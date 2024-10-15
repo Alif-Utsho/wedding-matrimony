@@ -1,0 +1,12 @@
+
+
+15-OCT-24
+    WEB    
+        Page Setup
+        Services dynamic
+        Testimonial dynamic
+        How It work dynamic
+        Our teams dynamic
+        Blogs dynamic
+    API
+        --
