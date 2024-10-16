@@ -87,16 +87,13 @@
         <div class="hom-ban-sli">
             <div>
                 <ul class="ban-sli">
+                    @foreach($banners as $banner)
                     <li>
                         <div class="image">
-                            <img src="{{ asset('frontend/images/ban-bg.jpg') }}" alt="" loading="lazy">
+                            <img src="{{ asset($banner->image) }}" alt="" loading="lazy">
                         </div>
                     </li>
-                    <li>
-                        <div class="image">
-                            <img src="{{ asset('frontend/images/banner.jpg') }}" alt="" loading="lazy">
-                        </div>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

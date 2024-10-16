@@ -1,9 +1,12 @@
 
 16-OCT-24
     WEB
-        Nav services dynamic
+        Navbar services dynamic
         Contact infos dynamic
-
+        Wedding list
+        Wedding stories
+        Wedding gallery
+        Homepage Banners
     API
         --
 

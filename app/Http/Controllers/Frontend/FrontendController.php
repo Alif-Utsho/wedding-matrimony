@@ -10,6 +10,7 @@ use App\Models\Testimonial;
 use App\Models\WeddingStep;
 use App\Models\Blog;
 use App\Models\Wedding;
+use App\Models\Banner;
 
 class FrontendController extends Controller
 {
@@ -20,9 +21,9 @@ class FrontendController extends Controller
         $ourteams = Ourteam::whereStatus(true)->get();
         $blogs = Blog::whereStatus(true)->latest()->limit(3)->get();
         $weddings = Wedding::whereStatus(true)->get();
-
+        $banners = Banner::whereStatus(true)->get();
         
-        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings'));
+        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners'));
     }
 
     public function weddingDetails($id){
