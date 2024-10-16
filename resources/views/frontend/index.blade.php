@@ -407,17 +407,19 @@
             </div>
             <div class="hom-coup-test">
                 <ul class="couple-sli">
+                    @foreach($weddings as $wedding)
                     <li>
                         <div class="hom-coup-box">
                             <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/6.jpg') }}" alt="" loading="lazy">
+                            <img src="{{ asset($wedding->couple_image) }}" alt="" loading="lazy">
                             <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
+                                <h4>{{ $wedding->couple_name }} <span>{{ $wedding->location }}</span></h4>
+                                <a href="/wedding-details/{{ $wedding->id }}" class="sml-cta cta-dark">View more</a>
                             </div>
                         </div>
                     </li>
-                    <li>
+                    @endforeach
+                    {{-- <li>
                         <div class="hom-coup-box">
                             <span class="leaf"></span>
                             <img src="{{ asset('frontend/images/couples/7.jpg') }}" alt="" loading="lazy">
@@ -486,7 +488,7 @@
                                 <a href="wedding.html" class="sml-cta cta-dark">View more</a>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
