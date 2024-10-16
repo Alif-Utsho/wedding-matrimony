@@ -52,13 +52,12 @@
         <p><strong>Best Wedding Matrimony</strong> lacinia viverra lectus. Fusce imperdiet ullamcorper metus eu
             fringilla.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
         <ul class="menu-pop-info">
-            <li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> 01678337722</a></li>
-            <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i>01320-390001
+            <li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> {{ $contactinfo->phone }}</a></li>
+            <li><a href="{{ $contactinfo->whatsapp }}"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{ $contactinfo->phone }}
                 </a></li>
-            <li><a href="#!"><i class="fa fa-envelope-o" aria-hidden="true"></i>messageappsis@gmail.com </a>
+            <li><a href="#!"><i class="fa fa-envelope-o" aria-hidden="true"></i>{{ $contactinfo->email }} </a>
             </li>
-            <li><a href="#!"><i class="fa fa-map-marker" aria-hidden="true"></i>SIS Media, Level # 9, Suite #
-                    10-A, Razzak Plaza, 383 Boro Moghbazar, Dhaka, Bangladesh</a></li>
+            <li><a href="#!"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ $contactinfo->address }}</a></li>
         </ul>
         <div class="menu-pop-help">
             <h4>Support Team</h4>
@@ -156,6 +155,98 @@
             </div>
         </div>
         <!-- END HELP BOX -->
+    </div>
+</div>
+<!-- END -->
+
+<!-- MAIN MENU -->
+<div class="hom-top">
+    <div class="container">
+        <div class="row">
+            <div class="hom-nav">
+                <!-- LOGO -->
+                <div class="logo">
+                    <span class="menu desk-menu">
+                        <i></i><i></i><i></i>
+                    </span>
+                    <a href="/" class="logo-brand"><img src="{{ asset($generalsetting->logo) }}"
+                            alt="" loading="lazy" class="ic-logo"></a>
+                </div>
+
+                <!-- EXPLORE MENU -->
+                <div class="bl">
+                    <ul>
+                        <li class="smenu-pare">
+                            <span class="smenu">Explore</span>
+                            <div class="smenu-open smenu-box">
+                                <div class="container">
+                                    <div class="row">
+                                        <h4 class="tit">Explore category</h4>
+                                        <ul>
+                                            @foreach($navServices as $service)
+                                            <li>
+                                                <div class="menu-box menu-box-{{ $loop->iteration }}" style="background-image: url({{ asset($service->image) }})">
+                                                    <h5>{{ $service->name }} <span>{{ $service->title }}</span></h5>
+                                                    <span class="explor-cta">More details</span>
+                                                    <a href="{{ url($service->link) }}" class="fclick"></a>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li><a href="all-profiles.html">All Profiles</a></li>
+                        <li><a href="plans.html">Plans</a></li>
+                        <li><a href="sign-up.html">Register</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li class="smenu-pare">
+                            <span class="smenu">Dashboard</span>
+                            <div class="smenu-open smenu-single">
+                                <ul>
+                                    <li><a href="user-dashboard.html">Dashboard</a></li>
+                                    <li><a href="user-profile.html">My profile</a></li>
+                                    <li><a href="user-interests.html">Interests</a></li>
+                                    <li><a href="user-chat.html">Chat lists</a></li>
+                                    <li><a href="user-plan.html">My plan details</a></li>
+                                    <li><a href="user-setting.html">Profile settings</a></li>
+                                    <li><a href="user-profile-edit.html">Edit full profile</a></li>
+                                    <li><a href="login.html">Sign in</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- USER PROFILE -->
+                <div class="al">
+                    <div class="head-pro">
+                        <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+                        <b>Advisor</b><br>
+                        <h4>Ashley emyy</h4>
+                        <span class="fclick"></span>
+                    </div>
+                </div>
+
+                <!--MOBILE MENU-->
+                <div class="mob-menu">
+                    <div class="mob-me-ic">
+                        <span class="ser-open mobile-ser">
+                            <img src="{{ asset('frontend/images/icon/search.svg') }}" alt="">
+                        </span>
+                        <span class="mobile-exprt" data-mob="dashbord">
+                            <img src="{{ asset('frontend/images/icon/users.svg') }}" alt="">
+                        </span>
+                        <span class="mobile-menu" data-mob="mobile">
+                            <img src="{{ asset('frontend/images/icon/menu.svg') }}" alt="">
+                        </span>
+                    </div>
+                </div>
+                <!--END MOBILE MENU-->
+            </div>
+        </div>
     </div>
 </div>
 <!-- END -->

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ourteam;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\WeddingStep;
@@ -15,8 +14,7 @@ class FrontendController extends Controller
         $services = Service::whereStatus(true)->latest()->get();
         $testimonials = Testimonial::whereStatus(true)->latest()->get();
         $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
-        $ourteams = Ourteam::whereStatus(true)->get();
         
-        return response()->json(compact('services', 'testimonials', 'wedding_steps', 'ourteams'));
+        return response()->json(compact('services', 'testimonials', 'wedding_steps'));
     }
 }

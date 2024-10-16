@@ -22,4 +22,8 @@ class FrontendController extends Controller
         
         return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs'));
     }
+
+    public function contact() {
+        return view('frontend.pages.contact');
+    }
 }

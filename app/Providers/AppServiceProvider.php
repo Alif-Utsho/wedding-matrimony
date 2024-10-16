@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Service;
+use App\Models\Ourteam;
+use App\Models\Contactinfo;
+use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $navServices = Service::whereStatus(true)->limit(4)->get();
+        view()->share('navServices', $navServices);
+
+        $ourteams = Ourteam::whereStatus(true)->get();
+        view()->share('ourteams', $ourteams);
+
+        $contactinfo = Contactinfo::whereStatus(true)->first();
+        view()->share('contactinfo', $contactinfo);
+
+        $generalsetting = GeneralSetting::whereStatus(true)->first();
+        view()->share('generalsetting', $generalsetting);
     }
 }

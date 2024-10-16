@@ -1,7 +1,16 @@
 
+16-OCT-24
+    WEB
+        Nav services dynamic
+        Contact infos dynamic
+
+    API
+        --
+
+---------------------------------------------
 
 15-OCT-24
-    WEB    
+    WEB
         Page Setup
         Services dynamic
         Testimonial dynamic

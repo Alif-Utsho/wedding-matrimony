@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#f6af04">
     <meta name="description" content="">
     <meta name="keyword" content="">
-    <link rel="shortcut icon" href="{{ asset('frontend/images/fav.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" type="image/x-icon">
     <!--== CSS FILES ==-->
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
@@ -46,16 +46,16 @@
     <section class="wed-hom-footer">
         <div class="container">
             <div class="row foot-supp">
-                <h2><span>Free support:</span> +8801678337722 |<span>Email:</span>
-                    messageappsis@gmail.com</h2>
+                <h2><span>Free support:</span> {{ $contactinfo->phone }} |<span>Email:</span>
+                    {{ $contactinfo->email }}</h2>
             </div>
             <div class="row wed-foot-link wed-foot-link-1">
                 <div class="col-md-4">
                     <h4>Get In Touch</h4>
-                    <p>Address: SIS Media, Level # 9, Suite # 10-A, Razzak Plaza, 383 Boro Moghbazar, Dhaka, Bangladesh
+                    <p>Address: {{ $contactinfo->address }}
                     </p>
-                    <p>Phone: <a href="tel:+8801678337722">+8801678337722</a></p>
-                    <p>Email: <a href="mailto:messageappsis@gmail.com ">messageappsis@gmail.com </a></p>
+                    <p>Phone: <a href="tel:{{ $contactinfo->phone }}">{{ $contactinfo->phone }}</a></p>
+                    <p>Email: <a href="mailto:{{ $contactinfo->email }} ">{{ $contactinfo->email }} </a></p>
                 </div>
                 <div class="col-md-4">
                     <h4>HELP &amp; SUPPORT</h4>
