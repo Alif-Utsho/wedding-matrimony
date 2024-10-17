@@ -3,6 +3,7 @@
     WEB
         Homepage Photo Gallery
         User auth pages
+        Auth functionality
         
     API
         --

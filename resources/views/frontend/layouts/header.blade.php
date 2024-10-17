@@ -220,12 +220,14 @@
                     </ul>
                 </div>
 
+                
                 <!-- USER PROFILE -->
+                @if(Auth::guard('user')->check())
                 <div class="al">
                     <div class="head-pro">
                         <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
                         <b>Advisor</b><br>
-                        <h4>Ashley emyy</h4>
+                        <h4>{{ Auth::guard('user')->user()->name }}</h4>
                         <span class="fclick"></span>
                     </div>
                 </div>
@@ -245,6 +247,7 @@
                     </div>
                 </div>
                 <!--END MOBILE MENU-->
+                @endif
             </div>
         </div>
     </div>

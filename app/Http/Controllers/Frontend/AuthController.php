@@ -57,5 +57,15 @@ class AuthController extends Controller
         return redirect()->intended('customer/dashboard');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::guard('user')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('user.login')->with('status', 'You have been successfully logged out.');
+    }
+
 
 }

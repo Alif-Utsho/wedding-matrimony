@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
 
+    @stack('css')
+
 </head>
 
 <body>
@@ -116,6 +118,9 @@
     <script src="{{ asset('frontend/js/select-opt.js') }}"></script>
     <script src="{{ asset('frontend/js/slick.js') }}"></script>
     <script src="{{ asset('frontend/js/custom.js') }}"></script>
+
+    @stack('script')
+    
 </body>
 
 </html>
