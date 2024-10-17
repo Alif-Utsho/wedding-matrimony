@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\WeddingStep;
+use App\Models\WeddingGallery;
 use App\Models\Blog;
 use App\Models\Wedding;
 use App\Models\Banner;
@@ -22,8 +23,9 @@ class FrontendController extends Controller
         $blogs = Blog::whereStatus(true)->latest()->limit(3)->get();
         $weddings = Wedding::whereStatus(true)->get();
         $banners = Banner::whereStatus(true)->get();
+        $galleries = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
         
-        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners'));
+        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries'));
     }
 
     public function weddingDetails($id){

@@ -1,4 +1,13 @@
 
+17-OCT-24
+    WEB
+        Homepage Photo Gallery
+        
+    API
+        --
+
+---------------------------------------------
+
 16-OCT-24
     WEB
         Navbar services dynamic

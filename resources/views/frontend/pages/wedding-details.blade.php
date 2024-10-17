@@ -141,58 +141,7 @@
                         <span class="leaf1"></span>
                         <span class="tit-ani-"></span>
                     </div>
-                    {{-- @foreach ($wedding->galleries as $gallery)
-                    @if ($loop->iteration % 2 == 0)
-                        <div class="col-md-3">
-                            <div class="gal-im animate animate__animated animate__slower" data-ani="animate__flipInX">
-                                <img src="{{ asset($gallery->image) }}" class="gal-siz-2" alt="">
-                                <div class="txt">
-                                    <span>Wedding</span>
-                                    <h4>{{ $wedding->couple_name }}</h4>
-                                </div>
-                            </div>
-                            <div class="gal-im animate animate__animated animate__slower" data-ani="animate__flipInX">
-                                <img src="{{ asset($gallery->image) }}" class="gal-siz-1" alt="">
-                                <div class="txt">
-                                    <span>Wedding</span>
-                                    <h4>{{ $wedding->couple_name }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="col-md-2">
-                            <div class="gal-im animate animate__animated animate__slow" data-ani="animate__flipInX">
-                                <img src="{{ asset($gallery->image) }}" class="gal-siz-1" alt="">
-                                <div class="txt">
-                                    <span>Wedding</span>
-                                    <h4>{{ $wedding->couple_name }}</h4>
-                                </div>
-                            </div>
-                            <div class="gal-im animate animate__animated animate__slower" data-ani="animate__flipInX">
-                                <img src="{{ asset($gallery->image) }}" class="gal-siz-2" alt="">
-                                <div class="txt">
-                                    <span>Wedding</span>
-                                    <h4>{{ $wedding->couple_name }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                    @endforeach --}}
-
-                    {{-- @foreach ($wedding->galleries->chunk(2) as $galleryPair)
-                        <div class="{{ $loop->iteration % 2 == 0 ? 'col-md-3' : 'col-md-2' }}">
-                            @foreach ($galleryPair as $gallery)
-                                <div class="gal-im animate animate__animated animate__slower" data-ani="animate__flipInX">
-                                    <img src="{{ asset($gallery->image) }}" class="{{ $loop->iteration % 2 == 0 ? 'gal-siz-2' : 'gal-siz-1' }}" alt="">
-                                    <div class="txt">
-                                        <span>Wedding</span>
-                                        <h4>{{ $wedding->couple_name }}</h4>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach --}}
-
+                    
                     @foreach ($wedding->galleries->chunk(2) as $chunkIndex => $galleryChunk)
                         @if ($chunkIndex % 2 == 0)
                             <!-- Use col-md-2 for odd chunks -->

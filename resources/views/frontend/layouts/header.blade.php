@@ -202,7 +202,7 @@
                         <li><a href="plans.html">Plans</a></li>
                         <li><a href="sign-up.html">Register</a></li>
                         <li><a href="/contact">Contact</a></li>
-                        <li class="smenu-pare">
+                        {{-- <li class="smenu-pare">
                             <span class="smenu">Dashboard</span>
                             <div class="smenu-open smenu-single">
                                 <ul>
@@ -216,7 +216,7 @@
                                     <li><a href="login.html">Sign in</a></li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
 
