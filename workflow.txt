@@ -2,6 +2,7 @@
 17-OCT-24
     WEB
         Homepage Photo Gallery
+        User auth pages
         
     API
         --
