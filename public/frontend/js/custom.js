@@ -357,7 +357,7 @@ function validateWeight(weight) {
 }
 
 // On form submission
-$('form').on('submit', function(event) {
+$('#profile-edit-form').on('submit', function(event) {
     var isValid = true;
     var firstErrorElement = null;
 

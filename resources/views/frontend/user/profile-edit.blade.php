@@ -7,7 +7,7 @@
                     <div class="inn">
                         <div class="rhs">
                             <div class="form-login">
-                                <form action="{{ route('user.profileEdit.submit') }}" method="POST">
+                                <form action="{{ route('user.profileEdit.submit') }}" method="POST" id="profile-edit-form">
                                     @csrf
                                     <!--PROFILE BIO-->
                                     <div class="edit-pro-parti">
@@ -68,7 +68,7 @@
                                                     value="{{ $user->profile->city_id ?? old('city_id') }}">
                                                     <option value="">Select</option>
                                                     @foreach ($cities as $city)
-                                                        <option value="{{ $city->id }}" {{ $city->id===$user->profile->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                        <option value="{{ $city->id }}" {{ $user->profile && $city->id===$user->profile->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('city_id')
@@ -153,7 +153,7 @@
                                                 data-placeholder="Select your Hobbies" name="type">
                                                 <option value="">Select</option>
                                                 @foreach(\App\Enums\JobType::getValues() as $jobType)
-                                                    <option value="{{ $jobType }}" {{ $user->profile->career->type == $jobType ? 'selected' : '' }}>
+                                                    <option value="{{ $jobType }}" {{ $user->profile && $user->profile->career->type == $jobType ? 'selected' : '' }}>
                                                         {{ $jobType }}
                                                     </option>
                                                 @endforeach
@@ -165,7 +165,7 @@
                                         <div class="form-group">
                                             <label class="lb">Company name:</label>
                                             <input type="text" class="form-control" name="company_name"
-                                                value="{{ $user->profile->career->company_name ?? old('company_name') }}">
+                                                value="{{ $user->profile && $user->profile->career->company_name ?? old('company_name') }}">
                                             @error('cpmpany_name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -174,7 +174,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Salary:</label>
                                                 <input type="text" class="form-control" name="salary"
-                                                    value="{{ $user->profile->career->salary ?? old('salary') }}">
+                                                    value="{{ $user->profile && $user->profile->career->salary ?? old('salary') }}">
                                                 @error('salary')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -182,7 +182,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Job total experience:</label>
                                                 <input type="text" class="form-control" name="experience"
-                                                    value="{{ $user->profile->career->experience ?? old('experience') }}">
+                                                    value="{{ $user->profile && $user->profile->career->experience ?? old('experience') }}">
                                                 @error('experience')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -192,7 +192,7 @@
                                         <div class="form-group">
                                             <label class="lb">Degree:</label>
                                             <input type="text" class="form-control" name="degree"
-                                                value="{{ $user->profile->career->degree ?? old('degree') }}">
+                                                value="{{ $user->profile && $user->profile->career->degree ?? old('degree') }}">
                                             @error('degree')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -201,7 +201,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">School:</label>
                                                 <input type="text" class="form-control" name="school"
-                                                    value="{{ $user->profile->career->school ?? old('school') }}">
+                                                    value="{{ $user->profile && $user->profile->career->school ?? old('school') }}">
                                                 @error('school')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -209,7 +209,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">College:</label>
                                                 <input type="text" class="form-control" name="college"
-                                                    value="{{ $user->profile->career->college ?? old('college') }}">
+                                                    value="{{ $user->profile && $user->profile->career->college ?? old('college') }}">
                                                 @error('college')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -291,7 +291,7 @@
                                                     multiple name="hobbies[]">
                                                     <option></option>
                                                     @php
-                                                        $userHobbies = $user->profile->hobbies->pluck('hobby_id')->toArray();
+                                                        $userHobbies = $user->profile ? $user->profile->hobbies->pluck('hobby_id')->toArray() : [];
                                                     @endphp
                                                     @foreach ($hobbies as $hobby)
                                                         <option value="{{ $hobby->id }}"

@@ -15,7 +15,10 @@ class EnsureProfileIsUpdated
     {
         $user = Auth::guard('user')->user();
         if (!$user->profile || !$user->profile->isComplete()) {
-            return redirect()->route('profile.edit')->with('error', 'Please update your profile to continue.');
+            if (!$request->is('user/profile-edit') && !$request->is('user/profile-edit-submit')) {
+                return redirect()->route('user.profileEdit')->with('error', 'Please update your profile to continue.');
+            }
+            // return redirect()->route('user.profileEdit')->with('error', 'Please update your profile to continue.');
         }
 
         return $next($request);
