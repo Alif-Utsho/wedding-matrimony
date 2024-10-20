@@ -52,9 +52,9 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password); 
         $user->save();
 
-        Auth::guard('customer')->login($user);
+        Auth::guard('user')->login($user);
 
-        return redirect()->intended('customer/dashboard');
+        return redirect()->intended('user/dashboard');
     }
 
     public function logout(Request $request)

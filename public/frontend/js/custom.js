@@ -327,3 +327,72 @@ if ($lis.length > 0) {
     });
 
 }
+
+// Profile EDIT Scripts
+
+function calculateAge(birthDate) {
+    var today = new Date();
+    var birthDate = new Date(birthDate);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+$('#birth_date').on('change', function() {
+    var birthDate = $(this).val();
+    var age = calculateAge(birthDate);
+    $('#age').val(age);
+});
+
+function validateHeight(height) {
+    return /^\d+(\.\d{1,2})?$/.test(height); // Accepts numbers with up to 2 decimal places
+}
+
+function validateWeight(weight) {
+    return /^\d+(\.\d{1,2})?$/.test(weight); // Accepts numbers with up to 2 decimal places
+}
+
+// On form submission
+$('form').on('submit', function(event) {
+    var isValid = true;
+    var firstErrorElement = null;
+
+    var height = $('#height').val();
+    var weight = $('#weight').val();
+
+    // Height validation
+    if (!validateHeight(height)) {
+        $('#heightError').show();
+        if (!firstErrorElement) {
+            firstErrorElement = $('#heightError'); // Capture first error element
+        }
+        isValid = false;
+    } else {
+        $('#heightError').hide();
+    }
+
+    // Weight validation
+    if (!validateWeight(weight)) {
+        $('#weightError').show();
+        if (!firstErrorElement) {
+            firstErrorElement = $('#weightError'); // Capture first error element if no previous errors
+        }
+        isValid = false;
+    } else {
+        $('#weightError').hide();
+    }
+
+    // If any validation fails, scroll to the first error and prevent the form submission
+    if (!isValid) {
+        event.preventDefault();
+        if (firstErrorElement) {
+            $('html, body').animate({
+                scrollTop: firstErrorElement.offset().top - 200 // Scroll to the error with a small offset
+            }, 800); // Animation duration (800ms)
+        }
+    }
+});

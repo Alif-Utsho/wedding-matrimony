@@ -1,10 +1,18 @@
 
+20-OCT-24
+    WEB
+        Profile Update
+        
+    API
+        --
+
+---------------------------------------------
+
 17-OCT-24
     WEB
         Homepage Photo Gallery
         User auth pages
         Auth functionality
-        
     API
         --
 
