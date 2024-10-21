@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('/wedding-details/{id}', [FrontendController::class, 'weddingDetails']);
+Route::get('/all-profile', [FrontendController::class, 'allProfile']);
 Route::get('/contact', [FrontendController::class, 'contact']);
 
 Route::middleware('guest:user')->group(function () {
@@ -22,6 +23,7 @@ Route::middleware('guest:user')->group(function () {
 
 Route::group(['middleware' => ['user.auth', 'ensure.profile.updated']], function () {
     Route::get('user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('user/profile-edit', [UserController::class, 'profileEdit'])->name('user.profileEdit');
     Route::post('user/profile-edit-submit', [UserController::class, 'profileEditSubmit'])->name('user.profileEdit.submit');
 

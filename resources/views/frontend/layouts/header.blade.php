@@ -7,10 +7,10 @@
         </form>
         <div class="rel-sear">
             <h4>Top searches:</h4>
-            <a href="all-profiles.html">Browse all profiles</a>
-            <a href="all-profiles.html">Mens profile</a>
-            <a href="all-profiles.html">Female profile</a>
-            <a href="all-profiles.html">New profiles</a>
+            <a href="/all-profile">Browse all profiles</a>
+            <a href="/all-profile">Mens profile</a>
+            <a href="/all-profile">Female profile</a>
+            <a href="/all-profile">New profiles</a>
         </div>
     </div>
 </div>
@@ -198,7 +198,7 @@
                             </div>
                         </li>
                         
-                        <li><a href="all-profiles.html">All Profiles</a></li>
+                        <li><a href="/all-profile">All Profiles</a></li>
                         <li><a href="plans.html">Plans</a></li>
                         <li><a href="sign-up.html">Register</a></li>
                         <li><a href="/contact">Contact</a></li>

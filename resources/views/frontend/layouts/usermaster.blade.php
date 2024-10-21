@@ -1,4 +1,5 @@
 @extends('frontend.layouts.master')
+
 @section('content')
     <section>
         <div class="db">
@@ -10,8 +11,16 @@
                                     alt=""></div>
                             <div class="db-nav-list">
                                 <ul>
-                                    <li><a href="{{ route('user.dashboard') }}" class="act"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a></li>
-                                    <li><a href="user-profile.html"><i class="fa fa-male" aria-hidden="true"></i>Profile</a></li>
+                                    <li>
+                                        <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'act' : '' }}">
+                                            <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'act' : '' }}">
+                                            <i class="fa fa-male" aria-hidden="true"></i> Profile
+                                        </a>
+                                    </li>
                                     <li><a href="user-interests.html"><i class="fa fa-handshake-o" aria-hidden="true"></i>Interests</a></li>
                                     <li><a href="user-chat.html"><i class="fa fa-commenting-o" aria-hidden="true"></i>Chat list</a></li>
                                     <li><a href="user-plan.html"><i class="fa fa-money" aria-hidden="true"></i>Plan</a></li>

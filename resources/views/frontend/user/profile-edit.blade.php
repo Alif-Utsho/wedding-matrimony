@@ -165,7 +165,7 @@
                                         <div class="form-group">
                                             <label class="lb">Company name:</label>
                                             <input type="text" class="form-control" name="company_name"
-                                                value="{{ $user->profile && $user->profile->career->company_name ?? old('company_name') }}">
+                                                value="{{ $user->profile ? $user->profile->career->company_name : old('company_name') }}">
                                             @error('cpmpany_name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -174,7 +174,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Salary:</label>
                                                 <input type="text" class="form-control" name="salary"
-                                                    value="{{ $user->profile && $user->profile->career->salary ?? old('salary') }}">
+                                                    value="{{ $user->profile ? $user->profile->career->salary : old('salary') }}">
                                                 @error('salary')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -182,7 +182,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Job total experience:</label>
                                                 <input type="text" class="form-control" name="experience"
-                                                    value="{{ $user->profile && $user->profile->career->experience ?? old('experience') }}">
+                                                    value="{{ $user->profile ? $user->profile->career->experience : old('experience') }}">
                                                 @error('experience')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -192,7 +192,7 @@
                                         <div class="form-group">
                                             <label class="lb">Degree:</label>
                                             <input type="text" class="form-control" name="degree"
-                                                value="{{ $user->profile && $user->profile->career->degree ?? old('degree') }}">
+                                                value="{{ $user->profile ? $user->profile->career->degree : old('degree') }}">
                                             @error('degree')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -201,7 +201,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">School:</label>
                                                 <input type="text" class="form-control" name="school"
-                                                    value="{{ $user->profile && $user->profile->career->school ?? old('school') }}">
+                                                    value="{{ $user->profile ? $user->profile->career->school : old('school') }}">
                                                 @error('school')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -209,7 +209,7 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">College:</label>
                                                 <input type="text" class="form-control" name="college"
-                                                    value="{{ $user->profile && $user->profile->career->college ?? old('college') }}">
+                                                    value="{{ $user->profile ? $user->profile->career->college : old('college') }}">
                                                 @error('college')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror

@@ -18,6 +18,11 @@ class UserController extends Controller {
         return view('frontend.user.dashboard');
     }
 
+    public function profile(){
+        $user    = User::find(Auth::guard('user')->id());
+        return view('frontend.user.profile', compact('user'));
+    }
+
     public function profileEdit() {
         $user    = User::find(Auth::guard('user')->id());
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();

@@ -37,6 +37,10 @@ class FrontendController extends Controller
         return view('frontend.pages.wedding-details', compact('wedding'));
     }
 
+    public function allProfile(Request $request){
+        return view('frontend.pages.all-profile');
+    }
+
     public function contact() {
         return view('frontend.pages.contact');
     }
