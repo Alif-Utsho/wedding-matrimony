@@ -12,6 +12,8 @@ use App\Models\WeddingGallery;
 use App\Models\Blog;
 use App\Models\Wedding;
 use App\Models\Banner;
+use App\Models\User;
+use App\Models\City;
 
 class FrontendController extends Controller
 {
@@ -38,7 +40,40 @@ class FrontendController extends Controller
     }
 
     public function allProfile(Request $request){
-        return view('frontend.pages.all-profile');
+        $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
+
+        if ($request->filled('gender')) {
+            $gender = $request->gender === 'Men' ? 'Male' : 'Female';
+            $userQuery->whereHas('profile', function($query) use ($gender) {
+                $query->where('gender', $gender);
+            });
+        }
+    
+        if ($request->filled('age_range')) {
+            $ageRange = explode('-to-', $request->age_range);
+            if (count($ageRange) == 2) {
+                $minAge = $ageRange[0];
+                $maxAge = $ageRange[1];
+
+                $userQuery->whereHas('profile', function($query) use ($minAge, $maxAge) {
+                    $query->whereBetween('age', [$minAge, $maxAge]);
+                });
+            }
+        }
+    
+        if ($request->filled('location')) {
+            $city = City::where('name', $request->location)->first();
+            if($city){
+                $userQuery->whereHas('profile', function($query) use ($city) {
+                    $query->where('city_id', $city->id);
+                });
+            }
+        }
+
+        $users = $userQuery->limit(100)->get();
+
+        $cities  = City::whereStatus(true)->orderBy('name', 'ASC')->get();
+        return view('frontend.pages.all-profile', compact('users', 'cities'));
     }
 
     public function contact() {

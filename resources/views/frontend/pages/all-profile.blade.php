@@ -26,120 +26,127 @@
                 <div class="col-md-3 fil-mob-view">
                     <span class="filter-clo">+</span>
                     <!-- START -->
-                    <div class="filt-com lhs-cate">
-                        <h4><i class="fa fa-search" aria-hidden="true"></i> I'm looking for</h4>
-                        <div class="form-group">
-                            <select class="chosen-select">
-                                <option value="">I'm looking for</option>
-                                <option value="Men">Men</option>
-                                <option value="Women">Women</option>
-                            </select>
+                    <form action="" method="GET">
+                        <div class="filt-com lhs-cate">
+                            <h4><i class="fa fa-search" aria-hidden="true"></i> I'm looking for</h4>
+                            <div class="form-group">
+                                <select class="chosen-select" name="gender">
+                                    <option value="">I'm looking for</option>
+                                    <option value="Men" {{ request()->gender=='Men' ? 'selected' : '' }}>Men</option>
+                                    <option value="Women" {{ request()->gender=='Women' ? 'selected' : '' }}>Women</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END -->
-                    <!-- START -->
-                    <div class="filt-com lhs-cate">
-                        <h4><i class="fa fa-clock-o" aria-hidden="true"></i>Age</h4>
-                        <div class="form-group">
-                            <select class="chosen-select">
-                                <option value="">Select age</option>
-                                <option value="">18 to 30</option>
-                                <option value="">31 to 40</option>
-                                <option value="">41 to 50</option>
-                                <option value="">51 to 60</option>
-                                <option value="">61 to 70</option>
-                                <option value="">71 to 80</option>
-                                <option value="">81 to 90</option>
-                                <option value="">91 to 100</option>
-                            </select>
+                        <!-- END -->
+                        <!-- START -->
+                        <div class="filt-com lhs-cate">
+                            <h4><i class="fa fa-clock-o" aria-hidden="true"></i>Age</h4>
+                            <div class="form-group">
+                                <select class="chosen-select" name="age_range">
+                                    <option value="">Select age</option>
+                                    <option value="18-to-30" {{ request()->age_range=='18-to-30' ? 'selected' : '' }}>18 to 30</option>
+                                    <option value="31-to-40" {{ request()->age_range=='31-to-40' ? 'selected' : '' }}>31 to 40</option>
+                                    <option value="41-to-50" {{ request()->age_range=='41-to-50' ? 'selected' : '' }}>41 to 50</option>
+                                    <option value="51-to-60" {{ request()->age_range=='51-to-60' ? 'selected' : '' }}>51 to 60</option>
+                                    <option value="61-to-70" {{ request()->age_range=='61-to-70' ? 'selected' : '' }}>61 to 70</option>
+                                    <option value="71-to-80" {{ request()->age_range=='71-to-80' ? 'selected' : '' }}>71 to 80</option>
+                                    <option value="81-to-90" {{ request()->age_range=='81-to-90' ? 'selected' : '' }}>81 to 90</option>
+                                    <option value="91-to-100" {{ request()->age_range=='91-to-100' ? 'selected' : '' }}>91 to 100</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END -->
-                    <!-- START -->
-                    <div class="filt-com lhs-cate">
-                        <h4><i class="fa fa-bell-o" aria-hidden="true"></i>Select Religion</h4>
-                        <div class="form-group">
-                            <select class="chosen-select">
-                                <option>Religion</option>
-                                <option>Any</option>
-                                <option>Hindu</option>
-                                <option>Muslim</option>
-                                <option>Jain</option>
-                                <option>Christian</option>
-                            </select>
+                        <!-- END -->
+                        <!-- START -->
+                        <div class="filt-com lhs-cate">
+                            <h4><i class="fa fa-bell-o" aria-hidden="true"></i>Select Religion</h4>
+                            <div class="form-group">
+                                <select class="chosen-select" name="religion">
+                                    <option value="">Religion</option>
+                                    <option value="">Any</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Jain">Jain</option>
+                                    <option value="Christian">Christian</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END -->
-                    <!-- START -->
-                    <div class="filt-com lhs-cate">
-                        <h4><i class="fa fa-map-marker" aria-hidden="true"></i>Location</h4>
-                        <div class="form-group">
-                            <select class="chosen-select" name="addjbmaincate">
-                                <option value="Chennai">Chennai</option>
-                                <option value="Bangaluru">Bangaluru</option>
-                                <option value="Delhi">Delhi</option>
-                            </select>
+                        <!-- END -->
+                        <!-- START -->
+                        <div class="filt-com lhs-cate">
+                            <h4><i class="fa fa-map-marker" aria-hidden="true"></i>Location</h4>
+                            <div class="form-group">
+                                <select class="chosen-select" name="location">
+                                    <option value="">Select location</option>
+                                    @foreach($cities as $city)
+                                    <option value="{{ $city->name }}" {{ request()->location==$city->name ? 'selected' : '' }}>{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END -->
-                    <!-- START -->
-                    <div class="filt-com lhs-rati lhs-avail lhs-cate">
-                        <h4><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Availablity</h4>
-                        <ul>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_avail" class="rating_check" id="exav1"
-                                        checked>
-                                    <label for="exav1">All</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_avail" class="rating_check"
-                                        id="exav2">
-                                    <label for="exav2">Available</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_avail" class="rating_check"
-                                        id="exav3">
-                                    <label for="exav3">Offline</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END -->
+                        <!-- END -->
+                        <!-- START -->
+                        <div class="filt-com lhs-rati lhs-avail lhs-cate">
+                            <h4><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Availablity</h4>
+                            <ul>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="availability" class="rating_check" id="exav1"
+                                            checked>
+                                        <label for="exav1">All</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="availability" class="rating_check"
+                                            id="exav2">
+                                        <label for="exav2">Available</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="availability" class="rating_check"
+                                            id="exav3">
+                                        <label for="exav3">Offline</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END -->
 
-                    <!-- START -->
-                    <div class="filt-com lhs-rati lhs-ver lhs-cate">
-                        <h4><i class="fa fa-shield" aria-hidden="true"></i>Profile</h4>
-                        <ul>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_veri" class="rating_check" id="exver1"
-                                        checked>
-                                    <label for="exver1">All</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_veri" class="rating_check"
-                                        id="exver2">
-                                    <label for="exver2">Premium</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="rbbox">
-                                    <input type="radio" value="" name="expert_veri" class="rating_check"
-                                        id="exver3">
-                                    <label for="exver3">Free</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END -->
-                    <!-- START -->
+                        <!-- START -->
+                        <div class="filt-com lhs-rati lhs-ver lhs-cate">
+                            <h4><i class="fa fa-shield" aria-hidden="true"></i>Profile</h4>
+                            <ul>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="type" class="rating_check" id="exver1"
+                                            checked>
+                                        <label for="exver1">All</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="type" class="rating_check"
+                                            id="exver2">
+                                        <label for="exver2">Premium</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rbbox">
+                                        <input type="radio" value="" name="type" class="rating_check"
+                                            id="exver3">
+                                        <label for="exver3">Free</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END -->
+                        <!-- START -->
+
+                        <div class="my-4">
+                            <button type="submit" class="btn btn-danger btn-sm col-12">Filter Profiles</button>
+                        </div>
+                    </form>
                     <div class="filt-com filt-send-query">
                         <div class="send-query">
                             <h5>What are you looking for?</h5>
@@ -152,7 +159,7 @@
                 <div class="col-md-9">
                     <div class="short-all">
                         <div class="short-lhs">
-                            Showing <b>32</b> profiles
+                            Showing <b>{{ $users->count() }}</b> profiles
                         </div>
                         <div class="short-rhs">
                             <ul>
@@ -183,6 +190,7 @@
                     </div>
                     <div class="all-list-sh">
                         <ul>
+                            @forelse($users as $user)
                             <li>
                                 <div class="all-pro-box user-avil-onli" data-useravil="avilyes"
                                     data-aviltxt="Available online">
@@ -202,12 +210,12 @@
 
                                     <!--PROFILE NAME-->
                                     <div class="pro-detail">
-                                        <h4><a href="profile-details.html">Ashley emyy</a></h4>
+                                        <h4><a href="profile-details.html">{{ $user->name }}</a></h4>
                                         <div class="pro-bio">
-                                            <span>B.Sc</span>
-                                            <span>IT Profession</span>
-                                            <span>29 Yeard old</span>
-                                            <span>Height: 155Cms</span>
+                                            <span>{{ $user->profile->career->degree }}</span>
+                                            <span>{{ $user->profile->career->type }}</span>
+                                            <span>{{ $user->profile->age }} Years Old</span>
+                                            <span>Height: {{ $user->profile->height }}Cms</span>
                                         </div>
                                         <div class="links">
                                             <span class="cta-chat">Chat now</span>
@@ -223,7 +231,16 @@
                                     <!--END SAVE-->
                                 </div>
                             </li>
-                            <li>
+                            @empty
+
+                            <div class="mx-auto text-center my-3">
+                                <div class="alert ">
+                                    <h5>No Profiles Found</h5>
+                                </div>
+                            </div>
+
+                            @endforelse
+                            {{-- <li>
                                 <div class="all-pro-box" data-useravil="avilno" data-aviltxt="Offline">
                                     <!--PROFILE IMAGE-->
                                     <div class="pro-img">
@@ -390,7 +407,7 @@
                                             aria-hidden="true"></i></span>
                                     <!--END SAVE-->
                                 </div>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </div>
