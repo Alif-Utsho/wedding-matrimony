@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class AuthController extends Controller
 {
@@ -47,6 +49,7 @@ class AuthController extends Controller
 
         $user = new User(); 
         $user->name = $request->name;
+        $user->slug = Str::slug($request->name);
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password); 
