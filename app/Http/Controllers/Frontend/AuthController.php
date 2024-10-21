@@ -47,9 +47,15 @@ class AuthController extends Controller
             'agree' => 'accepted', 
         ]);
 
+        $slug = Str::slug($request->name);
+        $userExist = User::where('slug', $slug)->count();
+        if($userExist){
+            $slug = $slug . '-' . $userExist+1;
+        }
+
         $user = new User(); 
         $user->name = $request->name;
-        $user->slug = Str::slug($request->name);
+        $user->slug = $slug;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password); 
