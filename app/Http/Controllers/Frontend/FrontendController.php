@@ -76,6 +76,20 @@ class FrontendController extends Controller
         return view('frontend.pages.all-profile', compact('users', 'cities'));
     }
 
+    public function profileDetails(Request $request){
+        $user = User::where('slug', $request->slug)->first();
+        
+        $related_users = User::where('id', '!=', $user->id)
+            ->whereHas('profile', function ($query) use ($user) {
+                $query->where('gender', $user->profile->gender)
+                    ->whereBetween('age', [$user->profile->age - 5, $user->profile->age + 5]);
+            })
+            ->limit(6)
+            ->get();
+            
+        return view('frontend.pages.profile-details', compact('user', 'related_users'));
+    }
+
     public function contact() {
         return view('frontend.pages.contact');
     }

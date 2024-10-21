@@ -28,4 +28,8 @@ class UserProfile extends Model {
     public function socialmedia() {
         return $this->hasOne(UserSocialmedia::class);
     }
+
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
 }

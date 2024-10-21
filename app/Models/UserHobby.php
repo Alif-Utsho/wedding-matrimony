@@ -10,4 +10,8 @@ class UserHobby extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function hobby(){
+        return $this->belongsTo(Hobby::class);
+    }
 }

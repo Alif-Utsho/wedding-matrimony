@@ -202,21 +202,22 @@
                         <li><a href="plans.html">Plans</a></li>
                         <li><a href="sign-up.html">Register</a></li>
                         <li><a href="/contact">Contact</a></li>
-                        {{-- <li class="smenu-pare">
+                        @if(Auth::guard('user')->check())
+                        <li class="smenu-pare">
                             <span class="smenu">Dashboard</span>
                             <div class="smenu-open smenu-single">
                                 <ul>
-                                    <li><a href="user-dashboard.html">Dashboard</a></li>
-                                    <li><a href="user-profile.html">My profile</a></li>
-                                    <li><a href="user-interests.html">Interests</a></li>
-                                    <li><a href="user-chat.html">Chat lists</a></li>
-                                    <li><a href="user-plan.html">My plan details</a></li>
-                                    <li><a href="user-setting.html">Profile settings</a></li>
-                                    <li><a href="user-profile-edit.html">Edit full profile</a></li>
-                                    <li><a href="login.html">Sign in</a></li>
+                                    <li><a href="/user/dashboard">Dashboard</a></li>
+                                    <li><a href="/user/profile">My profile</a></li>
+                                    <li><a href="/user/interests">Interests</a></li>
+                                    <li><a href="/user/chat">Chat lists</a></li>
+                                    <li><a href="/user/plan">My plan details</a></li>
+                                    <li><a href="/user/setting">Profile settings</a></li>
+                                    <li><a href="/user/profile-edit">Edit full profile</a></li>
                                 </ul>
                             </div>
-                        </li> --}}
+                        </li>
+                        @endif
                     </ul>
                 </div>
 
