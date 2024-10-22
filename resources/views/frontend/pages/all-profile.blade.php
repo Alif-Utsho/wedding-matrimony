@@ -197,7 +197,7 @@
                                     <!--PROFILE IMAGE-->
                                     <div class="pro-img">
                                         <a href="/profile/{{ $user->slug }}">
-                                            <img src="{{ asset('frontend/images/profiles/4.jpg') }}" alt="">
+                                            <img src="{{ asset($user->profile->image) }}" alt="">
                                         </a>
                                         <div class="pro-ave" title="User currently available">
                                             <span class="pro-ave-yes"></span>

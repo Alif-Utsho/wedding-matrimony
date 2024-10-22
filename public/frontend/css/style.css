@@ -12229,3 +12229,49 @@ h2.db-tit{
         margin-right: 7px;
     }
 }
+
+
+/* ================= */
+
+.profile-uploadOuter {
+    text-align: center;
+    padding: 10px;
+    background: #fff;
+
+    strong {
+        padding: 0 5px
+    }
+}
+
+.profile-dragBox {
+    height: 120px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+    border: 2px dashed #ccc;
+    display: inline-block;
+    transition: transform 0.3s;
+
+    input[type="file"] {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        top: 0;
+        left: 0;
+    }
+}
+
+.profile-draging {
+    transform: scale(1.1);
+}
+
+#preview {
+    text-align: center;
+
+    img {
+        max-width: 50px;
+    }
+}

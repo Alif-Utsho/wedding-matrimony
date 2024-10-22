@@ -226,7 +226,7 @@
                 @if(Auth::guard('user')->check())
                 <div class="al">
                     <div class="head-pro">
-                        <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+                        <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}" alt="" loading="lazy">
                         <b>Advisor</b><br>
                         <h4>{{ Auth::guard('user')->user()->name }}</h4>
                         <span class="fclick"></span>

@@ -8,7 +8,7 @@
                     <div class="profile">
                         <div class="pg-pro-big-im">
                             <div class="s1">
-                                <img src="{{ asset('frontend/images/profiles/profile-large.jpg') }}" loading="lazy"
+                                <img src="{{ asset($user->profile->image) }}" loading="lazy"
                                     class="pro" alt="">
                             </div>
                             <div class="s3">
@@ -79,30 +79,16 @@
                             <div class="pr-bio-c pr-bio-gal" id="gallery">
                                 <h3>Photo gallery</h3>
                                 <div id="image-gallery">
+                                    @foreach($user->profile->images as $userimage)
                                     <div class="pro-gal-imag">
                                         <div class="img-wrapper">
-                                            <a href="#!"><img src="{{ asset('frontend/images/profiles/1.jpg') }}"
+                                            <a href="#!"><img src="{{ asset($userimage->image) }}"
                                                     class="img-responsive" alt=""></a>
                                             <div class="img-overlay"><i class="fa fa-arrows-alt" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pro-gal-imag">
-                                        <div class="img-wrapper">
-                                            <a href="#!"><img src="{{ asset('frontend/images/profiles/6.jpg') }}"
-                                                    class="img-responsive" alt=""></a>
-                                            <div class="img-overlay"><i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="pro-gal-imag">
-                                        <div class="img-wrapper">
-                                            <a href="#!"><img src="{{ asset('frontend/images/profiles/14.jpg') }}"
-                                                    class="img-responsive" alt=""></a>
-                                            <div class="img-overlay"><i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <!-- END PROFILE ABOUT -->
@@ -201,7 +187,7 @@
                                     <li>
                                         <div class="wedd-rel-box">
                                             <div class="wedd-rel-img">
-                                                <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="">
+                                                <img src="{{ asset($related->profile->image) }}" alt="">
                                                 <span class="badge badge-success">{{ $related->profile->age }} Years old</span>
                                             </div>
                                             <div class="wedd-rel-con">

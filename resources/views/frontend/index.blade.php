@@ -577,7 +577,7 @@
                                     <span>{{ $blog->tag }}</span>
                                     <h2>{{ $blog->title }}</h2>
                                     <p>{{ $blog->short_description }}</p>
-                                    <a href="blog-details.html" class="cta-dark"><span>Read more</span></a>
+                                    <a href="/blog-details/{{ $blog->id }}" class="cta-dark"><span>Read more</span></a>
                                 </div>
                             </li>
                             @endforeach

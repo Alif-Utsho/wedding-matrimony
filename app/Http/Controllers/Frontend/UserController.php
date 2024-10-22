@@ -7,10 +7,14 @@ use App\Models\Hobby;
 use App\Models\User;
 use App\Models\UserCareer;
 use App\Models\UserHobby;
+use App\Models\UserImage;
 use App\Models\UserProfile;
 use App\Models\UserSocialmedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
+
 
 class UserController extends Controller {
     public function index() {
@@ -30,6 +34,9 @@ class UserController extends Controller {
     }
 
     public function profileEditSubmit(Request $request) {
+        $userId = Auth::guard('user')->id();
+        $user = User::find($userId);
+
         // Validate the request
         $request->validate([
             'name'         => 'required|string|max:200',
@@ -55,10 +62,32 @@ class UserController extends Controller {
             'youtube'      => 'nullable|string|max:200',
             'linkedin'     => 'nullable|string|max:200',
             'hobbies'      => 'nullable|array',
+            // 'image'        => 'if $user->profile->image == null required else nullable|image|png, jpg, jpeg'
+            'image'        => [
+                Rule::requiredIf(!$user->profile || !$user->profile->image),
+                'nullable',
+                'image',
+                'mimes:png,jpg,jpeg'
+            ]
         ]);
 
-        $userId = Auth::guard('user')->id();
-// Get the current logged-in user ID
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $userProfile = UserProfile::where('user_id', $userId)->first();
+            if($userProfile){
+                $existingImagePath = public_path($userProfile->image);
+    
+                if (File::exists($existingImagePath)) {
+                    File::delete($existingImagePath);
+                }
+            }
+
+            $file = $request->file('image');        
+            $destinationPath = public_path('frontend/uploads/profile');         
+            $fileName = time() . '_' . $file->getClientOriginalName();        
+            $file->move($destinationPath, $fileName);        
+            $imagePath = 'frontend/uploads/profile/' . $fileName;
+        }
 
         // Update user_profiles table
         $userProfile = UserProfile::updateOrCreate(
@@ -73,6 +102,7 @@ class UserController extends Controller {
                 'mothers_name' => $request->mothers_name,
                 'address'      => $request->address,
                 'age'          => $request->age,
+                'image'        => $imagePath
             ]
         );
 
@@ -115,7 +145,59 @@ class UserController extends Controller {
             ]
         );
 
-        return redirect('/user/dashboard')->with('success', 'Profile Updated Successfully');
+        return redirect('/user/profile')->with('success', 'Profile Updated Successfully');
     }
 
+    public function imageUpload(Request $request)
+    {
+        $request->validate([
+            'images' => [
+                'required',
+                'array',
+                'min:1', 
+            ],
+            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048', 
+        ]);
+
+        $userId = Auth::guard('user')->id();
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        if (!$userProfile) {
+            return response()->json(['message' => 'User profile not found'], 404);
+        }
+
+        foreach ($request->file('images') as $image) {
+            $destinationPath = public_path('frontend/uploads/userimages');
+            
+            $fileName = time() . '_' . $image->getClientOriginalName();
+
+            $image->move($destinationPath, $fileName);
+
+            $imagePath = 'frontend/uploads/userimages/' . $fileName;
+
+            UserImage::create([
+                'user_id'        => $userId,
+                'user_profile_id'=> $userProfile->id,
+                'image'          => $imagePath,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Images uploaded successfully!');
+    }
+
+    public function deleteImage(Request $request) {
+        $id = $request->imageId;
+        $userImage = UserImage::findOrFail($id);
+        $imagePath = public_path($userImage->image);
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        $userImage->delete();
+
+        return redirect()->back()->with('success', 'Image deleted successfully.');
+    }
+
+    
 }

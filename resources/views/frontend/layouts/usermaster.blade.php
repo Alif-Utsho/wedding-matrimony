@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-3">
                         <div class="db-nav">
-                            <div class="db-nav-pro"><img src="{{ asset('frontend/images/profiles/12.jpg') }}" class="img-fluid"
+                            <div class="db-nav-pro"><img src="{{ asset(Auth::guard('user')->user()->profile->image) }}" class="img-fluid"
                                     alt=""></div>
                             <div class="db-nav-list">
                                 <ul>
@@ -105,6 +105,7 @@
                 }
             });
         </script>
+        @stack('user-script')
     @endpush
 
 @endsection

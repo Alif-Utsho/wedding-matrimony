@@ -32,4 +32,8 @@ class UserProfile extends Model {
     public function city(){
         return $this->belongsTo(City::class);
     }
+
+    public function images(){
+        return $this->hasMany(UserImage::class);
+    }
 }

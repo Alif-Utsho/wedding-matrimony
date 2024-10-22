@@ -7,7 +7,7 @@
                     <div class="inn">
                         <div class="rhs">
                             <div class="form-login">
-                                <form action="{{ route('user.profileEdit.submit') }}" method="POST" id="profile-edit-form">
+                                <form action="{{ route('user.profileEdit.submit') }}" method="POST" id="profile-edit-form" enctype="multipart/form-data">
                                     @csrf
                                     <!--PROFILE BIO-->
                                     <div class="edit-pro-parti">
@@ -23,6 +23,18 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="lb">Profile Image:</label>
+                                            <input type="file" class="form-control" name="image">
+                                            @error('image')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                            @if($user->profile && $user->profile->image)
+                                                <img src="{{ asset($user->profile->image) }}" width="150" loading="lazy" alt="">
+                                            @endif
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="lb">Email:</label>
                                             <input type="email" class="form-control" id="email"

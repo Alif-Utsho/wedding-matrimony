@@ -24,11 +24,14 @@ Route::middleware('guest:user')->group(function () {
 
 
 
-Route::group(['middleware' => ['user.auth', 'ensure.profile.updated']], function () {
-    Route::get('user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-    Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');
-    Route::get('user/profile-edit', [UserController::class, 'profileEdit'])->name('user.profileEdit');
-    Route::post('user/profile-edit-submit', [UserController::class, 'profileEditSubmit'])->name('user.profileEdit.submit');
+Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.updated']], function () {
+    Route::get('dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('profile-edit', [UserController::class, 'profileEdit'])->name('user.profileEdit');
+    Route::post('profile-edit-submit', [UserController::class, 'profileEditSubmit'])->name('user.profileEdit.submit');
+    Route::post('images/upload', [UserController::class, 'imageUpload'])->name('user.imageUpload');
+    Route::post('/image/delete', [UserController::class, 'deleteImage'])->name('user.imageDelete');
 
-    Route::get('user/logout', [AuthController::class, 'logout'])->name('user.logout');
+
+    Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');
 });
