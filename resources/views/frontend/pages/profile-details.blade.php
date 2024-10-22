@@ -76,6 +76,7 @@
                             </div>
                             <!-- END PROFILE ABOUT -->
                             <!-- PROFILE ABOUT -->
+                            @if($user->profile->images->count()>0)
                             <div class="pr-bio-c pr-bio-gal" id="gallery">
                                 <h3>Photo gallery</h3>
                                 <div id="image-gallery">
@@ -91,6 +92,7 @@
                                     @endforeach
                                 </div>
                             </div>
+                            @endif
                             <!-- END PROFILE ABOUT -->
                             <!-- PROFILE ABOUT -->
                             <div class="pr-bio-c pr-bio-conta">
