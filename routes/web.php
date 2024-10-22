@@ -11,6 +11,8 @@ Route::get('/', [FrontendController::class, 'index']);
 Route::get('/wedding-details/{id}', [FrontendController::class, 'weddingDetails']);
 Route::get('/all-profile', [FrontendController::class, 'allProfile']);
 Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
+Route::get('/blogs', [FrontendController::class, 'blogs']);
+Route::get('/blog-details/{id}', [FrontendController::class, 'blogDetails']);
 Route::get('/contact', [FrontendController::class, 'contact']);
 
 Route::middleware('guest:user')->group(function () {

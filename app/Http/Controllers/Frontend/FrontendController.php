@@ -12,6 +12,7 @@ use App\Models\WeddingGallery;
 use App\Models\Blog;
 use App\Models\Wedding;
 use App\Models\Banner;
+use App\Models\BlogCategory;
 use App\Models\User;
 use App\Models\City;
 
@@ -22,7 +23,7 @@ class FrontendController extends Controller
         $testimonials = Testimonial::whereStatus(true)->latest()->get();
         $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
         $ourteams = Ourteam::whereStatus(true)->get();
-        $blogs = Blog::whereStatus(true)->latest()->limit(3)->get();
+        $blogs = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
         $weddings = Wedding::whereStatus(true)->get();
         $banners = Banner::whereStatus(true)->get();
         $galleries = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
@@ -87,6 +88,44 @@ class FrontendController extends Controller
             ->get();
             
         return view('frontend.pages.profile-details', compact('user', 'related_users'));
+    }
+
+    public function blogs(Request $request){
+        $blogQueries = Blog::whereStatus(true);
+
+        if($request->category){
+            $category = BlogCategory::where('slug', $request->category)->first();
+            $blogQueries->where('category_id', $category->id);
+        }
+        
+        $blogs = $blogQueries->latest()->get();
+
+        $blog_categories = BlogCategory::whereStatus(true)->get();
+        $trending_blogs = Blog::where('trending', true)->latest()->limit(5)->get();
+
+        return view('frontend.pages.blogs', compact('blogs', 'trending_blogs', 'blog_categories'));
+    }
+
+    public function blogDetails(Request $request){
+        $blog_id = $request->id;
+        $blog = Blog::find($blog_id);
+
+        $related_posts = Blog::whereHas('tags', function($query) use ($blog) {
+            $query->whereIn('tag_id', $blog->tags->pluck('id')); 
+        })
+        ->where('id', '!=', $blog->id) 
+        ->take(6) 
+        ->get();
+
+        $next_post = Blog::where('id', '>', $blog->id)->orderBy('id', 'asc')->first();
+
+        $prev_post = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
+
+        $trending_blogs = Blog::where('trending', true)->where('id', '<>', $blog_id)->latest()->limit(5)->get();
+        
+        $blog_categories = BlogCategory::whereStatus(true)->get();
+
+        return view('frontend.pages.blog-details', compact('blog', 'related_posts', 'next_post', 'prev_post', 'trending_blogs', 'blog_categories'));
     }
 
     public function contact() {
