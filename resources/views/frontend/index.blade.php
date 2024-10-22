@@ -14,12 +14,12 @@
                                 <p>Most trusted Matrimony Brand in the World.</p>
                             </div>
                             <div class="ban-search chosenini">
-                                <form>
+                                <form action="/all-profile" method="GET">
                                     <ul>
                                         <li class="sr-look">
                                             <div class="form-group">
                                                 <label>I'm looking for</label>
-                                                <select class="chosen-select">
+                                                <select class="chosen-select" name="gender">
                                                     <option value="">I'm looking for</option>
                                                     <option value="Men">Men</option>
                                                     <option value="Women">Women</option>
@@ -29,23 +29,23 @@
                                         <li class="sr-age">
                                             <div class="form-group">
                                                 <label>Age</label>
-                                                <select class="chosen-select">
+                                                <select class="chosen-select" name="age_range">
                                                     <option value="">Age</option>
-                                                    <option value="">18 to 30</option>
-                                                    <option value="">31 to 40</option>
-                                                    <option value="">41 to 50</option>
-                                                    <option value="">51 to 60</option>
-                                                    <option value="">61 to 70</option>
-                                                    <option value="">71 to 80</option>
-                                                    <option value="">81 to 90</option>
-                                                    <option value="">91 to 100</option>
+                                                    <option value="18-to-30">18 to 30</option>
+                                                    <option value="31-to-40">31 to 40</option>
+                                                    <option value="41-to-50">41 to 50</option>
+                                                    <option value="51-to-60">51 to 60</option>
+                                                    <option value="61-to-70">61 to 70</option>
+                                                    <option value="71-to-80">71 to 80</option>
+                                                    <option value="81-to-90">81 to 90</option>
+                                                    <option value="91-to-100">91 to 100</option>
                                                 </select>
                                             </div>
                                         </li>
                                         <li class="sr-reli">
                                             <div class="form-group">
                                                 <label>Religion</label>
-                                                <select class="chosen-select">
+                                                <select class="chosen-select" name="religion">
                                                     <option>Religion</option>
                                                     <option>Any</option>
                                                     <option>Hindu</option>
@@ -58,13 +58,12 @@
                                         <li class="sr-cit">
                                             <div class="form-group">
                                                 <label>City</label>
-                                                <select class="chosen-select">
-                                                    <option>Location</option>
-                                                    <option>Any location</option>
-                                                    <option>Chennai</option>
-                                                    <option>New york</option>
-                                                    <option>Perth</option>
-                                                    <option>London</option>
+                                                <select class="chosen-select" name="location">
+                                                    <option value="">Location</option>
+                                                    <option value="">Any Location</option>
+                                                    @foreach($cities as $city)
+                                                    <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </li>

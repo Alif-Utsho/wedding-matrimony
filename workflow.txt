@@ -1,9 +1,17 @@
 
+22-OCT-24
+    WEB
+                
+    API
+        --
+
+---------------------------------------------
+
 21-OCT-24
     WEB
         Profile Update Bug fix
         Profile View
-        Profile List Frontend
+        Browse Profiles
         Profile Filters
         Profile Details        
     API

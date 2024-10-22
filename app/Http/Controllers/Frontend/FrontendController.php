@@ -72,8 +72,7 @@ class FrontendController extends Controller
 
         $users = $userQuery->limit(100)->get();
 
-        $cities  = City::whereStatus(true)->orderBy('name', 'ASC')->get();
-        return view('frontend.pages.all-profile', compact('users', 'cities'));
+        return view('frontend.pages.all-profile', compact('users'));
     }
 
     public function profileDetails(Request $request){

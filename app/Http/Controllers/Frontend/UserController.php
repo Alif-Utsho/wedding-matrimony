@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Models\Hobby;
 use App\Models\User;
 use App\Models\UserCareer;
@@ -26,9 +25,8 @@ class UserController extends Controller {
     public function profileEdit() {
         $user    = User::find(Auth::guard('user')->id());
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $cities  = City::whereStatus(true)->orderBy('name', 'ASC')->get();
 
-        return view('frontend.user.profile-edit', compact('user', 'hobbies', 'cities'));
+        return view('frontend.user.profile-edit', compact('user', 'hobbies'));
     }
 
     public function profileEditSubmit(Request $request) {
