@@ -15,6 +15,8 @@ use App\Models\Banner;
 use App\Models\BlogCategory;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Invitation;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -42,6 +44,10 @@ class FrontendController extends Controller
 
     public function allProfile(Request $request){
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
+
+        if(Auth::guard('user')->check()) {
+            $userQuery->where('id', '<>', Auth::guard('user')->user()->id);
+        }
 
         if ($request->filled('gender')) {
             $gender = $request->gender === 'Men' ? 'Male' : 'Female';
@@ -78,6 +84,15 @@ class FrontendController extends Controller
 
     public function profileDetails(Request $request){
         $user = User::where('slug', $request->slug)->first();
+
+        $invitationSent = false;
+        if (Auth::guard('user')->check()) {
+            $invitationSent = Invitation::where([
+                'sent_from' => Auth::guard('user')->user()->id,
+                'sent_to' => $user->id
+            ])->exists();  
+        }
+        
         
         $related_users = User::where('id', '!=', $user->id)
             ->whereHas('profile', function ($query) use ($user) {
@@ -87,7 +102,7 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
             
-        return view('frontend.pages.profile-details', compact('user', 'related_users'));
+        return view('frontend.pages.profile-details', compact('user', 'related_users', 'invitationSent'));
     }
 
     public function blogs(Request $request){

@@ -40,6 +40,8 @@
 
     @include('frontend.layouts.header')
     @include('frontend.layouts.header-mobile')
+
+    @include('frontend.includes.login-modal')
     
     @yield('content')
 

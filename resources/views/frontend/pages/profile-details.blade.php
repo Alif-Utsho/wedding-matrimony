@@ -8,13 +8,17 @@
                     <div class="profile">
                         <div class="pg-pro-big-im">
                             <div class="s1">
-                                <img src="{{ asset($user->profile->image) }}" loading="lazy"
-                                    class="pro" alt="">
+                                <img src="{{ asset($user->profile->image) }}" loading="lazy" class="pro" alt="">
                             </div>
                             <div class="s3">
-                                <a href="#!" class="cta fol cta-chat">Chat now</a>
-                                <span class="cta cta-sendint" data-toggle="modal" data-target="#sendInter">Send
-                                    interest</span>
+                                <a href="#!" class="cta fol cta-chat chat-now">Chat now</a>
+                                
+                                <button class="cta cta-sendint send-invitation {{ $invitationSent ? 'sent' : '' }}" 
+                                    data-loading-text="Sending..."
+                                    {{ $invitationSent ? 'disabled' : '' }}
+                                    >
+                                    {{ $invitationSent ? 'Invited' : 'Send Interest' }} 
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -76,22 +80,23 @@
                             </div>
                             <!-- END PROFILE ABOUT -->
                             <!-- PROFILE ABOUT -->
-                            @if($user->profile->images->count()>0)
-                            <div class="pr-bio-c pr-bio-gal" id="gallery">
-                                <h3>Photo gallery</h3>
-                                <div id="image-gallery">
-                                    @foreach($user->profile->images as $userimage)
-                                    <div class="pro-gal-imag">
-                                        <div class="img-wrapper">
-                                            <a href="#!"><img src="{{ asset($userimage->image) }}"
-                                                    class="img-responsive" alt=""></a>
-                                            <div class="img-overlay"><i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                            @if ($user->profile->images->count() > 0)
+                                <div class="pr-bio-c pr-bio-gal" id="gallery">
+                                    <h3>Photo gallery</h3>
+                                    <div id="image-gallery">
+                                        @foreach ($user->profile->images as $userimage)
+                                            <div class="pro-gal-imag">
+                                                <div class="img-wrapper">
+                                                    <a href="#!"><img src="{{ asset($userimage->image) }}"
+                                                            class="img-responsive" alt=""></a>
+                                                    <div class="img-overlay"><i class="fa fa-arrows-alt"
+                                                            aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                 </div>
-                            </div>
                             @endif
                             <!-- END PROFILE ABOUT -->
                             <!-- PROFILE ABOUT -->
@@ -115,7 +120,8 @@
                                     <li><b>Name:</b> {{ $user->name }}</li>
                                     <li><b>Father's name:</b> {{ $user->profile->fathers_name }}</li>
                                     <li><b>Age:</b> {{ $user->profile->age }}</li>
-                                    <li><b>Date of Birth: </b> {{ Carbon\Carbon::parse($user->profile->birth_date)->format('d M, Y') }}
+                                    <li><b>Date of Birth: </b>
+                                        {{ Carbon\Carbon::parse($user->profile->birth_date)->format('d M, Y') }}
                                     </li>
                                     <li><b>Height:</b> {{ $user->profile->height }}</li>
                                     <li><b>Weight:</b> {{ $user->profile->weight }}kg</li>
@@ -146,22 +152,28 @@
                                 <h3>Social media</h3>
                                 <ul>
                                     @if ($user->profile->socialmedia->facebook)
-                                        <li><a href="{{ $user->profile->socialmedia->facebook }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->facebook }}"><i class="fa fa-facebook"
+                                                    aria-hidden="true"></i></a></li>
                                     @endif
                                     @if ($user->profile->socialmedia->x)
-                                        <li><a href="{{ $user->profile->socialmedia->x }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->x }}"><i class="fa fa-twitter"
+                                                    aria-hidden="true"></i></a></li>
                                     @endif
                                     @if ($user->profile->socialmedia->whatsApp)
-                                        <li><a href="{{ $user->profile->socialmedia->whatsApp }}"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->whatsApp }}"><i class="fa fa-whatsapp"
+                                                    aria-hidden="true"></i></a></li>
                                     @endif
                                     @if ($user->profile->socialmedia->linkedin)
-                                        <li><a href="{{ $user->profile->socialmedia->linkedin }}"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->linkedin }}"><i class="fa fa-linkedin"
+                                                    aria-hidden="true"></i></a></li>
                                     @endif
                                     @if ($user->profile->socialmedia->youtube)
-                                        <li><a href="{{ $user->profile->socialmedia->youtube }}"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->youtube }}"><i
+                                                    class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
                                     @endif
                                     @if ($user->profile->socialmedia->instagram)
-                                        <li><a href="{{ $user->profile->socialmedia->instagram }}"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                        <li><a href="{{ $user->profile->socialmedia->instagram }}"><i
+                                                    class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                     @endif
                                 </ul>
                             </div>
@@ -185,20 +197,21 @@
                             <div class="slid-inn pr-bio-c wedd-rel-pro">
                                 <h3>Related profiles</h3>
                                 <ul class="slider3">
-                                    @foreach($related_users as $related)
-                                    <li>
-                                        <div class="wedd-rel-box">
-                                            <div class="wedd-rel-img">
-                                                <img src="{{ asset($related->profile->image) }}" alt="">
-                                                <span class="badge badge-success">{{ $related->profile->age }} Years old</span>
+                                    @foreach ($related_users as $related)
+                                        <li>
+                                            <div class="wedd-rel-box">
+                                                <div class="wedd-rel-img">
+                                                    <img src="{{ asset($related->profile->image) }}" alt="">
+                                                    <span class="badge badge-success">{{ $related->profile->age }} Years
+                                                        old</span>
+                                                </div>
+                                                <div class="wedd-rel-con">
+                                                    <h5>{{ $related->name }}</h5>
+                                                    <span>City: <b>{{ $related->profile->city->name }}</b></span>
+                                                </div>
+                                                <a href="/profile/{{ $related->slug }}" class="fclick"></a>
                                             </div>
-                                            <div class="wedd-rel-con">
-                                                <h5>{{ $related->name }}</h5>
-                                                <span>City: <b>{{ $related->profile->city->name }}</b></span>
-                                            </div>
-                                            <a href="/profile/{{ $related->slug }}" class="fclick"></a>
-                                        </div>
-                                    </li>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -212,8 +225,77 @@
     </section>
     <!-- END PROFILE -->
 
+    <!-- SUCCESS MODAL -->
+    <div class="modal fade" id="successModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Success</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="success-checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="success-checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                    
+                    <p class="my-4 text-center">Your Invitation has been Successfully Sent!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('script')
-    <script src="{{ asset('frontend/js/gallery.js') }}"></script>
+        <script src="{{ asset('frontend/js/gallery.js') }}"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('.send-invitation').on('click', function(e) {
+                    e.preventDefault();
+
+                    var $this = $(this);
+                    var originalText = $this.html(); 
+                    var userId = {{ $user->id }};
+
+                    var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
+                    if (!isAuthenticated) {
+                        $('#loginModal').modal('show');
+                        return;
+                    }
+
+                    $this.prop('disabled', true).html($this.data('loading-text'));
+
+                    $.ajax({
+                        url: "{{ route('send.invitation') }}", 
+                        method: 'POST',
+                        data: {
+                            userId: userId, 
+                            _token: '{{ csrf_token() }}' 
+                        },
+                        success: function(response) {
+                            $this.html('Invited')
+                                .addClass('sent')
+                                .prop('disabled', true);
+
+                            $('#successModal').modal('show');
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 403 && xhr.responseJSON.redirect_url) {
+                                alert('Your Profile Incomplete, Please Update your Profile');
+                                window.location.href = xhr.responseJSON.redirect_url;
+                            } else {
+                                $this.prop('disabled', false).html(originalText);
+                                alert('Something went wrong!');
+                            }
+                        }
+                        
+                    });
+                });
+            });
+        </script>
     @endpush
-    
+
 @endsection

@@ -209,7 +209,7 @@
                                 <ul>
                                     <li><a href="/user/dashboard">Dashboard</a></li>
                                     <li><a href="/user/profile">My profile</a></li>
-                                    <li><a href="/user/interests">Interests</a></li>
+                                    <li><a href="/user/invitations">Interests</a></li>
                                     <li><a href="/user/chat">Chat lists</a></li>
                                     <li><a href="/user/plan">My plan details</a></li>
                                     <li><a href="/user/setting">Profile settings</a></li>

@@ -10,7 +10,7 @@
                         <div class="hom-ban">
                             <div class="ban-tit">
                                 <span><i class="no1">#1</i> Matrimony</span>
-                                <h1>Find yours<br><b>Right Match</b> here</h1>
+                                <h1>Find your<br><b>Right Match</b> here</h1>
                                 <p>Most trusted Matrimony Brand in the World.</p>
                             </div>
                             <div class="ban-search chosenini">

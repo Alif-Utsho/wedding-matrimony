@@ -25,7 +25,19 @@ class AuthController extends Controller
         $remember = $request->has('remember'); 
 
         if (Auth::guard('user')->attempt($credentials, $remember)) {
+            if ($request->ajax()) {
+                return response()->json(['success' => true], 200);
+            }
+
             return redirect()->intended('user/dashboard');
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'errors' => [
+                    'email' => ['The provided credentials do not match our records.'],
+                ]
+            ], 422);
         }
 
         return redirect()->back()->withErrors([
