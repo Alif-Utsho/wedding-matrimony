@@ -200,7 +200,9 @@
                         
                         <li><a href="/all-profile">All Profiles</a></li>
                         <li><a href="plans.html">Plans</a></li>
-                        <li><a href="sign-up.html">Register</a></li>
+                        @if(!Auth::guard('user')->check())
+                        <li><a href="/user/register">Register</a></li>
+                        @endif
                         <li><a href="/contact">Contact</a></li>
                         @if(Auth::guard('user')->check())
                         <li class="smenu-pare">
@@ -227,7 +229,7 @@
                 <div class="al">
                     <div class="head-pro">
                         <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}" alt="" loading="lazy">
-                        <b>Advisor</b><br>
+                        <b>Welcome</b><br>
                         <h4>{{ Auth::guard('user')->user()->name }}</h4>
                         <span class="fclick"></span>
                     </div>

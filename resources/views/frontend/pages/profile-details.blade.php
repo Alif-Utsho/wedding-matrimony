@@ -13,11 +13,15 @@
                             <div class="s3">
                                 <a href="#!" class="cta fol cta-chat chat-now">Chat now</a>
                                 
-                                <button class="cta cta-sendint send-invitation {{ $invitationSent ? 'sent' : '' }}" 
+                                <button class="cta cta-sendint send-invitation" 
                                     data-loading-text="Sending..."
-                                    {{ $invitationSent ? 'disabled' : '' }}
+                                    {{ $invitationSent || $invitationAccepted ? 'disabled' : '' }}
                                     >
-                                    {{ $invitationSent ? 'Invited' : 'Send Interest' }} 
+                                    @if($invitationSent) Invited
+                                    @elseif($invitationReceived) Requested
+                                    @elseif($invitationAccepted) Connected
+                                    @else Send Interest
+                                    @endif
                                 </button>
                             </div>
                         </div>
@@ -47,16 +51,13 @@
                                     </li>
                                     <li>
                                         <div>
-                                            @php
-                                                // Assuming $user->profile->height is in cm
-                                                $heightInCm = $user->profile->height;
-                                                $heightInFeet = $heightInCm * 0.0328084; // Convert cm to feet
-                                                $feet = floor($heightInFeet); // Get the feet part
-                                                $inches = round(($heightInFeet - $feet) * 12); // Convert remaining part to inches
-                                            @endphp
                                             <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
                                                 alt="">
-                                            <span>Height: <strong>{{ $feet }}'{{ $inches }}</strong></span>
+                                            <span>Height: 
+                                                <strong class="heightToFeet" data-height="{{ $user->profile->height }}">
+                                                    {{ $user->profile->height }}
+                                                </strong>
+                                            </span>
                                         </div>
                                     </li>
                                     <li>
@@ -123,7 +124,8 @@
                                     <li><b>Date of Birth: </b>
                                         {{ Carbon\Carbon::parse($user->profile->birth_date)->format('d M, Y') }}
                                     </li>
-                                    <li><b>Height:</b> {{ $user->profile->height }}</li>
+                                    <li><b>Height:</b> <span class="heightToFeet" data-height="{{ $user->profile->height }}">
+                                        {{ $user->profile->height }}</li>
                                     <li><b>Weight:</b> {{ $user->profile->weight }}kg</li>
                                     <li><b>Degree:</b> {{ $user->profile->career->degree }}</li>
                                     <li><b>Religion:</b> Any</li>
@@ -230,7 +232,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Success</h4>
+                    <h4 class="modal-title successTitle">Success</h4>
                     <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -239,10 +241,31 @@
                         <path class="success-checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                     </svg>
                     
-                    <p class="my-4 text-center">Your Invitation has been Successfully Sent!</p>
+                    <p class="my-4 text-center successText">Your Invitation has been Successfully Sent!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Accepting or Denying Invitation -->
+    <div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-labelledby="invitationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="invitationModalLabel">Invitation Received</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    You have received an invitation. Would you like to accept or deny it?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="accept-invitation">Accept</button>
+                    <button type="button" class="btn btn-danger" id="deny-invitation">Deny</button>
                 </div>
             </div>
         </div>
@@ -263,6 +286,11 @@
                     var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
                     if (!isAuthenticated) {
                         $('#loginModal').modal('show');
+                        return;
+                    }
+
+                    if ({{ $invitationReceived ? 'true' : 'false' }}) {
+                        $('#invitationModal').modal('show');
                         return;
                     }
 
@@ -292,6 +320,41 @@
                             }
                         }
                         
+                    });
+                });
+
+                $('#accept-invitation').on('click', function() {
+                    var receivedInvitationId = "{{ $invitationReceivedId }}";
+
+                    $.post("{{ route('accept.invitation') }}", {
+                        invitationId: receivedInvitationId,
+                        _token: '{{ csrf_token() }}'
+                    }, function(response) {
+                        $('#invitationModal').modal('hide');
+                        
+                        $('.send-invitation').html('Connected')
+                            .addClass('sent')
+                            .prop('disabled', true);
+
+                        $('.successTitle').html('Invitation Accepted');
+                        $('.successText').html('Invitation accepted successfully!');
+                        $('#successModal').modal('show');
+                    }).fail(function() {
+                        alert('Error accepting invitation.');
+                    });
+                });
+
+                $('#deny-invitation').on('click', function() {
+                    var receivedInvitationId = "{{ $invitationReceivedId }}";
+
+                    $.post("{{ route('deny.invitation') }}", {
+                        invitationId: receivedInvitationId,
+                        _token: '{{ csrf_token() }}'
+                    }, function(response) {
+                        $('#invitationModal').modal('hide');
+                        location.reload();
+                    }).fail(function() {
+                        alert('Error denying invitation.');
                     });
                 });
             });

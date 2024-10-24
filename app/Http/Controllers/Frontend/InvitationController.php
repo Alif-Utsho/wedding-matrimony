@@ -33,4 +33,69 @@ class InvitationController extends Controller
         ], 200);
 
     }
+
+    public function cancelInvitation(Request $request)
+    {
+        $request->validate([
+            'invitationId' => 'required|exists:invitations,id',
+        ]);
+
+        $invitation = Invitation::findOrFail($request->invitationId);
+        $userId = Auth::guard('user')->user()->id;
+
+        if ($invitation->sent_from === $userId || $invitation->sent_to === $userId) {
+            $invitation->delete();
+    
+            return redirect()->back()->with('success', 'Invitation canceled successfully.');
+        }
+        return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
+
+    }
+
+    public function acceptInvitation(Request $request)
+    {
+        $request->validate([
+            'invitationId' => 'required|exists:invitations,id',
+        ]);
+
+        $invitation = Invitation::findOrFail($request->invitationId);
+
+        if ($invitation->sent_to !== Auth::guard('user')->user()->id) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => 'Unauthorized action.',
+                ], 403);
+            }
+            return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
+        }
+
+        $invitation->status = true;
+        $invitation->save();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Invitation accepted successfully!',
+            ], 200);
+        }
+        return redirect()->back()->with('success', 'Invitation accepted successfully.');
+    }
+
+    public function denyInvitation(Request $request)
+    {
+        $request->validate([
+            'invitationId' => 'required|exists:invitations,id',
+        ]);
+
+        $invitation = Invitation::findOrFail($request->invitationId);
+
+        if ($invitation->sent_to !== Auth::guard('user')->user()->id) {
+            return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
+        }
+
+        // $invitation->status = false;
+        // $invitation->save();
+        $invitation->delete();
+
+        return redirect()->back()->with('success', 'Invitation denied successfully.');
+    }
 }

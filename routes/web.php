@@ -36,6 +36,9 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
 
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
+    Route::post('cancel-invitation', [InvitationController::class, 'cancelInvitation'])->name('cancel.invitation');
+    Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation'])->name('accept.invitation');
+    Route::post('deny-invitation', [InvitationController::class, 'denyInvitation'])->name('deny.invitation');
     
 
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');

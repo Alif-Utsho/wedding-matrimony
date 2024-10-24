@@ -86,12 +86,53 @@ class FrontendController extends Controller
         $user = User::where('slug', $request->slug)->first();
 
         $invitationSent = false;
+        $invitationReceived = false;
+        $invitationAccepted = false;
+        $invitationSentId = null;
+        $invitationReceivedId = null;
+        $invitationAcceptedId = null;
+
         if (Auth::guard('user')->check()) {
-            $invitationSent = Invitation::where([
+            $invitationSentData = Invitation::where([
                 'sent_from' => Auth::guard('user')->user()->id,
-                'sent_to' => $user->id
-            ])->exists();  
+                'sent_to' => $user->id,
+                'status' => null
+                ])->first();
+                
+            if($invitationSentData){
+                $invitationSent = true;
+                $invitationSentId = $invitationSentData->id;
+            }
+                
+        
+                
+            $invitationReceivedData = Invitation::where([
+                'sent_to' => Auth::guard('user')->user()->id,
+                'sent_from' => $user->id,
+                'status' => null
+            ])->first();
+            
+            if($invitationReceivedData){
+                $invitationReceived = true;
+                $invitationReceivedId = $invitationReceivedData->id;
+            }
+
+            $currentUserId = Auth::guard('user')->user()->id;
+            $invitationAcceptedData = Invitation::where('status', true)
+                ->where(function($query) use ($currentUserId, $user) {
+                    $query->where('sent_to', $currentUserId)
+                        ->where('sent_from', $user->id);
+                })->orWhere(function($query) use ($currentUserId, $user) {
+                    $query->where('sent_to', $user->id)
+                        ->where('sent_from', $currentUserId);
+                })->first();
+
+            if($invitationAcceptedData){
+                $invitationAccepted = true;
+                $invitationAcceptedId = $invitationAcceptedData->id;
+            }
         }
+
         
         
         $related_users = User::where('id', '!=', $user->id)
@@ -102,7 +143,7 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
             
-        return view('frontend.pages.profile-details', compact('user', 'related_users', 'invitationSent'));
+        return view('frontend.pages.profile-details', compact('user', 'related_users', 'invitationSent', 'invitationReceived', 'invitationAccepted', 'invitationSentId', 'invitationReceivedId', 'invitationAcceptedId'));
     }
 
     public function blogs(Request $request){

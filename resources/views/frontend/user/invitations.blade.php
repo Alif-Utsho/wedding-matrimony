@@ -3,21 +3,21 @@
     <div class="col-md-8 col-lg-9">
         <div class="row">
             <div class="col-md-12 db-sec-com">
-                <h2 class="db-tit">Interest request</h2>
+                <h2 class="db-tit">Interest request @if($invitations->count()>0) ({{ $invitations->count() }}) @endif</h2>
                 <div class="db-pro-stat">
                     
                     <div class="db-inte-main">
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#allinvitations">New requests</a>
+                                <a class="nav-link active" data-bs-toggle="tab" href="#allinvitations">New requests </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#accepted">Accepted request</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#deny">Deny request</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#sent">Sent request</a>
                             </li>
@@ -30,7 +30,7 @@
                                     <ul>
                                         
                                         @forelse($invitations as $invitation)
-                                            @if($invitation->status==null)
+                                            @if($invitation->status===null)
                                             <li>
                                                 <div class="db-int-pro-1"> <img src="{{ asset($invitation->from_user->profile->image) }}" alt="">
                                                     <span class="badge bg-primary user-pla-pat">Platinum user</span></div>
@@ -39,7 +39,11 @@
                                                     <ol class="poi">
                                                         <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
                                                         <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: <strong>{{ $invitation->from_user->profile->height }}</strong></li>
+                                                        <li>Height: 
+                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
+                                                                {{ $invitation->from_user->profile->height }}
+                                                            </strong>
+                                                        </li>
                                                         <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
                                                     </ol>
                                                     <ol class="poi poi-date">
@@ -49,8 +53,17 @@
                                                         profile</a>
                                                 </div>
                                                 <div class="db-int-pro-3">
-                                                    <button type="button" class="btn btn-success btn-sm">Accept</button>
-                                                    <button type="button" class="btn btn-outline-danger btn-sm">Deny</button>
+                                                    <form action="{{ route('accept.invitation') }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
+                                                        <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                                                    </form>
+                                                    
+                                                    <form action="{{ route('deny.invitation') }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Deny</button>
+                                                    </form>
                                                 </div>
                                             </li>
                                             @endif
@@ -74,7 +87,11 @@
                                                     <ol class="poi">
                                                         <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
                                                         <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: <strong>{{ $invitation->from_user->profile->height }}</strong></li>
+                                                        <li>Height: 
+                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
+                                                                {{ $invitation->from_user->profile->height }}
+                                                            </strong>
+                                                        </li>
                                                         <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
                                                     </ol>
                                                     <ol class="poi poi-date">
@@ -84,8 +101,11 @@
                                                         profile</a>
                                                 </div>
                                                 <div class="db-int-pro-3">
-                                                    <button type="button" class="btn btn-success btn-sm">Accept</button>
-                                                    <button type="button" class="btn btn-outline-danger btn-sm">Deny</button>
+                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                    </form>
                                                 </div>
                                             </li>
                                             @endif
@@ -108,7 +128,11 @@
                                                     <ol class="poi">
                                                         <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
                                                         <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: <strong>{{ $invitation->from_user->profile->height }}</strong></li>
+                                                        <li>Height: 
+                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
+                                                                {{ $invitation->from_user->profile->height }}
+                                                            </strong>
+                                                        </li>
                                                         <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
                                                     </ol>
                                                     <ol class="poi poi-date">
@@ -118,8 +142,11 @@
                                                         profile</a>
                                                 </div>
                                                 <div class="db-int-pro-3">
-                                                    <button type="button" class="btn btn-success btn-sm">Accept</button>
-                                                    <button type="button" class="btn btn-outline-danger btn-sm">Deny</button>
+                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                    </form>
                                                 </div>
                                             </li>
                                             @endif
@@ -142,7 +169,11 @@
                                                     <ol class="poi">
                                                         <li>City: <strong>{{ $invitation->to_user->profile->city->name }}</strong></li>
                                                         <li>Age: <strong>{{ $invitation->to_user->profile->age }}</strong></li>
-                                                        <li>Height: <strong>{{ $invitation->to_user->profile->height }}</strong></li>
+                                                        <li>Height: 
+                                                            <strong class="heightToFeet" data-height="{{ $invitation->to_user->profile->height }}">
+                                                                {{ $invitation->from_user->profile->height }}
+                                                            </strong>
+                                                        </li>
                                                         <li>Job: <strong>{{ $invitation->to_user->profile->career->type }}</strong></li>
                                                     </ol>
                                                     <ol class="poi poi-date">
@@ -152,7 +183,11 @@
                                                         profile</a>
                                                 </div>
                                                 <div class="db-int-pro-3">
-                                                    <button type="button" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                    </form>
                                                 </div>
                                             </li>
                                         @empty
