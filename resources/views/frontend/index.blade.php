@@ -10,7 +10,7 @@
                         <div class="hom-ban">
                             <div class="ban-tit">
                                 <span><i class="no1">#1</i> Matrimony</span>
-                                <h1>Find your<br><b>Right Match</b> here</h1>
+                                <h1>Find yours<br><b>Right Match</b> here</h1>
                                 <p>Most trusted Matrimony Brand in the World.</p>
                             </div>
                             <div class="ban-search chosenini">
@@ -415,76 +415,6 @@
                         </div>
                     </li>
                     @endforeach
-                    {{-- <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/7.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/8.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/9.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/10.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/3.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/4.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding-video.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset('frontend/images/couples/5.jpg') }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>Dany & July <span>New York</span></h4>
-                                <a href="wedding.html" class="sml-cta cta-dark">View more</a>
-                            </div>
-                        </div>
-                    </li> --}}
                 </ul>
             </div>
         </div>
