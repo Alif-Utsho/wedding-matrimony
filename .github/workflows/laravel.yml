@@ -25,11 +25,6 @@ jobs:
       run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
     
     - name: 🛠️ Run migrations
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: php artisan migrate --force
+      
+    
