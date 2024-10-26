@@ -13,11 +13,6 @@ jobs:
       with:
         php-version: '8.2'
     
-    - name: 📥 Install Composer dependencies
-      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
-    
-    - name: 🛠️ Run migrations
-      run: php artisan migrate --force
       
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -25,3 +20,10 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.ftp_PASSWORD }}
+
+    - name: 🛠️ Run migrations
+      run: php artisan migrate --force
+      
+    - name: 📥 Install Composer dependencies
+      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
+    
