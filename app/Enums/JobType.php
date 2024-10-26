@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class Jobtype
+class JobType
 {
     public const BUSINESS = 'Business';
     public const EMPLOYEE = 'Employee';
