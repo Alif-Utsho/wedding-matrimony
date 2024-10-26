@@ -8,8 +8,6 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 📥 Install Composer dependencies
-    run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -17,6 +15,6 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.ftp_PASSWORD }}
-        script: |
-            git pull origin master
-            composer install
+
+    - name: 📥 Install Composer dependencies
+      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
