@@ -14,7 +14,7 @@
         Blog Lists
         Blog Details
         Blog Filters
-        Profile pictures
+        Profile images
     API
         --
 
