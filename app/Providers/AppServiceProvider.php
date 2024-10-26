@@ -24,19 +24,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $navServices = Service::whereStatus(true)->limit(4)->get();
-        view()->share('navServices', $navServices);
-
-        $ourteams = Ourteam::whereStatus(true)->get();
-        view()->share('ourteams', $ourteams);
-
-        $cities  = City::whereStatus(true)->orderBy('name', 'ASC')->get();
-        view()->share('cities', $cities);
-
-        $contactinfo = Contactinfo::whereStatus(true)->first();
-        view()->share('contactinfo', $contactinfo);
-
-        $generalsetting = GeneralSetting::whereStatus(true)->first();
-        view()->share('generalsetting', $generalsetting);
     }
 }
