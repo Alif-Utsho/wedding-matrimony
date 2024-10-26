@@ -215,7 +215,7 @@
                                             <span>{{ $user->profile->career->degree }}</span>
                                             <span>{{ $user->profile->career->type }}</span>
                                             <span>{{ $user->profile->age }} Years Old</span>
-                                            <span>Height: {{ $user->profile->height }}Cms</span>
+                                            <span>Height: {{ $user->profile->height }}cm</span>
                                         </div>
                                         <div class="links">
                                             <span class="cta-chat">Chat now</span>

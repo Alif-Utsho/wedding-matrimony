@@ -16,6 +16,13 @@ class EnsureProfileIsUpdated
         $user = Auth::guard('user')->user();
         if (!$user->profile || !$user->profile->isComplete()) {
             if (!$request->is('user/profile-edit') && !$request->is('user/profile-edit-submit')) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'message' => 'Profile incomplete',
+                        'redirect_url' => route('user.profileEdit')
+                    ], 403); 
+                }
+
                 return redirect()->route('user.profileEdit')->with('error', 'Please update your profile to continue.');
             }
             // return redirect()->route('user.profileEdit')->with('error', 'Please update your profile to continue.');

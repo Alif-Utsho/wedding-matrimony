@@ -40,6 +40,8 @@
 
     @include('frontend.layouts.header')
     @include('frontend.layouts.header-mobile')
+
+    @include('frontend.includes.login-modal')
     
     @yield('content')
 
@@ -118,6 +120,20 @@
     <script src="{{ asset('frontend/js/select-opt.js') }}"></script>
     <script src="{{ asset('frontend/js/slick.js') }}"></script>
     <script src="{{ asset('frontend/js/custom.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.heightToFeet').each(function() {
+                var heightInCm = $(this).data('height');
+                
+                var heightInFeet = heightInCm * 0.0328084; 
+                var feet = Math.floor(heightInFeet); 
+                var inches = Math.round((heightInFeet - feet) * 12); 
+                
+                $(this).html(feet + "' " + inches);
+            });
+        });
+    </script>
 
     @stack('script')
     

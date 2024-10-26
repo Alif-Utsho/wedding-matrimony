@@ -15,6 +15,8 @@ use App\Models\Banner;
 use App\Models\BlogCategory;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Invitation;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -42,6 +44,10 @@ class FrontendController extends Controller
 
     public function allProfile(Request $request){
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
+
+        if(Auth::guard('user')->check()) {
+            $userQuery->where('id', '<>', Auth::guard('user')->user()->id);
+        }
 
         if ($request->filled('gender')) {
             $gender = $request->gender === 'Men' ? 'Male' : 'Female';
@@ -78,6 +84,56 @@ class FrontendController extends Controller
 
     public function profileDetails(Request $request){
         $user = User::where('slug', $request->slug)->first();
+
+        $invitationSent = false;
+        $invitationReceived = false;
+        $invitationAccepted = false;
+        $invitationSentId = null;
+        $invitationReceivedId = null;
+        $invitationAcceptedId = null;
+
+        if (Auth::guard('user')->check()) {
+            $invitationSentData = Invitation::where([
+                'sent_from' => Auth::guard('user')->user()->id,
+                'sent_to' => $user->id,
+                'status' => null
+                ])->first();
+                
+            if($invitationSentData){
+                $invitationSent = true;
+                $invitationSentId = $invitationSentData->id;
+            }
+                
+        
+                
+            $invitationReceivedData = Invitation::where([
+                'sent_to' => Auth::guard('user')->user()->id,
+                'sent_from' => $user->id,
+                'status' => null
+            ])->first();
+            
+            if($invitationReceivedData){
+                $invitationReceived = true;
+                $invitationReceivedId = $invitationReceivedData->id;
+            }
+
+            $currentUserId = Auth::guard('user')->user()->id;
+            $invitationAcceptedData = Invitation::where('status', true)
+                ->where(function($query) use ($currentUserId, $user) {
+                    $query->where('sent_to', $currentUserId)
+                        ->where('sent_from', $user->id);
+                })->orWhere(function($query) use ($currentUserId, $user) {
+                    $query->where('sent_to', $user->id)
+                        ->where('sent_from', $currentUserId);
+                })->first();
+
+            if($invitationAcceptedData){
+                $invitationAccepted = true;
+                $invitationAcceptedId = $invitationAcceptedData->id;
+            }
+        }
+
+        
         
         $related_users = User::where('id', '!=', $user->id)
             ->whereHas('profile', function ($query) use ($user) {
@@ -87,7 +143,7 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
             
-        return view('frontend.pages.profile-details', compact('user', 'related_users'));
+        return view('frontend.pages.profile-details', compact('user', 'related_users', 'invitationSent', 'invitationReceived', 'invitationAccepted', 'invitationSentId', 'invitationReceivedId', 'invitationAcceptedId'));
     }
 
     public function blogs(Request $request){
