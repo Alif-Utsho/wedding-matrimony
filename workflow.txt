@@ -1,7 +1,9 @@
 
 24-OCT-24
     WEB
+        Invitations (List)
         Invitations (sent, accept, deny)
+        Send Interest Button functionality
     API
         --
 
