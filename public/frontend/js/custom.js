@@ -96,32 +96,33 @@ $(document).ready(function () {
         $(".ban-sli li div img").css("height", _homSerHei + 70 + "px");
     }
 
-    //PROFILE PAGE GET NAME AND IMAGE
-    $(".cta-sendint, .cta-chat").on('click', function () {
-        var _proname = $(this).parent().siblings(".s2").find("h1").text();
-        var _proimg = $(this).parent().siblings(".s1").find("img").attr("src");
-        $(".intename1").text(_proname);
-        $(".intephoto1").attr("src", _proimg);
+    // //PROFILE PAGE GET NAME AND IMAGE
+    // $(".cta-sendint, .cta-chat").on('click', function () {
+    //     var _proname = $(this).parent().siblings(".s2").find("h1").text();
+    //     var _proimg = $(this).parent().siblings(".s1").find("img").attr("src");
+    //     $(".intename1").text(_proname);
+    //     $(".intephoto1").attr("src", _proimg);
 
-        var _pronameall = $(this).parent().siblings("h4").find("a").text();
-        var _proimgall = $(this).parent().parent().siblings(".pro-img").find("img").attr("src");
-        $(".intename2").text(_pronameall);
-        $(".intephoto2").attr("src", _proimgall);
-    });
+    //     var _pronameall = $(this).parent().siblings("h4").find("a").text();
+    //     var _proimgall = $(this).parent().parent().siblings(".pro-img").find("img").attr("src");
+    //     $(".intename2").text(_pronameall);
+    //     $(".intephoto2").attr("src", _proimgall);
+    // });
 
-    //CHAT WINDOW AVAILABLE STATUS
-    $(".cta-chat").on('click', function () {
-        var _avlsts = $(this).parent().parent().parent(".all-pro-box").attr("data-useravil");
-        var _avltxt = $(this).parent().parent().parent(".all-pro-box").attr("data-aviltxt");
-        $(".avlsta").removeClass("avilyes avilno");
-        $(".avlsta").addClass(_avlsts);
-        $(".avlsta").text(_avltxt);
-    });
+    // //CHAT WINDOW AVAILABLE STATUS
+    // $(".cta-chat").on('click', function () {
+    //     var _avlsts = $(this).parent().parent().parent(".all-pro-box").attr("data-useravil");
+    //     var _avltxt = $(this).parent().parent().parent(".all-pro-box").attr("data-aviltxt");
+    //     $(".avlsta").removeClass("avilyes avilno");
+    //     $(".avlsta").addClass(_avlsts);
+    //     $(".avlsta").text(_avltxt);
+    // });
 
-    //CHAT WINDOW OPEN
-    $(".cta-chat").on('click', function () {
-        $(".chatbox").addClass("open")
-    });
+    // //CHAT WINDOW OPEN
+    // $(".cta-chat").on('click', function () {
+    //     $(".chatbox").addClass("open")
+    // });
+    
     //CHAT WINDOW CLOSE
     $(".comm-msg-pop-clo").on('click', function () {
         $(".chatbox").removeClass("open")

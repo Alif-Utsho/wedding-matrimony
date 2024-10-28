@@ -42,7 +42,10 @@
     @include('frontend.layouts.header-mobile')
 
     @include('frontend.includes.login-modal')
-    
+
+    <div class="chatboxsection" id="chat-box-content">
+    </div>
+
     @yield('content')
 
 
@@ -125,18 +128,74 @@
         $(document).ready(function() {
             $('.heightToFeet').each(function() {
                 var heightInCm = $(this).data('height');
-                
-                var heightInFeet = heightInCm * 0.0328084; 
-                var feet = Math.floor(heightInFeet); 
-                var inches = Math.round((heightInFeet - feet) * 12); 
-                
+
+                var heightInFeet = heightInCm * 0.0328084;
+                var feet = Math.floor(heightInFeet);
+                var inches = Math.round((heightInFeet - feet) * 12);
+
                 $(this).html(feet + "' " + inches);
             });
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            function loadMessages(receiverId) {
+                $.ajax({
+                    url: "{{ route('chat.getMessages') }}",
+                    type: 'GET',
+                    data: {
+                        receiver_id: receiverId,
+                    },
+                    success: function(response) {
+                        // $('.chat-box-messages').empty();
+                        $('#chat-box-message').html(response);
+                        scrollToBottom();
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
+                    }
+                });
+            }
+
+            function scrollToBottom() {
+                const chatContainer = $('.chat-box-messages');
+                chatContainer.scrollTop(chatContainer[0].scrollHeight);
+            }
+            
+            $('.chat-now-btn').on('click', function(e) {
+                var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
+                if (!isAuthenticated) {
+                    $('#loginModal').modal('show');
+                    return;
+                }
+                
+                e.preventDefault();
+                $(".chatbox").removeClass("open");
+                var userId = $(this).data('user-id');
+
+                $.ajax({
+                    url: "{{ route('user.chatnow') }}",
+                    type: 'POST',
+                    data: {
+                        userId: userId, 
+                        _token: '{{ csrf_token() }}' 
+                    },
+                    success: function(response) {
+                        $('#chat-box-content').html(response);
+                        $(".chatbox").addClass("open");  
+                        loadMessages(userId);
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText); 
+                    }
+                });
+            });
+        });
+    </script>
+
     @stack('script')
-    
+
 </body>
 
 </html>

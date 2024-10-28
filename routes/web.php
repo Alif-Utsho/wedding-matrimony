@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InvitationController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\MessageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,6 +40,10 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('cancel-invitation', [InvitationController::class, 'cancelInvitation'])->name('cancel.invitation');
     Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation'])->name('accept.invitation');
     Route::post('deny-invitation', [InvitationController::class, 'denyInvitation'])->name('deny.invitation');
+
+    Route::post('chat-now', [MessageController::class, 'chatNow'])->name('user.chatnow');
+    Route::post('chat-send', [MessageController::class, 'sendMessage'])->name('user.chat.send');
+    Route::get('chat/messages', [MessageController::class, 'getMessages'])->name('chat.getMessages');
     
 
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');

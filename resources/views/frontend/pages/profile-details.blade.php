@@ -11,7 +11,7 @@
                                 <img src="{{ asset($user->profile->image) }}" loading="lazy" class="pro" alt="">
                             </div>
                             <div class="s3">
-                                <a href="#!" class="cta fol cta-chat chat-now">Chat now</a>
+                                <a href="#!" class="cta fol cta-chat chat-now chat-now-btn" data-user-id="{{ $user->id }}">Chat now</a>
                                 
                                 <button class="cta cta-sendint send-invitation" 
                                     data-loading-text="Sending..."
