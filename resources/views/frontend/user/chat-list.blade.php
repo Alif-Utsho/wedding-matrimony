@@ -12,7 +12,7 @@
                             <div class="db-chat-pro"> <img src="{{ asset($chatuser->profile->image) }}" alt=""> </div>
                             <div class="db-chat-bio">
                                 <h5>{{ $chatuser->name }}</h5> 
-                                <span class="{{ $chatuser->message->sender_id==$chatuser->id && !$chatuser->message->is_read ? 'fw-bold' : '' }}">{{ $chatuser->message->message }}</span>
+                                <span class="message-text {{ $chatuser->message->sender_id==$chatuser->id && !$chatuser->message->is_read ? 'fw-bold' : '' }}">{{ $chatuser->message->message }}</span>
                             </div>
                             <div class="db-chat-info">
                                 <div class="time new">
@@ -25,7 +25,7 @@
                                         @endif
                                     </span>
                                     @if($chatuser->unread>0)
-                                    <span class="cont">{{ $chatuser->unread }}</span>
+                                    <span class="cont unread-count">{{ $chatuser->unread }}</span>
                                     @endif
                                 </div>
                             </div>

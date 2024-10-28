@@ -151,6 +151,9 @@
                         // $('.chat-box-messages').empty();
                         $('#chat-box-message').html(response);
                         scrollToBottom();
+                        $(`li[data-user-id="${receiverId}"] .unread-count`).hide();
+                        $(`li[data-user-id="${receiverId}"] .message-text`).removeClass('fw-bold');
+                        
                     },
                     error: function(xhr) {
                         console.log('Error:', xhr.responseText);
@@ -187,7 +190,13 @@
                         loadMessages(userId);
                     },
                     error: function(xhr) {
-                        console.log('Error:', xhr.responseText); 
+                        if (xhr.status === 403 && xhr.responseJSON.redirect_url) {
+                            alert('Your Profile Incomplete, Please Update your Profile');
+                            window.location.href = xhr.responseJSON.redirect_url;
+                        } else {
+                            $this.prop('disabled', false).html(originalText);
+                            alert('Something went wrong!');
+                        }
                     }
                 });
             });

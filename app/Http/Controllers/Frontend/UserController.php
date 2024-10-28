@@ -217,7 +217,7 @@ class UserController extends Controller {
 
         foreach($chatListUsers as $chatuser){
             $message = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
-            $unread_count = Message::where('sender_id', $chatuser->id)->where('is_read', false)->count();
+            $unread_count = Message::where('sender_id', $chatuser->id)->where('receiver_id', $userId)->where('is_read', false)->count();
             $chatuser->message = $message;
             $chatuser->unread = $unread_count;
         }
