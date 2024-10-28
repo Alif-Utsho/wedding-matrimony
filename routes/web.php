@@ -34,6 +34,7 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('profile-edit-submit', [UserController::class, 'profileEditSubmit'])->name('user.profileEdit.submit');
     Route::post('images/upload', [UserController::class, 'imageUpload'])->name('user.imageUpload');
     Route::post('/image/delete', [UserController::class, 'deleteImage'])->name('user.imageDelete');
+    Route::get('chat/list', [UserController::class, 'chatList'])->name('user.chat.list');
 
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
@@ -41,6 +42,7 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation'])->name('accept.invitation');
     Route::post('deny-invitation', [InvitationController::class, 'denyInvitation'])->name('deny.invitation');
 
+    
     Route::post('chat-now', [MessageController::class, 'chatNow'])->name('user.chatnow');
     Route::post('chat-send', [MessageController::class, 'sendMessage'])->name('user.chat.send');
     Route::get('chat/messages', [MessageController::class, 'getMessages'])->name('chat.getMessages');

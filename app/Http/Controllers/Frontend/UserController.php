@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hobby;
+use App\Models\Message;
 use App\Models\User;
 use App\Models\UserCareer;
 use App\Models\UserHobby;
@@ -197,6 +198,30 @@ class UserController extends Controller {
         $userImage->delete();
 
         return redirect()->back()->with('success', 'Image deleted successfully.');
+    }
+
+    public function chatList(Request $request) {
+        $userId = Auth::guard('user')->id();
+
+        $receiverIds = Message::where('sender_id', $userId)
+                    ->latest()
+                    ->pluck('receiver_id')
+                    ->unique();
+        $senderIds = Message::where('receiver_id', $userId)
+                    ->latest()
+                    ->pluck('sender_id')
+                    ->unique();
+        $chatListUserIds = $receiverIds->merge($senderIds)->unique();
+
+        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
+
+        foreach($chatListUsers as $chatuser){
+            $message = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
+            $chatuser->message = $message;
+        }
+        $chatListUsers;
+
+        return view('frontend.user.chat-list', compact('chatListUsers'));
     }
 
     
