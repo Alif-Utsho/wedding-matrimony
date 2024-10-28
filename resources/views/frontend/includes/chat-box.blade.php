@@ -8,7 +8,7 @@
             <h4><b class="intename2">{{ $user->name }}</b>,</h4>
                 <span class="avlsta avilyes">Available online</span>
         </div>
-        <div class="s2 chat-box-messages">
+        <div class="s2 chat-box-messages h-100">
             
             <div class="chat-con" id="chat-box-message">
                 

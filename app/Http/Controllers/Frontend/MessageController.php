@@ -52,6 +52,8 @@ class MessageController extends Controller
                         })
                         ->orderBy('created_at', 'asc')
                         ->get();
+        
+        Message::where('sender_id', $receiverId)->where('receiver_id', $senderId)->where('is_read', false)->update(['is_read'=> true]);
 
         return view('frontend.includes.chat-message', compact('messages'));
     }

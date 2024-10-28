@@ -217,9 +217,14 @@ class UserController extends Controller {
 
         foreach($chatListUsers as $chatuser){
             $message = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
+            $unread_count = Message::where('sender_id', $chatuser->id)->where('is_read', false)->count();
             $chatuser->message = $message;
+            $chatuser->unread = $unread_count;
         }
-        $chatListUsers;
+
+        $chatListUsers = $chatListUsers->sortByDesc(function($chatuser) {
+            return $chatuser->message ? $chatuser->message->created_at : now()->subYears(100);
+        });
 
         return view('frontend.user.chat-list', compact('chatListUsers'));
     }
