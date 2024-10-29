@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Helpers\Toastr;
 
 
 class AuthController extends Controller
@@ -85,7 +86,8 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('user.login')->with('status', 'You have been successfully logged out.');
+        Toastr::success('You have been successfully logged out.');
+        return redirect()->route('user.login');
     }
 
 

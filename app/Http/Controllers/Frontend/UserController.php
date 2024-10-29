@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use App\Helpers\Toastr;
 
 
 class UserController extends Controller {
@@ -146,7 +147,8 @@ class UserController extends Controller {
             ]
         );
 
-        return redirect('/user/profile')->with('success', 'Profile Updated Successfully');
+        Toastr::success('Profile Updated Successfully');
+        return redirect('/user/profile');
     }
 
     public function imageUpload(Request $request)
@@ -183,7 +185,8 @@ class UserController extends Controller {
             ]);
         }
 
-        return redirect()->back()->with('success', 'Images uploaded successfully!');
+        Toastr::success('Images uploaded successfully!');
+        return redirect()->back();
     }
 
     public function deleteImage(Request $request) {
@@ -197,7 +200,8 @@ class UserController extends Controller {
 
         $userImage->delete();
 
-        return redirect()->back()->with('success', 'Image deleted successfully.');
+        Toastr::success('Image deleted successfully.');
+        return redirect()->back();
     }
 
     public function chatList(Request $request) {

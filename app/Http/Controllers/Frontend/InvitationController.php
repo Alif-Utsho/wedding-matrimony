@@ -7,6 +7,8 @@ use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Toastr;
+
 
 class InvitationController extends Controller
 {
@@ -46,7 +48,8 @@ class InvitationController extends Controller
         if ($invitation->sent_from === $userId || $invitation->sent_to === $userId) {
             $invitation->delete();
     
-            return redirect()->back()->with('success', 'Invitation canceled successfully.');
+            Toastr::success('Invitation canceled successfully.');
+            return redirect()->back();
         }
         return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
 
@@ -77,7 +80,8 @@ class InvitationController extends Controller
                 'message' => 'Invitation accepted successfully!',
             ], 200);
         }
-        return redirect()->back()->with('success', 'Invitation accepted successfully.');
+        Toastr::success('Invitation accepted successfully.');
+        return redirect()->back();
     }
 
     public function denyInvitation(Request $request)
@@ -96,6 +100,7 @@ class InvitationController extends Controller
         // $invitation->save();
         $invitation->delete();
 
-        return redirect()->back()->with('success', 'Invitation denied successfully.');
+        Toastr::success('Invitation denied successfully.');
+        return redirect()->back();
     }
 }

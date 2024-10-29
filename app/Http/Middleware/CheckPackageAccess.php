@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Toastr;
+
 
 
 class CheckPackageAccess
@@ -19,6 +21,7 @@ class CheckPackageAccess
     {
         $user = Auth::guard('user')->user();
         if(!$user){
+            Toastr::error('Please login first!');
             return redirect('/user/login')->with('error', 'Please login first');
         }
 
@@ -26,7 +29,8 @@ class CheckPackageAccess
         $accesses = $package ? $package->accesses->pluck('name')->toArray() : [];
 
         if (!$package || !in_array($feature, $accesses)) {
-            return redirect('/plans')->with('error', 'Upgrade to access this feature.');
+            Toastr::error('Upgrade to access this feature!');
+            return redirect('/plans');
         }
 
     

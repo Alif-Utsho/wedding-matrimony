@@ -13,11 +13,16 @@
     <meta name="description" content="">
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" type="image/x-icon">
+    
     <!--== CSS FILES ==-->
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     @stack('css')
 
@@ -150,6 +155,29 @@
     <script src="{{ asset('frontend/js/select-opt.js') }}"></script>
     <script src="{{ asset('frontend/js/slick.js') }}"></script>
     <script src="{{ asset('frontend/js/custom.js') }}"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if (session('toastr_success'))
+                toastr.success("{{ session('toastr_success') }}");
+            @endif
+    
+            @if (session('toastr_error'))
+                toastr.error("{{ session('toastr_error') }}");
+            @endif
+    
+            @if (session('toastr_warning'))
+                toastr.warning("{{ session('toastr_warning') }}");
+            @endif
+    
+            @if (session('toastr_info'))
+                toastr.info("{{ session('toastr_info') }}");
+            @endif
+        });
+    </script>
+    
 
     <script>
         $(document).ready(function() {

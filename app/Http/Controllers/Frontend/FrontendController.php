@@ -19,6 +19,8 @@ use App\Models\Package;
 use App\Models\Invitation;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Toastr;
+
 
 class FrontendController extends Controller
 {
@@ -45,7 +47,8 @@ class FrontendController extends Controller
     public function weddingDetails($id){
         $wedding = Wedding::find($id);
         if(!$wedding){
-            return redirect('/')->with('error', 'Wedding not Found!');
+            Toastr::error('Wedding not Found!');
+            return redirect('/');
         }
 
         return view('frontend.pages.wedding-details', compact('wedding'));
