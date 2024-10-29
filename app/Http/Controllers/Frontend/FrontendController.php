@@ -15,11 +15,20 @@ use App\Models\Banner;
 use App\Models\BlogCategory;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Package;
 use App\Models\Invitation;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('check.access:profile-view')->only('profileDetails');
+    }
+
+
     public function index() {
         $services = Service::whereStatus(true)->latest()->get();
         $testimonials = Testimonial::whereStatus(true)->latest()->get();
@@ -182,6 +191,11 @@ class FrontendController extends Controller
         $blog_categories = BlogCategory::whereStatus(true)->get();
 
         return view('frontend.pages.blog-details', compact('blog', 'related_posts', 'next_post', 'prev_post', 'trending_blogs', 'blog_categories'));
+    }
+
+    public function plans() {
+        $plans = Package::whereStatus(true)->get();
+        return view('frontend.pages.plans', compact('plans'));
     }
 
     public function contact() {

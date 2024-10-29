@@ -199,7 +199,7 @@
                         </li>
                         
                         <li><a href="/all-profile">All Profiles</a></li>
-                        <li><a href="plans.html">Plans</a></li>
+                        <li><a href="/plans">Plans</a></li>
                         @if(!Auth::guard('user')->check())
                         <li><a href="/user/register">Register</a></li>
                         @endif

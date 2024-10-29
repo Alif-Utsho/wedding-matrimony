@@ -46,4 +46,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+
+    public function currentPackage()
+    {
+        return $this->hasOne(UserPackage::class)->where('expired_at', '>', now())->with('package')->first();
+    }
+
+    public function assignPackage($package)
+    {
+        return $this->userPackages()->create([
+            'package_id' => $package->id,
+            'expired_at' => now()->addDays($package->duration),
+        ]);
+    }
 }
