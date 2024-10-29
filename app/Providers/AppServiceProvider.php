@@ -8,6 +8,8 @@ use App\Models\Contactinfo;
 use App\Models\City;
 use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,19 +26,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $navServices = Service::whereStatus(true)->limit(4)->get();
-        view()->share('navServices', $navServices);
+        if (Schema::hasTable('services')) {
+            $navServices = Service::where('status', 1)->limit(4)->get();
+            view()->share('navServices', $navServices);
+        }
 
-        $ourteams = Ourteam::whereStatus(true)->get();
-        view()->share('ourteams', $ourteams);
+        if (Schema::hasTable('ourteams')) {
+            $ourteams = Ourteam::where('status', 1)->get();
+            view()->share('ourteams', $ourteams);
+        }
 
-        $cities  = City::whereStatus(true)->orderBy('name', 'ASC')->get();
-        view()->share('cities', $cities);
+        if (Schema::hasTable('cities')) {
+            $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
+            view()->share('cities', $cities);
+        }
 
-        $contactinfo = Contactinfo::whereStatus(true)->first();
-        view()->share('contactinfo', $contactinfo);
+        if (Schema::hasTable('contactinfos')) {
+            $contactinfo = Contactinfo::where('status', 1)->first();
+            view()->share('contactinfo', $contactinfo);
+        }
 
-        $generalsetting = GeneralSetting::whereStatus(true)->first();
-        view()->share('generalsetting', $generalsetting);
+        if (Schema::hasTable('general_settings')) {
+            $generalsetting = GeneralSetting::where('status', 1)->first();
+            view()->share('generalsetting', $generalsetting);
+        }
     }
 }

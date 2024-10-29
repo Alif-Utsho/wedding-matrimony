@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('image3', 250)->nullable(); // Additional image 3, allowing NULL
             $table->date('date'); // Date associated with the couple
             $table->tinyInteger('status')->default(1); // Status field with default value of 1
-            $table->timestamp('created_at')->useCurrent(); // Created timestamp
             $table->timestamps();
         });
     }
