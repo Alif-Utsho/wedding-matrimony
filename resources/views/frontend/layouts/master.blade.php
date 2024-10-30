@@ -246,7 +246,7 @@
                     },
                     error: function(xhr) {
                         if (xhr.status === 403 && xhr.responseJSON.redirect_url) {
-                            alert('Your Profile Incomplete, Please Update your Profile');
+                            alert(xhr.responseJSON.message);
                             window.location.href = xhr.responseJSON.redirect_url;
                         } else {
                             $this.prop('disabled', false).html(originalText);

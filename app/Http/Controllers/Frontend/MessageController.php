@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('check.access:send-message')->only(['chatNow', 'sendMessage', 'getMessages']);
+    }
+
     public function chatNow(Request $request){
         $user = User::find($request->userId);
         

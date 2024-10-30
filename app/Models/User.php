@@ -49,7 +49,17 @@ class User extends Authenticatable
 
     public function currentPackage()
     {
-        return $this->hasOne(UserPackage::class)->where('expired_at', '>', now())->with('package')->first();
+        $userPackage = $this->hasOne(UserPackage::class)
+            ->where('expired_at', '>', now())
+            ->with('package')
+            ->first();
+
+        if (!$userPackage) {
+            $defaultPackage = Package::where('price', 0)->first();
+            return $defaultPackage;
+        }
+
+        return $userPackage->package;
     }
 
     public function assignPackage($package)
@@ -58,5 +68,13 @@ class User extends Authenticatable
             'package_id' => $package->id,
             'expired_at' => now()->addDays($package->duration),
         ]);
+    }
+
+    public function hasAccessTo($feature)
+    {
+        $package = $this->currentPackage();
+        $accesses = $package ? $package->accesses->pluck('name')->toArray() : [];
+
+        return in_array($feature, $accesses);
     }
 }

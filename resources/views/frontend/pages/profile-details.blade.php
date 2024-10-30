@@ -11,7 +11,13 @@
                                 <img src="{{ asset($user->profile->image) }}" loading="lazy" class="pro" alt="">
                             </div>
                             <div class="s3">
-                                <a href="#!" class="cta fol cta-chat chat-now chat-now-btn" data-user-id="{{ $user->id }}">Chat now</a>
+                                <a href="#!" class="cta fol cta-chat chat-now chat-now-btn" data-user-id="{{ $user->id }}">
+                                    Chat Now
+                                    
+                                    @if(!auth('user')->user()->hasAccessTo('send-message'))
+                                    <i class="fa fa-lock"></i>
+                                    @endif
+                                </a>
                                 
                                 <button class="cta cta-sendint send-invitation" 
                                     data-loading-text="Sending..."
@@ -22,12 +28,18 @@
                                     @elseif($invitationAccepted) Connected
                                     @else Send Interest
                                     @endif
+
+                                    @if(!auth('user')->user()->hasAccessTo('send-interest'))
+                                    <i class="fa fa-lock"></i>
+                                    @endif
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="profi-pg profi-bio">
                         <div class="lhs">
+                            @auth('user')
+                            @if(auth('user')->user()->hasAccessTo('profile-view'))
                             <div class="pro-pg-intro">
                                 <h1>{{ $user->name }}</h1>
                                 <div class="pro-info-status">
@@ -69,6 +81,10 @@
                                     </li>
                                 </ul>
                             </div>
+                            @else
+                            <h1>Please Subscribe
+                            @endif
+                            @endauth
                             <!-- PROFILE ABOUT -->
                             <div class="pr-bio-c pr-bio-abo">
                                 <h3>About</h3>
@@ -312,7 +328,7 @@
                         },
                         error: function(xhr) {
                             if (xhr.status === 403 && xhr.responseJSON.redirect_url) {
-                                alert('Your Profile Incomplete, Please Update your Profile');
+                                alert(xhr.responseJSON.message);
                                 window.location.href = xhr.responseJSON.redirect_url;
                             } else {
                                 $this.prop('disabled', false).html(originalText);

@@ -12,6 +12,11 @@ use App\Helpers\Toastr;
 
 class InvitationController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('check.access:send-interest')->only(['sendInvitation']);
+    }
+    
     public function invitations(){
         $user = User::find(Auth::guard('user')->user()->id);
 

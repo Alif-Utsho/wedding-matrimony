@@ -27,7 +27,18 @@
                                 <h2>{{ $plan->name }}</h2>
                                 <p>Printer took a type and scrambled </p>
                                 <a href="sign-up.html" class="cta">Get Started</a>
-                                <span class="pri-cou"><b>${{ $plan->price }}</b></span>
+                                <span class="pri-cou">
+                                    <b>${{ $plan->price }}</b>
+                                    @if($plan->price>0)
+                                        <small style="font-size: 18px;">/
+                                            @if($plan->duration >= 30)
+                                                {{ round($plan->duration / 30, 1) }} {{ Str::plural('Month', round($plan->duration / 30, 1)) }}
+                                            @else
+                                                {{ $plan->duration }} {{ Str::plural('Day', $plan->duration) }}
+                                            @endif
+                                        </small>
+                                    @endif
+                                </span>
                                 {!! $plan->details !!}
                             </div>
                         </li>

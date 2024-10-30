@@ -218,7 +218,17 @@
                                             <span>Height: {{ $user->profile->height }}cm</span>
                                         </div>
                                         <div class="links">
-                                            <span class="cta-chat chat-now-btn" data-user-id="{{ $user->id }}">Chat now</span>
+                                            <span class="cta-chat chat-now-btn" data-user-id="{{ $user->id }}">
+                                                Chat now 
+                                                @auth('user')
+                                                    @if(auth('user')->user()->hasAccessTo('send-message'))
+                                                    @else
+                                                    <i class="fa fa-lock"></i>
+                                                    @endif
+                                                @else
+                                                <i class="fa fa-lock"></i>
+                                                @endauth
+                                            </span>
                                             <a href="#!">WhatsApp</a>
                                             <a href="#!" class="cta cta-sendint" data-bs-toggle="modal" data-bs-target="#sendInter">Send interest</a>
                                             <a href="/profile/{{ $user->slug }}">More detaiils</a>
