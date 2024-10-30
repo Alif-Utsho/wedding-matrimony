@@ -11,11 +11,15 @@ use App\Models\UserHobby;
 use App\Models\UserImage;
 use App\Models\UserProfile;
 use App\Models\UserSocialmedia;
+use App\Models\UserPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Helpers\Toastr;
+use App\Models\Package;
+use App\Models\PackagePayment;
+use App\Enums\PaymentStatus;
 
 
 class UserController extends Controller {
@@ -231,6 +235,26 @@ class UserController extends Controller {
         });
 
         return view('frontend.user.chat-list', compact('chatListUsers'));
+    }
+
+    public function userPlan() {
+        $user = User::find(Auth::guard('user')->id());
+        $userPackage = UserPackage::where('user_id', $user->id)
+            ->where('expired_at', '>', now())
+            ->latest()
+            ->with('package')
+            ->first();
+
+        if ($userPackage) {
+            $package = Package::find($userPackage->package_id);
+        } else {
+            $package = Package::where('price', 0)->first();
+        }
+
+        $payments = PackagePayment::where('user_id', $user->id)->where('status', PaymentStatus::PAID)->get();
+       
+
+        return view('frontend.user.plan', compact('userPackage', 'package', 'payments'));
     }
 
     

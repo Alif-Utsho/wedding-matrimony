@@ -26,7 +26,13 @@
                                 @endif
                                 <h2>{{ $plan->name }}</h2>
                                 <p>Printer took a type and scrambled </p>
-                                <a href="sign-up.html" class="cta">Get Started</a>
+                                {{-- <a href="sign-up.html" class="cta">Get Started</a> --}}
+                                <a href="javascript:void(0);" class="cta" onclick="document.getElementById('subscription-form-{{ $plan->id }}').submit();">Get Started</a>
+
+                                <form id="subscription-form-{{ $plan->id }}" action="{{ route('user.subscribe') }}" method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="package_id" value="{{ $plan->id }}">
+                                </form>
                                 <span class="pri-cou">
                                     <b>${{ $plan->price }}</b>
                                     @if($plan->price>0)

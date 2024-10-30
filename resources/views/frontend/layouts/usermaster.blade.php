@@ -27,7 +27,7 @@
                                         </a>
                                     </li>
                                     <li><a href="{{ route('user.chat.list') }}" class="{{ request()->routeIs('user.chat.list') ? 'act' : '' }}"><i class="fa fa-commenting-o" aria-hidden="true"></i>Chat list</a></li>
-                                    <li><a href="user-plan.html"><i class="fa fa-money" aria-hidden="true"></i>Plan</a></li>
+                                    <li><a href="{{ route('user.plan') }}" class="{{ request()->routeIs('user.plan') ? 'act' : '' }}"><i class="fa fa-money" aria-hidden="true"></i>Plan</a></li>
                                     <li><a href="user-setting.html"><i class="fa fa-cog" aria-hidden="true"></i>Setting</a></li>
                                     <li>
                                         <a href="{{ route('user.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a>

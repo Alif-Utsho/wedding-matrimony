@@ -51,6 +51,7 @@ class User extends Authenticatable
     {
         $userPackage = $this->hasOne(UserPackage::class)
             ->where('expired_at', '>', now())
+            ->latest()
             ->with('package')
             ->first();
 

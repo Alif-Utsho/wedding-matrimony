@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InvitationController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\MessageController;
+use App\Http\Controllers\Frontend\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,6 +37,7 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('images/upload', [UserController::class, 'imageUpload'])->name('user.imageUpload');
     Route::post('/image/delete', [UserController::class, 'deleteImage'])->name('user.imageDelete');
     Route::get('chat/list', [UserController::class, 'chatList'])->name('user.chat.list');
+    Route::get('plan', [UserController::class, 'userPlan'])->name('user.plan');
 
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
@@ -47,6 +49,9 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('chat-now', [MessageController::class, 'chatNow'])->name('user.chatnow');
     Route::post('chat-send', [MessageController::class, 'sendMessage'])->name('user.chat.send');
     Route::get('chat/messages', [MessageController::class, 'getMessages'])->name('chat.getMessages');
+
+    Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('user.subscribe');
+
     
 
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');

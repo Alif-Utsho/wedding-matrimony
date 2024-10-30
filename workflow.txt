@@ -1,4 +1,21 @@
 
+30-OCT-24
+    WEB
+        Access Authorization
+        Package Subscribe
+    API
+        --
+
+---------------------------------------------
+
+29-OCT-24
+    WEB
+        Package Access Manages
+    API
+        --
+
+---------------------------------------------
+
 28-OCT-24
     WEB
         Message Send Ajax
