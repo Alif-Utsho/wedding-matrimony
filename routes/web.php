@@ -46,6 +46,8 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation'])->name('accept.invitation');
     Route::post('deny-invitation', [InvitationController::class, 'denyInvitation'])->name('deny.invitation');
 
+    Route::post('profile/{userId}/like', [UserController::class, 'like'])->name('profile.like');
+
     
     Route::post('chat-now', [MessageController::class, 'chatNow'])->name('user.chatnow');
     Route::post('chat-send', [MessageController::class, 'sendMessage'])->name('user.chat.send');

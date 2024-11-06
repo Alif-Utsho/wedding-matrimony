@@ -82,4 +82,8 @@ class User extends Authenticatable
     public function profileViews() {
         return $this->hasMany(ProfileView::class, 'user_id');
     }
+
+    public function profileLikes() {
+        return $this->hasMany(ProfileLike::class, 'user_id');
+    }
 }

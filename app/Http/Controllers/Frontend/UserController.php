@@ -20,7 +20,7 @@ use App\Helpers\Toastr;
 use App\Models\Package;
 use App\Models\PackagePayment;
 use App\Enums\PaymentStatus;
-
+use App\Models\ProfileLike;
 
 class UserController extends Controller {
     public function index() {
@@ -336,5 +336,24 @@ class UserController extends Controller {
         return view('frontend.user.setting');
     }
 
+    public function like($userId) {
+        $likerId = Auth::guard('user')->id();
+    
+        $alreadyLiked = ProfileLike::where('user_id', $userId)
+            ->where('liker_id', $likerId)
+            ->exists();
+    
+        if (!$alreadyLiked) {
+            ProfileLike::create([
+                'user_id' => $userId,
+                'liker_id' => $likerId,
+            ]);
+    
+            return response()->json(['message' => 'Profile liked']);
+        } else {
+            ProfileLike::where('user_id', $userId)->where('liker_id', $likerId)->delete();
+            return response()->json(['message' => 'Profile unliked']);
+        }
+    }
     
 }

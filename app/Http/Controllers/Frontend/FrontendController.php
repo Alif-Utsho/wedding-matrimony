@@ -20,6 +20,7 @@ use App\Models\Invitation;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
+use App\Models\ProfileLike;
 use App\Models\ProfileView;
 
 class FrontendController extends Controller
@@ -91,7 +92,15 @@ class FrontendController extends Controller
 
         $users = $userQuery->limit(100)->get();
 
-        return view('frontend.pages.all-profile', compact('users'));
+        
+        $likedUsers = ProfileLike::where('liker_id', Auth::guard('user')->id())
+                ->whereIn('user_id', $users->pluck('id'))
+                ->pluck('user_id')
+                ->flip()
+                ->map(fn() => true)
+                ->toArray();
+
+        return view('frontend.pages.all-profile', compact('users', 'likedUsers'));
     }
 
     public function profileDetails(Request $request){

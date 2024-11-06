@@ -236,8 +236,8 @@
                                     </div>
                                     <!--END PROFILE NAME-->
                                     <!--SAVE-->
-                                    <span class="enq-sav" data-toggle="tooltip"
-                                        title="Click to save this provile."><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span>
+                                    <span class="enq-sav like-btn {{ isset($likedUsers[$user->id]) ? 'liked' : '' }}" data-toggle="tooltip" data-user-id="{{ $user->id }}"
+                                        title="{{ isset($likedUsers[$user->id]) ? 'Profile liked' : 'Click to like this profile' }}""><i class="fa fa-thumbs-o-up {{ isset($likedUsers[$user->id]) ? 'sav-act' : '' }} " aria-hidden="true"></i></span>
                                     <!--END SAVE-->
                                 </div>
                             </li>
@@ -504,6 +504,41 @@
 </div>
 <!-- END INTEREST POPUP -->
 
-
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('.like-btn').on('click', function() {
+                const userId = $(this).data('user-id');
+                const $button = $(this);
+                
+                var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
+                if (!isAuthenticated) {
+                    $('#loginModal').modal('show');
+                    return;
+                }
+                
+                $.ajax({
+                    url: `/user/profile/${userId}/like`,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $button.toggleClass('liked');                        
+                        if ($button.hasClass('liked')) {
+                            $button.find('i').addClass('sav-act');
+                        } else {
+                            $button.find('i').removeClass('sav-act');
+                        }
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr) {
+                        toastr.error('Something went wrong!');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
 
 @endsection

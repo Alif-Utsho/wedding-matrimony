@@ -81,14 +81,14 @@ $(document).ready(function () {
     //$('[data-toggle="tooltip"]').tooltip();
 
     //ENQUIRY AND REVIEW LIKE
-    $(".enq-sav i").on('click', function () {
-        $(this).toggleClass('sav-act');
-    });
+    // $(".enq-sav i").on('click', function () {
+    //     $(this).toggleClass('sav-act');
+    // });
 
     //ENQUIRY AND REVIEW LIKE
-    $(".ldelik").on('click', function () {
-        $(this).toggleClass('sav-act');
-    });
+    // $(".ldelik").on('click', function () {
+    //     $(this).toggleClass('sav-act');
+    // });
 
     //HOME PAGE BANNER BG SLIDER HEIGHT SET
     if ($(window).width() < 1250) {
