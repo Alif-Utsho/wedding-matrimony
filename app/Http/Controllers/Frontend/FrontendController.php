@@ -20,6 +20,7 @@ use App\Models\Invitation;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
+use App\Models\ProfileClick;
 use App\Models\ProfileLike;
 use App\Models\ProfileView;
 
@@ -108,7 +109,7 @@ class FrontendController extends Controller
 
         $alreadyViewed = ProfileView::where('user_id', $user->id)
             ->where('viewer_id', Auth::guard('user')->id())
-            ->whereDate('created_at', now()->toDateString())
+            // ->whereDate('created_at', now()->toDateString())
             ->exists();
 
         if (!$alreadyViewed) {
@@ -117,6 +118,11 @@ class FrontendController extends Controller
                 'viewer_id' => Auth::guard('user')->id(),
             ]);
         }
+
+        ProfileClick::create([
+            'user_id' => $user->id,
+            'clicker_id' => Auth::guard('user')->id(),
+        ]);
 
         $invitationSent = false;
         $invitationReceived = false;

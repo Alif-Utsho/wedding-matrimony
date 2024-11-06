@@ -86,4 +86,16 @@ class User extends Authenticatable
     public function profileLikes() {
         return $this->hasMany(ProfileLike::class, 'user_id');
     }
+
+    public function profileClicks() {
+        return $this->hasMany(ProfileClick::class, 'user_id');
+    }
+
+    public function invitations()
+    {
+        return Invitation::where(function ($query) {
+            $query->where('sent_from', $this->id)
+                ->orWhere('sent_to', $this->id);
+        });
+    }
 }
