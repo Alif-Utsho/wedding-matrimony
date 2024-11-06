@@ -2,97 +2,29 @@
 @section('user_content')
 
 <div class="col-md-8 col-lg-9">
+    @if($matchingUsers->count()>0)
     <div class="col-md-12 db-sec-com db-new-pro-main">
         <h2 class="db-tit">New Profiles Matches</h2>
         <ul class="slider">
+            @foreach($matchingUsers as $matchingUser)
             <li>
                 <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/16.jpg') }}" alt="" class="profile">
+                    <img src="{{ asset($matchingUser->profile->image) }}" alt="" class="profile">
                     <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
+                        <h5>{{ $matchingUser->name }}</h5>
+                        <span class="city">{{ $matchingUser->profile->city->name }}</span>
+                        <span class="age">{{ $matchingUser->profile->age }} Years old</span>
                     </div>
-                    <div class="pro-ave" title="User currently available">
+                    {{-- <div class="pro-ave" title="User currently available">
                         <span class="pro-ave-yes"></span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
+                    </div> --}}
+                    <a href="/profile/{{ $matchingUser->slug }}" class="fclick" target="_blank">&nbsp;</a>
                 </div>
             </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/2.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/3.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/4.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/5.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/6.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <div class="pro-ave" title="User currently available">
-                        <span class="pro-ave-yes"></span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
-            <li>
-                <div class="db-new-pro">
-                    <img src="{{ asset('frontend/images/profiles/14.jpg') }}" alt="" class="profile">
-                    <div>
-                        <h5>Julia ann</h5>
-                        <span class="city">New york</span>
-                        <span class="age">22 Years old</span>
-                    </div>
-                    <div class="pro-ave" title="User currently available">
-                        <span class="pro-ave-yes"></span>
-                    </div>
-                    <a href="profile-details.html" class="fclick" target="_blank">&nbsp;</a>
-                </div>
-            </li>
+            @endforeach
         </ul>
     </div>
+    @endif
     <div class="row">
         <div class="col-md-12 col-lg-6 col-xl-4 db-sec-com">
             <h2 class="db-tit">Profiles status</h2>

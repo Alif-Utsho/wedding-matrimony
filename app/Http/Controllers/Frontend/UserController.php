@@ -52,7 +52,9 @@ class UserController extends Controller {
         $chatListUserIds = $receiverIds->merge($senderIds)->unique();
         $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
 
-        return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers'));
+        $matchingUsers = $this->getMatchingUsers();
+
+        return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers', 'matchingUsers'));
     }
 
     public function profile(){
@@ -106,10 +108,10 @@ class UserController extends Controller {
         ]);
 
         $imagePath = null;
+        $editProfile = UserProfile::where('user_id', $userId)->first();
         if ($request->hasFile('image')) {
-            $userProfile = UserProfile::where('user_id', $userId)->first();
-            if($userProfile){
-                $existingImagePath = public_path($userProfile->image);
+            if($editProfile){
+                $existingImagePath = public_path($editProfile->image);
     
                 if (File::exists($existingImagePath)) {
                     File::delete($existingImagePath);
@@ -136,7 +138,7 @@ class UserController extends Controller {
                 'mothers_name' => $request->mothers_name,
                 'address'      => $request->address,
                 'age'          => $request->age,
-                'image'        => $imagePath
+                'image'        => $imagePath ?? $editProfile->image
             ]
         );
 
@@ -181,6 +183,81 @@ class UserController extends Controller {
 
         Toastr::success('Profile Updated Successfully');
         return redirect('/user/profile');
+    }
+
+    public function getMatchingUsers()
+    {
+        $userId = Auth::guard('user')->id();
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        $oppositeGender = $userProfile->gender === 'Male' ? 'Female' : 'Male';
+
+        $cityId = $userProfile->city_id;
+
+        if ($userProfile->gender === 'Male') {
+            $ageMax = $userProfile->age;
+            $heightMax = $userProfile->height;
+        } else {
+            $ageMin = $userProfile->age;
+            $heightMin = $userProfile->height;
+        }
+
+        $query = UserProfile::where('user_id', '!=', $userId)
+            // ->where('city_id', $cityId)
+            ->where('gender', $oppositeGender);
+
+        if ($userProfile->gender === 'Male') {
+            $query->where('age', '<', $ageMax)
+                ->where('height', '<', $heightMax);
+        } else {
+            $query->where('age', '>', $ageMin)
+                ->where('height', '>', $heightMin);
+        }
+        $matchingProfiles = $query->pluck('user_id');
+        
+        $matchingUsers = User::whereIn('id', $matchingProfiles)->inRandomOrder()->get();
+
+        return $matchingUsers;
+    }
+
+    public function getMatchingProfiles_pro()
+    {
+        $userId = Auth::guard('user')->id();
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+        $userPreferences = $userProfile->preferences;
+
+        $query = UserProfile::query()->where('user_id', '!=', $userId);
+
+        if ($userPreferences->preferred_gender) {
+            $query->where('gender', $userPreferences->preferred_gender);
+        }
+
+        if ($userPreferences->preferred_city_id) {
+            $query->where('city_id', $userPreferences->preferred_city_id);
+        }
+
+        if ($userPreferences->preferred_min_age && $userPreferences->preferred_max_age) {
+            $query->whereBetween('age', [$userPreferences->preferred_min_age, $userPreferences->preferred_max_age]);
+        }
+
+        if ($userPreferences->preferred_min_height && $userPreferences->preferred_max_height) {
+            $query->whereBetween('height', [$userPreferences->preferred_min_height, $userPreferences->preferred_max_height]);
+        }
+
+        $matchingProfiles = $query->with(['user', 'hobbies'])->get();
+
+        $matchingProfiles = $matchingProfiles->map(function($profile) use ($userPreferences) {
+            $score = 0;
+
+            if ($profile->gender == $userPreferences->preferred_gender) $score += 10;
+            if ($profile->city_id == $userPreferences->preferred_city_id) $score += 15;
+            if (in_array($profile->hobby_id, $userPreferences->hobbies)) $score += 5;
+            
+            // $profile->match_score = $score;
+            return $profile;
+        })->sortByDesc('match_score');
+
+        return response()->json($matchingProfiles);
     }
 
     public function getProfileCompletion()
