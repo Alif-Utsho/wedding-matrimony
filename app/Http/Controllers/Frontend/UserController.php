@@ -24,7 +24,35 @@ use App\Enums\PaymentStatus;
 
 class UserController extends Controller {
     public function index() {
-        return view('frontend.user.dashboard');
+        $profile_completion = $this->getProfileCompletion();
+
+        $user = User::find(Auth::guard('user')->id());
+        $userPackage = UserPackage::where('user_id', $user->id)
+            ->where('expired_at', '>', now())
+            ->latest()
+            ->with('package')
+            ->first();
+
+        if ($userPackage) {
+            $package = Package::find($userPackage->package_id);
+        } else {
+            $package = Package::where('price', 0)->first();
+        }
+
+        $receiverIds = Message::where('sender_id', $user->id)
+                    ->latest()
+                    ->limit(2)
+                    ->pluck('receiver_id')
+                    ->unique();
+        $senderIds = Message::where('receiver_id', $user->id)
+                    ->latest()
+                    ->limit(2)
+                    ->pluck('sender_id')
+                    ->unique();
+        $chatListUserIds = $receiverIds->merge($senderIds)->unique();
+        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
+
+        return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers'));
     }
 
     public function profile(){
@@ -153,6 +181,53 @@ class UserController extends Controller {
 
         Toastr::success('Profile Updated Successfully');
         return redirect('/user/profile');
+    }
+
+    public function getProfileCompletion()
+    {
+        $userId = Auth::guard('user')->id();
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+        $userCareer = UserCareer::where('user_id', $userId)->first();
+        $userSocialmedia = UserSocialmedia::where('user_id', $userId)->first();
+        $userHobbies = UserHobby::where('user_id', $userId)->exists();
+
+        // Define fields to check for completion
+        $fields = [
+            'name'          => Auth::guard('user')->user()->name,
+            'gender'        => $userProfile->gender ?? null,
+            'city_id'       => $userProfile->city_id ?? null,
+            'birth_date'    => $userProfile->birth_date ?? null,
+            'height'        => $userProfile->height ?? null,
+            'weight'        => $userProfile->weight ?? null,
+            'fathers_name'  => $userProfile->fathers_name ?? null,
+            'mothers_name'  => $userProfile->mothers_name ?? null,
+            'address'       => $userProfile->address ?? null,
+            'image'         => $userProfile->image ?? null,
+            'type'          => $userCareer->type ?? null,
+            'company_name'  => $userCareer->company_name ?? null,
+            'salary'        => $userCareer->salary ?? null,
+            'experience'    => $userCareer->experience ?? null,
+            'degree'        => $userCareer->degree ?? null,
+            'college'       => $userCareer->college ?? null,
+            'school'        => $userCareer->school ?? null,
+            'whatsApp'      => $userSocialmedia->whatsApp ?? null,
+            'facebook'      => $userSocialmedia->facebook ?? null,
+            'instagram'     => $userSocialmedia->instagram ?? null,
+            'x'             => $userSocialmedia->x ?? null,
+            'youtube'       => $userSocialmedia->youtube ?? null,
+            'linkedin'      => $userSocialmedia->linkedin ?? null,
+            'hobbies'       => $userHobbies ? 'filled' : null,
+        ];
+
+        // Count completed fields
+        $completedFields = array_filter($fields, fn($value) => !empty($value));
+        $totalFields = count($fields);
+        $completedCount = count($completedFields);
+
+        // Calculate percentage
+        $completionPercentage = ($completedCount / $totalFields) * 100;
+
+        return round($completionPercentage);
     }
 
     public function imageUpload(Request $request)

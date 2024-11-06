@@ -104,14 +104,14 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Edid profile</a></li>
-                        <li><a class="dropdown-item" href="#">View profile</a></li>
-                        <li><a class="dropdown-item" href="#">Profile visibility settings</a>
+                        <li><a class="dropdown-item" href="{{ route('user.profileEdit') }}">Edit profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.profile') }}">View Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.setting') }}">Profile Settings</a>
                         </li>
                     </ul>
                 </div>
                 <div class="db-pro-pgog">
-                    <span><b class="count">90</b>%</span>
+                    <span><b class="count">{{ $profile_completion }}</b>%</span>
                 </div>
                 <ul class="pro-stat-ic">
                     <li><span><i class="fa fa-heart-o like"
@@ -128,17 +128,16 @@
         <div class="col-md-12 col-lg-6 col-xl-4 db-sec-com">
             <h2 class="db-tit">Plan details</h2>
             <div class="db-pro-stat">
-                <h6 class="tit-top-curv">Standard plan</h6>
+                <h6 class="tit-top-curv">Current plan</h6>
                 <div class="dropdown">
                     <button type="button" class="btn btn-outline-secondary"
                         data-bs-toggle="dropdown">
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Edid profile</a></li>
-                        <li><a class="dropdown-item" href="#">View profile</a></li>
-                        <li><a class="dropdown-item" href="#">Plan change</a></li>
-                        <li><a class="dropdown-item" href="#">Download invoice now</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.plan') }}">View Details</a></li>
+                        <li><a class="dropdown-item" href="{{ url('plans') }}">Plan Change</a></li>
+                        <li><a class="dropdown-item" href="{{ route('user.plan') }}">Download Invoice</a></li>
                     </ul>
                 </div>
                 <div class="db-plan-card">
@@ -146,10 +145,23 @@
                 </div>
                 <div class="db-plan-detil">
                     <ul>
-                        <li>Plan name: <strong>Standard</strong></li>
-                        <li>Validity: <strong>6 Months</strong></li>
-                        <li>Valid till <strong>24 June 2024</strong></li>
-                        <li><a href="#" class="cta-3">Upgrade now</a></li>
+                        <li>Plan name: <strong>{{ $package->name }}</strong></li>
+                        @if ($userPackage !== null)
+                            <li>Validity:
+                                <strong>
+                                    @if ($package->duration >= 30)
+                                        {{ round($package->duration / 30, 1) }}
+                                        {{ Str::plural('Month', round($package->duration / 30, 1)) }}
+                                    @else
+                                        {{ $package->duration }} {{ Str::plural('Day', $package->duration) }}
+                                    @endif
+                                </strong>
+                            </li>
+                            <li>Valid till
+                                <strong>{{ Carbon\Carbon::parse($userPackage->expired_at)->format('d M Y') }}</strong>
+                            </li>
+                        @endif
+                        <li><a href="/plans" class="cta-3">Upgrade now</a></li>
                     </ul>
                 </div>
             </div>
@@ -159,34 +171,17 @@
             <div class="db-pro-stat">
                 <div class="db-inte-prof-list db-inte-prof-chat">
                     <ul>
+                        @forelse($chatListUsers as $chatuser)
                         <li>
-                            <div class="db-int-pro-1"> <img src="{{ asset('frontend/images/profiles/2.jpg') }}"
+                            <div class="db-int-pro-1"> <img src="{{ asset($chatuser->profile->image) }}"
                                     alt=""> </div>
                             <div class="db-int-pro-2">
-                                <h5>Julia Ann</h5> <span>Illunois, United States</span>
+                                <h5>{{ $chatuser->name }}</h5> <span>{{ $chatuser->profile->city->name }}</span>
                             </div>
                         </li>
-                        <li>
-                            <div class="db-int-pro-1"> <img src="{{ asset('frontend/images/profiles/16.jpg') }}"
-                                    alt=""> </div>
-                            <div class="db-int-pro-2">
-                                <h5>Julia Ann</h5> <span>Illunois, United States</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="db-int-pro-1"> <img src="{{ asset('frontend/images/profiles/13.jpg') }}"
-                                    alt=""> </div>
-                            <div class="db-int-pro-2">
-                                <h5>Julia Ann</h5> <span>Illunois, United States</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="db-int-pro-1"> <img src="{{ asset('frontend/images/profiles/14.jpg') }}"
-                                    alt=""> </div>
-                            <div class="db-int-pro-2">
-                                <h5>Julia Ann</h5> <span>Illunois, United States</span>
-                            </div>
-                        </li>
+                        @empty
+                        <li>Not available</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
