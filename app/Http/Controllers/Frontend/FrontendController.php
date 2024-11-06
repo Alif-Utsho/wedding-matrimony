@@ -20,7 +20,7 @@ use App\Models\Invitation;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
-
+use App\Models\ProfileView;
 
 class FrontendController extends Controller
 {
@@ -96,6 +96,18 @@ class FrontendController extends Controller
 
     public function profileDetails(Request $request){
         $user = User::where('slug', $request->slug)->first();
+
+        $alreadyViewed = ProfileView::where('user_id', $user->id)
+            ->where('viewer_id', Auth::guard('user')->id())
+            ->whereDate('created_at', now()->toDateString())
+            ->exists();
+
+        if (!$alreadyViewed) {
+            ProfileView::create([
+                'user_id' => $user->id,
+                'viewer_id' => Auth::guard('user')->id(),
+            ]);
+        }
 
         $invitationSent = false;
         $invitationReceived = false;

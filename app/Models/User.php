@@ -78,4 +78,8 @@ class User extends Authenticatable
 
         return in_array($feature, $accesses);
     }
+
+    public function profileViews() {
+        return $this->hasMany(ProfileView::class, 'user_id');
+    }
 }

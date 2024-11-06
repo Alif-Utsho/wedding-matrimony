@@ -2,6 +2,8 @@
 06-NOV-24
     WEB
         Profile setting page
+        Profile completion
+        Dashboard plan card
     API
         --
 
