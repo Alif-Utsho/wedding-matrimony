@@ -257,5 +257,9 @@ class UserController extends Controller {
         return view('frontend.user.plan', compact('userPackage', 'package', 'payments'));
     }
 
+    public function setting(){
+        return view('frontend.user.setting');
+    }
+
     
 }

@@ -1,4 +1,12 @@
 
+06-NOV-24
+    WEB
+        Profile setting page
+    API
+        --
+
+---------------------------------------------
+
 30-OCT-24
     WEB
         Access Authorization

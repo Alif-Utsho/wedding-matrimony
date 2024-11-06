@@ -38,6 +38,7 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::post('/image/delete', [UserController::class, 'deleteImage'])->name('user.imageDelete');
     Route::get('chat/list', [UserController::class, 'chatList'])->name('user.chat.list');
     Route::get('plan', [UserController::class, 'userPlan'])->name('user.plan');
+    Route::get('setting', [UserController::class, 'setting'])->name('user.setting');
 
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
