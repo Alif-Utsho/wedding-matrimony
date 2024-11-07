@@ -91,7 +91,7 @@ class FrontendController extends Controller
             }
         }
 
-        $users = $userQuery->limit(100)->get();
+        $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
 
         
         $likedUsers = ProfileLike::where('liker_id', Auth::guard('user')->id())
@@ -105,7 +105,12 @@ class FrontendController extends Controller
     }
 
     public function profileDetails(Request $request){
-        $user = User::where('slug', $request->slug)->first();
+        $user = User::where('slug', $request->slug)->where('profile_visibility', '<>', 'no-visible')->first();
+
+        if(!$user){
+            Toastr::error('User not found');
+            return redirect()->back();
+        }
 
         $alreadyViewed = ProfileView::where('user_id', $user->id)
             ->where('viewer_id', Auth::guard('user')->id())

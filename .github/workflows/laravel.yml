@@ -45,4 +45,4 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.ftp_PASSWORD }}
-        server-dir: /home/deshiicom/matrimony.deshii.com.bd
+        server-dir: /home/deshiicom/matrimony.deshii.com.bd/
