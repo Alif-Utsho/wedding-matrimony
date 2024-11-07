@@ -13,14 +13,6 @@ jobs:
       with:
         php-version: '8.2'
 
-      
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.ftp_PASSWORD }}
-
     - name: Copy .env
       run: cp .env.example .env
 
@@ -29,3 +21,10 @@ jobs:
         
     - name: 🛠️ Run migrations
       run: php artisan migrate --force
+      
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.ftp_PASSWORD }}
