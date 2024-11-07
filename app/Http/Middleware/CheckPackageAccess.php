@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
 use App\Models\Package;
-
-
+use App\Models\User;
 
 class CheckPackageAccess
 {
@@ -33,10 +32,29 @@ class CheckPackageAccess
             return redirect('/user/login')->with('error', 'Please login first');
         }
 
-        $package = $user->currentPackage();
-        $accesses = $package ? $package->accesses->pluck('name')->toArray() : [];
+        $access = true;
 
-        if (!$package || !in_array($feature, $accesses)) {
+        if($feature === 'profile-view'){
+            $profile = User::where('slug', $request->route('slug'))->first();
+
+            if (!$profile->canViewProfile($user)) {
+                $access = false;
+            }
+        }
+
+        if($feature === 'send-interest'){
+            $recipient = User::findOrFail($request->input('userId'));
+
+            if (!$recipient->canReceiveInterestRequests()) {
+                $access = false;
+            }
+        }
+
+        if (!$user->hasAccessTo($feature)) {
+            $access = false;
+        }
+
+        if(!$access){
             if ($request->ajax() || $request->expectsJson()) {
                 return response()->json([
                     'message' => 'Upgrade to access this feature!',
@@ -48,7 +66,6 @@ class CheckPackageAccess
             return redirect('/plans');
         }
 
-    
         return $next($request);
     }
 }

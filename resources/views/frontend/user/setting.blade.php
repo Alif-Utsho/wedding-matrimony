@@ -37,11 +37,10 @@
                                 </div>
                                 <div class="sett-rig">
                                     <div class="sett-select-drop">
-                                        <select>
-                                          <option value="All users">All users</option>
-                                          <option value="Premium">Premium</option>
-                                          <option value="Free">Free</option>
-                                          <option value="Free">No-more visible(You can't visible, so no one can view your profile)</option>
+                                        <select id="profileVisibility" onchange="updateSetting('profile_visibility', this.value)">
+                                          <option value="all" {{ Auth::guard('user')->user()->profile_visibility==='all' ? 'selected' : '' }}>All users</option>
+                                          <option value="premium" {{ Auth::guard('user')->user()->profile_visibility==='premium' ? 'selected' : '' }}>Premium</option>
+                                          <option value="no-visible" {{ Auth::guard('user')->user()->profile_visibility==='no-visible' ? 'selected' : '' }}>No-more visible(You can't visible, so no one can view your profile)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -55,10 +54,9 @@
                                 </div>
                                 <div class="sett-rig">
                                     <div class="sett-select-drop">
-                                        <select>
-                                            <option value="All users">All users</option>
-                                            <option value="Premium">Premium</option>
-                                            <option value="Free">Free</option>
+                                        <select id="interestRequestAccess" onchange="updateSetting('interest_request_access', this.value)">
+                                            <option value="all" {{ Auth::guard('user')->user()->interest_request_access==='all' ? 'selected' : '' }}>All users</option>
+                                            <option value="premium" {{ Auth::guard('user')->user()->interest_request_access==='premium' ? 'selected' : '' }}>Premium</option>
                                         </select>
                                     </div>
                                 </div>
@@ -170,4 +168,32 @@
         </div>
     </div>
 </div>
+
+@push('script')
+
+<script>
+    function updateSetting(settingKey, settingValue) {
+        $.ajax({
+            url: '/user/update-setting', 
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                setting_key: settingKey,
+                setting_value: settingValue
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr) {
+                toastr.error('An error occurred while updating the setting.');
+            }
+        });
+    }
+</script>
+@endpush
+
 @endsection

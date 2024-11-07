@@ -427,6 +427,28 @@ class UserController extends Controller {
         return view('frontend.user.setting');
     }
 
+    public function updateSetting(Request $request)
+    {
+        $user = Auth::guard('user')->user();
+
+        $request->validate([
+            'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
+            'setting_value' => 'required|string|in:all,premium,no-visible',
+        ]);
+
+        $settingKey = $request->input('setting_key');
+        $settingValue = $request->input('setting_value');
+
+        $user->$settingKey = $settingValue;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => ucfirst(str_replace('_', ' ', $settingKey)) . ' updated successfully!',
+        ]);
+    }
+
+
     public function like($userId) {
         $likerId = Auth::guard('user')->id();
     

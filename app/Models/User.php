@@ -42,6 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    const VISIBILITY_ALL = 'all';
+    const VISIBILITY_PREMIUM = 'premium';
+
+    const REQUEST_ALL = 'all';
+    const REQUEST_PREMIUM = 'premium';
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class);
@@ -97,5 +103,23 @@ class User extends Authenticatable
             $query->where('sent_from', $this->id)
                 ->orWhere('sent_to', $this->id);
         });
+    }
+
+
+    public function canReceiveInterestRequests()
+    {
+        return $this->interest_request_access === self::REQUEST_ALL ||
+               ($this->interest_request_access === self::REQUEST_PREMIUM && $this->isPremium());
+    }
+
+    public function canViewProfile($viewer)
+    {
+        return $this->profile_visibility === self::VISIBILITY_ALL ||
+               ($this->profile_visibility === self::VISIBILITY_PREMIUM && $viewer->isPremium());
+    }
+
+    public function isPremium()
+    {
+        return $this->currentPackage() && $this->currentPackage()->price>0;
     }
 }

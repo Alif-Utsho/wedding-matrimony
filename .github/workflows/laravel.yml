@@ -1,3 +1,34 @@
+# on: push
+# name: 🚀 Deploy website on push
+# jobs:
+#   web-deploy:
+#     name: 🎉 Deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: 🚚 Get latest code
+#       uses: actions/checkout@v4
+
+#     - name: 🔧 Set up PHP
+#       uses: shivammathur/setup-php@v2
+#       with:
+#         php-version: '8.2'
+
+#     - name: Copy .env
+#       run: cp .env.example .env
+
+#     - name: 📥 Install Composer dependencies
+#       run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
+        
+#     - name: 🛠️ Run migrations
+#       run: php artisan migrate --force
+      
+#     - name: 📂 Sync files
+#       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#       with:
+#         server: ${{ secrets.FTP_SERVER }}
+#         username: ${{ secrets.FTP_USERNAME }}
+#         password: ${{ secrets.ftp_PASSWORD }}
+
 on: push
 name: 🚀 Deploy website on push
 jobs:
@@ -6,26 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-
-    - name: 🔧 Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-
-    - name: Copy .env
-      run: cp .env.example .env
-
-    - name: 📥 Install Composer dependencies
-      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --optimize-autoloader
-        
-    - name: 🛠️ Run migrations
-      run: php artisan migrate --force
-      
+      uses: actions/checkout@v2.3.2
+    
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.ftp_PASSWORD }}
-    
+        server-dir: /home/deshiicom/matrimony.deshii.com.bd

@@ -39,6 +39,8 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::get('chat/list', [UserController::class, 'chatList'])->name('user.chat.list');
     Route::get('plan', [UserController::class, 'userPlan'])->name('user.plan');
     Route::get('setting', [UserController::class, 'setting'])->name('user.setting');
+    Route::post('update-setting', [UserController::class, 'updateSetting'])->name('user.updateSetting');
+
 
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');

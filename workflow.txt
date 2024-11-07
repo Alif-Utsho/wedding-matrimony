@@ -3,6 +3,7 @@
     WEB
         Profile card sepertated
         Plan card sepertated
+        Profile setting(View & Interest control)
     API
         --
 
