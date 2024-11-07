@@ -59,7 +59,21 @@ class UserController extends Controller {
 
     public function profile(){
         $user    = User::find(Auth::guard('user')->id());
-        return view('frontend.user.profile', compact('user'));
+
+        $profile_completion = $this->getProfileCompletion();
+
+        $userPackage = UserPackage::where('user_id', $user->id)
+            ->where('expired_at', '>', now())
+            ->latest()
+            ->with('package')
+            ->first();
+
+        if ($userPackage) {
+            $package = Package::find($userPackage->package_id);
+        } else {
+            $package = Package::where('price', 0)->first();
+        }
+        return view('frontend.user.profile', compact('user', 'profile_completion', 'userPackage','package'));
     }
 
     public function profileEdit() {

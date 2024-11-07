@@ -1,9 +1,20 @@
 
+07-NOV-24
+    WEB
+        Profile card sepertated
+        Plan card sepertated
+    API
+        --
+
+---------------------------------------------
+
 06-NOV-24
     WEB
         Profile setting page
         Profile completion
         Dashboard plan card
+        Profile Views & click count
+        Matching profile list
     API
         --
 
