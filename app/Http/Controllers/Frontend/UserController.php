@@ -229,7 +229,7 @@ class UserController extends Controller {
         }
         $matchingProfiles = $query->pluck('user_id');
         
-        $matchingUsers = User::whereIn('id', $matchingProfiles)->inRandomOrder()->get();
+        $matchingUsers = User::whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
 
         return $matchingUsers;
     }
