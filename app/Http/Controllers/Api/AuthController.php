@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -40,5 +41,29 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'token' => $token,
         ]);
+    }
+
+    public function register(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255', 
+            'phone' => 'required|numeric|digits_between:10,15',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $userService = new UserService();
+        $user = $userService->createUser($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+        ], 201);
     }
 }

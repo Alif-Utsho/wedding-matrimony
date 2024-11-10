@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\Toastr;
-
+use App\Services\UserService;
 
 class AuthController extends Controller
 {
@@ -60,19 +60,8 @@ class AuthController extends Controller
             'agree' => 'accepted', 
         ]);
 
-        $slug = Str::slug($request->name);
-        $userExist = User::where('slug', $slug)->count();
-        if($userExist){
-            $slug = $slug . '-' . $userExist+1;
-        }
-
-        $user = new User(); 
-        $user->name = $request->name;
-        $user->slug = $slug;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = bcrypt($request->password); 
-        $user->save();
+        $userService = new UserService();
+        $user = $userService->createUser($request->all());
 
         Auth::guard('user')->login($user);
 

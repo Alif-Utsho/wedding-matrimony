@@ -5,8 +5,8 @@
         Off-canvas dynamic
         Religion added
     API
-        --
-
+        JWT Login
+        
 ---------------------------------------------
 
 07-NOV-24
