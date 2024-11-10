@@ -43,7 +43,7 @@
                             <div class="pro-pg-intro">
                                 <h1>{{ $user->name }}</h1>
                                 <div class="pro-info-status">
-                                    <span class="stat-1"><b>100</b> viewers</span>
+                                    <span class="stat-1"><b>{{ $user->profileViews()->count() }}</b> viewers</span>
                                     <span class="stat-2"><b>Available</b> online</span>
                                 </div>
                                 <ul>
@@ -144,7 +144,7 @@
                                         {{ $user->profile->height }}</li>
                                     <li><b>Weight:</b> {{ $user->profile->weight }}kg</li>
                                     <li><b>Degree:</b> {{ $user->profile->career->degree }}</li>
-                                    <li><b>Religion:</b> Any</li>
+                                    <li><b>Religion:</b> {{ $user->profile->religion }}</li>
                                     <li><b>Profession:</b> {{ $user->profile->career->type }}</li>
                                     <li><b>Company:</b> {{ $user->profile->career->company_name }}</li>
                                     <li><b>Position:</b> {{ $user->profile->career->position }}</li>

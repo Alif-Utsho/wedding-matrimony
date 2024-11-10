@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('user_id'); // Foreign key reference to users table
             $table->string('image', 200)->nullable(); // Image file name with varchar(200), allowing NULL
             $table->string('gender', 10); // Gender field
+            $table->string('religion', 20)->nullable();
             $table->integer('city_id'); // Foreign key reference to cities table
             $table->date('birth_date'); // Birth date
             $table->integer('age'); // Age

@@ -1,6 +1,5 @@
 @extends('frontend.layouts.master')
 @section('content')
-
     <!-- BANNER & SEARCH -->
     <section>
         <div class="str">
@@ -48,10 +47,9 @@
                                                 <select class="chosen-select" name="religion">
                                                     <option>Religion</option>
                                                     <option>Any</option>
-                                                    <option>Hindu</option>
-                                                    <option>Muslim</option>
-                                                    <option>Jain</option>
-                                                    <option>Christian</option>
+                                                    @foreach (App\Enums\Religion::all() as $religion)
+                                                        <option value="{{ $religion }}">{{ $religion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </li>
@@ -61,8 +59,8 @@
                                                 <select class="chosen-select" name="location">
                                                     <option value="">Location</option>
                                                     <option value="">Any Location</option>
-                                                    @foreach($cities as $city)
-                                                    <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->name }}">{{ $city->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -86,12 +84,12 @@
         <div class="hom-ban-sli">
             <div>
                 <ul class="ban-sli">
-                    @foreach($banners as $banner)
-                    <li>
-                        <div class="image">
-                            <img src="{{ asset($banner->image) }}" alt="" loading="lazy">
-                        </div>
-                    </li>
+                    @foreach ($banners as $banner)
+                        <li>
+                            <div class="image">
+                                <img src="{{ asset($banner->image) }}" alt="" loading="lazy">
+                            </div>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -119,17 +117,18 @@
                     </div>
                     <div class="home-acces">
                         <ul class="hom-qui-acc-sli">
-                            @foreach($services as $service)
-                            <li>
-                                <div class="wow fadeInUp hacc" data-wow-delay="0.1s" style="background-image: url({{ asset($service->image) }});">
-                                    <div class="con">
-                                        <img src="{{ asset($service->icon) }}" alt="" loading="lazy">
-                                        <h4>{{ $service->name }}</h4>
-                                        <p>{{ $service->title }}</p>
-                                        <a href="{{ $service->link }}">View more</a>
+                            @foreach ($services as $service)
+                                <li>
+                                    <div class="wow fadeInUp hacc" data-wow-delay="0.1s"
+                                        style="background-image: url({{ asset($service->image) }});">
+                                        <div class="con">
+                                            <img src="{{ asset($service->icon) }}" alt="" loading="lazy">
+                                            <h4>{{ $service->name }}</h4>
+                                            <p>{{ $service->title }}</p>
+                                            <a href="{{ $service->link }}">View more</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -152,20 +151,20 @@
                     </div>
                     <div class="slid-inn cus-revi">
                         <ul class="slider3">
-                            @foreach($testimonials as $testimonial)
-                            <li>
-                                <div class="cus-revi-box">
-                                    <div class="revi-im">
-                                        <img src="{{ asset($testimonial->image) }}" alt="" loading="lazy">
-                                        <i class="cir-com cir-1"></i>
-                                        <i class="cir-com cir-2"></i>
-                                        <i class="cir-com cir-3"></i>
+                            @foreach ($testimonials as $testimonial)
+                                <li>
+                                    <div class="cus-revi-box">
+                                        <div class="revi-im">
+                                            <img src="{{ asset($testimonial->image) }}" alt="" loading="lazy">
+                                            <i class="cir-com cir-1"></i>
+                                            <i class="cir-com cir-2"></i>
+                                            <i class="cir-com cir-3"></i>
+                                        </div>
+                                        <p>{{ $testimonial->description }}</p>
+                                        <h5>{{ $testimonial->title }}</h5>
+                                        <span>{{ $testimonial->location }}</span>
                                     </div>
-                                    <p>{{ $testimonial->description }}</p>
-                                    <h5>{{ $testimonial->title }}</h5>
-                                    <span>{{ $testimonial->location }}</span>
-                                </div>
-                            </li>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -243,8 +242,10 @@
                     <div class="col-lg-6">
                         <div class="ab-wel-lhs">
                             <span class="ab-wel-3"></span>
-                            <img src="{{ asset('frontend/images/about/1.jpg') }}" alt="" loading="lazy" class="ab-wel-1">
-                            <img src="{{ asset('frontend/images/couples/20.jpg') }}" alt="" loading="lazy" class="ab-wel-2">
+                            <img src="{{ asset('frontend/images/about/1.jpg') }}" alt="" loading="lazy"
+                                class="ab-wel-1">
+                            <img src="{{ asset('frontend/images/couples/20.jpg') }}" alt="" loading="lazy"
+                                class="ab-wel-2">
                             <span class="ab-wel-4"></span>
                         </div>
                     </div>
@@ -347,38 +348,38 @@
                     </div>
                     <div class="inn">
                         <ul>
-                            @foreach($wedding_steps as $step)
-                            @if($loop->iteration%2==0)
-                            <li>
-                                <div class="tline-inn tline-inn-reve">
-                                    <div class="tline-con animate animate__animated animate__slower"
-                                        data-ani="animate__fadeInUp">
-                                        <h5>{{ $step->title }}</h5>
-                                        <span>{{ $step->time }}</span>
-                                        <p>{{ $step->description }}</p>
-                                    </div>
-                                    <div class="tline-im animate animate__animated animate__slow"
-                                        data-ani="animate__fadeInUp">
-                                        <img src="{{ asset($step->image) }}" alt="" loading="lazy">
-                                    </div>
-                                </div>
-                            </li>
-                            @else
-                            <li>
-                                <div class="tline-inn">
-                                    <div class="tline-im animate animate__animated animate__slower"
-                                        data-ani="animate__fadeInUp">
-                                        <img src="{{ asset($step->image) }}" alt="" loading="lazy">
-                                    </div>
-                                    <div class="tline-con animate animate__animated animate__slow"
-                                        data-ani="animate__fadeInUp">
-                                        <h5>{{ $step->title }}</h5>
-                                        <span>{{ $step->time }}</span>
-                                        <p>{{ $step->description }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                            @endif
+                            @foreach ($wedding_steps as $step)
+                                @if ($loop->iteration % 2 == 0)
+                                    <li>
+                                        <div class="tline-inn tline-inn-reve">
+                                            <div class="tline-con animate animate__animated animate__slower"
+                                                data-ani="animate__fadeInUp">
+                                                <h5>{{ $step->title }}</h5>
+                                                <span>{{ $step->time }}</span>
+                                                <p>{{ $step->description }}</p>
+                                            </div>
+                                            <div class="tline-im animate animate__animated animate__slow"
+                                                data-ani="animate__fadeInUp">
+                                                <img src="{{ asset($step->image) }}" alt="" loading="lazy">
+                                            </div>
+                                        </div>
+                                    </li>
+                                @else
+                                    <li>
+                                        <div class="tline-inn">
+                                            <div class="tline-im animate animate__animated animate__slower"
+                                                data-ani="animate__fadeInUp">
+                                                <img src="{{ asset($step->image) }}" alt="" loading="lazy">
+                                            </div>
+                                            <div class="tline-con animate animate__animated animate__slow"
+                                                data-ani="animate__fadeInUp">
+                                                <h5>{{ $step->title }}</h5>
+                                                <span>{{ $step->time }}</span>
+                                                <p>{{ $step->description }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -403,17 +404,17 @@
             </div>
             <div class="hom-coup-test">
                 <ul class="couple-sli">
-                    @foreach($weddings as $wedding)
-                    <li>
-                        <div class="hom-coup-box">
-                            <span class="leaf"></span>
-                            <img src="{{ asset($wedding->couple_image) }}" alt="" loading="lazy">
-                            <div class="bx">
-                                <h4>{{ $wedding->couple_name }} <span>{{ $wedding->location }}</span></h4>
-                                <a href="/wedding-details/{{ $wedding->id }}" class="sml-cta cta-dark">View more</a>
+                    @foreach ($weddings as $wedding)
+                        <li>
+                            <div class="hom-coup-box">
+                                <span class="leaf"></span>
+                                <img src="{{ asset($wedding->couple_image) }}" alt="" loading="lazy">
+                                <div class="bx">
+                                    <h4>{{ $wedding->couple_name }} <span>{{ $wedding->location }}</span></h4>
+                                    <a href="/wedding-details/{{ $wedding->id }}" class="sml-cta cta-dark">View more</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -446,7 +447,7 @@
                         <span class="leaf1"></span>
                         <span class="tit-ani-"></span>
                     </div>
-                    
+
                     @foreach ($galleries->chunk(2) as $chunkIndex => $galleryChunk)
                         @if ($chunkIndex % 2 == 0)
                             <!-- Use col-md-2 for odd chunks -->
@@ -454,8 +455,8 @@
                                 @foreach ($galleryChunk as $gallery)
                                     <div class="gal-im animate animate__animated animate__slower"
                                         data-ani="animate__flipInX">
-                                        <img src="{{ asset($gallery->image) }}" class="gal-siz-{{ $loop->first ? 1 : 2 }}"
-                                            alt="">
+                                        <img src="{{ asset($gallery->image) }}"
+                                            class="gal-siz-{{ $loop->first ? 1 : 2 }}" alt="">
                                         <div class="txt">
                                             <span>Wedding</span>
                                             <h4>{{ $wedding->couple_name }}</h4>
@@ -469,8 +470,8 @@
                                 @foreach ($galleryChunk as $gallery)
                                     <div class="gal-im animate animate__animated animate__slower"
                                         data-ani="animate__flipInX">
-                                        <img src="{{ asset($gallery->image) }}" class="gal-siz-{{ $loop->first ? 2 : 1 }}"
-                                            alt="">
+                                        <img src="{{ asset($gallery->image) }}"
+                                            class="gal-siz-{{ $loop->first ? 2 : 1 }}" alt="">
                                         <div class="txt">
                                             <span>Wedding</span>
                                             <h4>{{ $wedding->couple_name }}</h4>
@@ -500,16 +501,17 @@
                     </div>
                     <div class="blog">
                         <ul>
-                            @foreach($blogs as $blog)
-                            <li>
-                                <div class="blog-box">
-                                    <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
-                                    <span>{{ $blog->tag }}</span>
-                                    <h2>{{ $blog->title }}</h2>
-                                    <p>{{ $blog->short_description }}</p>
-                                    <a href="/blog-details/{{ $blog->id }}" class="cta-dark"><span>Read more</span></a>
-                                </div>
-                            </li>
+                            @foreach ($blogs as $blog)
+                                <li>
+                                    <div class="blog-box">
+                                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
+                                        <span>{{ $blog->tag }}</span>
+                                        <h2>{{ $blog->title }}</h2>
+                                        <p>{{ $blog->short_description }}</p>
+                                        <a href="/blog-details/{{ $blog->id }}" class="cta-dark"><span>Read
+                                                more</span></a>
+                                    </div>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -538,5 +540,4 @@
         </div>
     </section>
     <!-- END -->
-
 @endsection

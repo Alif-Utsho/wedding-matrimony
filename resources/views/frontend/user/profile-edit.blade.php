@@ -73,20 +73,24 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
+
                                             <div class="col-md-6 form-group">
-                                                <label class="lb">City:</label>
+                                                <label class="lb">Religion:</label>
                                                 <select class="form-select chosen-select"
-                                                    data-placeholder="Select your City" name="city_id"
-                                                    value="{{ $user->profile->city_id ?? old('city_id') }}">
+                                                    data-placeholder="Select your Religion" name="religion">
                                                     <option value="">Select</option>
-                                                    @foreach ($cities as $city)
-                                                        <option value="{{ $city->id }}" {{ $user->profile && $city->id===$user->profile->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                    @foreach(\App\Enums\Religion::all() as $value => $label)
+                                                        <option value="{{ $label }}" 
+                                                            {{ (isset($user->profile->religion) && $user->profile->religion == $label) ? 'selected' : (old('religion') == $label ? 'selected' : '') }}>
+                                                            {{ $label }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
-                                                @error('city_id')
+                                                @error('religion')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
+                                            
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
@@ -142,6 +146,20 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <label class="lb">City:</label>
+                                            <select class="form-select chosen-select"
+                                                data-placeholder="Select your City" name="city_id"
+                                                value="{{ $user->profile->city_id ?? old('city_id') }}">
+                                                <option value="">Select</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}" {{ $user->profile && $city->id===$user->profile->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('city_id')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label class="lb">Address:</label>

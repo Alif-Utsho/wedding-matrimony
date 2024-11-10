@@ -70,6 +70,13 @@ class FrontendController extends Controller
                 $query->where('gender', $gender);
             });
         }
+
+        if ($request->filled('religion')) {
+            $religion = $request->religion;
+            $userQuery->whereHas('profile', function($query) use ($religion) {
+                $query->where('religion', $religion);
+            });
+        }
     
         if ($request->filled('age_range')) {
             $ageRange = explode('-to-', $request->age_range);

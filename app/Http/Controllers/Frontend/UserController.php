@@ -92,6 +92,7 @@ class UserController extends Controller {
             'name'         => 'required|string|max:200',
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
+            'religion'      => 'required|string',
             'birth_date'   => 'required|date',
             'height'       => 'required|numeric|min:30|max:300',
             'weight'       => 'required|numeric|min:10|max:300',
@@ -145,6 +146,7 @@ class UserController extends Controller {
             [
                 'gender'       => $request->gender,
                 'city_id'      => $request->city_id,
+                'religion'     => $request->religion,
                 'birth_date'   => $request->birth_date,
                 'height'       => $request->height,
                 'weight'       => $request->weight,
@@ -218,7 +220,8 @@ class UserController extends Controller {
 
         $query = UserProfile::where('user_id', '!=', $userId)
             // ->where('city_id', $cityId)
-            ->where('gender', $oppositeGender);
+            ->where('gender', $oppositeGender)
+            ->where('religion', $userProfile->religion);
 
         if ($userProfile->gender === 'Male') {
             $query->where('age', '<', $ageMax)
