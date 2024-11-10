@@ -67,7 +67,7 @@
             <div class="user-bio">
                 <h5>Ashley emyy</h5>
                 <span>Senior personal advisor</span>
-                <a href="enquiry.html" class="btn btn-primary btn-sm">Ask your doubts</a>
+                <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
         </div>
         <div class="menu-pop-soci">
@@ -96,7 +96,7 @@
             <div class="user-bio">
                 <h5>Ashley emyy</h5>
                 <span>Senior personal advisor</span>
-                <a href="enquiry.html" class="btn btn-primary btn-sm">Ask your doubts</a>
+                <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
         </div>
         <div class="menu-pop-soci">
@@ -151,7 +151,7 @@
             <div class="inn">
                 <h3>Tell us your Needs</h3>
                 <p>Tell us what kind of service you are looking for.</p>
-                <a href="enquiry.html">Register for free</a>
+                <a href="/enquiry">Register for free</a>
             </div>
         </div>
         <!-- END HELP BOX -->

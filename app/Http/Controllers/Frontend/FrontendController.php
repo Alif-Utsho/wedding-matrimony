@@ -20,6 +20,7 @@ use App\Models\Invitation;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
+use App\Models\Enquiry;
 use App\Models\ProfileClick;
 use App\Models\ProfileLike;
 use App\Models\ProfileView;
@@ -235,5 +236,24 @@ class FrontendController extends Controller
 
     public function contact() {
         return view('frontend.pages.contact');
+    }
+
+    public function enquiry() {
+        return view('frontend.pages.enquiry');
+    }
+
+    public function enquirySubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'required|string',
+        ]);
+
+        Enquiry::create($request->only(['name', 'email', 'phone', 'message']));
+
+        Toastr::success('Your enquiry has been submitted successfully.');
+        return redirect('/');
     }
 }

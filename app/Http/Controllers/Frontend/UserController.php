@@ -429,7 +429,7 @@ class UserController extends Controller {
 
     public function updateSetting(Request $request)
     {
-        $user = Auth::guard('user')->user();
+        $user = User::find(Auth::guard('user')->id());
 
         $request->validate([
             'setting_key' => 'required|string|in:profile_visibility,interest_request_access',

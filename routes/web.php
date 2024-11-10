@@ -18,6 +18,8 @@ Route::get('/blogs', [FrontendController::class, 'blogs']);
 Route::get('/blog-details/{id}', [FrontendController::class, 'blogDetails']);
 Route::get('/plans', [FrontendController::class, 'plans']);
 Route::get('/contact', [FrontendController::class, 'contact']);
+Route::get('/enquiry', [FrontendController::class, 'enquiry']);
+Route::post('/enquiry-submit', [FrontendController::class, 'enquirySubmit']);
 
 Route::middleware('guest:user')->group(function () {
     Route::get('/user/login', [AuthController::class, 'login'])->name('user.login');
