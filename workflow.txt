@@ -1,4 +1,14 @@
 
+10-NOV-24
+    WEB
+        Enquiry sending
+        Off-canvas dynamic
+        Religion added
+    API
+        --
+
+---------------------------------------------
+
 07-NOV-24
     WEB
         Profile card sepertated
