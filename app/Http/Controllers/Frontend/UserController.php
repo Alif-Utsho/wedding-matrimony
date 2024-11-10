@@ -21,8 +21,17 @@ use App\Models\Package;
 use App\Models\PackagePayment;
 use App\Enums\PaymentStatus;
 use App\Models\ProfileLike;
+use App\Services\UserService;
 
 class UserController extends Controller {
+    
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index() {
         $profile_completion = $this->getProfileCompletion();
 
@@ -122,80 +131,7 @@ class UserController extends Controller {
             ]
         ]);
 
-        $imagePath = null;
-        $editProfile = UserProfile::where('user_id', $userId)->first();
-        if ($request->hasFile('image')) {
-            if($editProfile){
-                $existingImagePath = public_path($editProfile->image);
-    
-                if (File::exists($existingImagePath)) {
-                    File::delete($existingImagePath);
-                }
-            }
-
-            $file = $request->file('image');        
-            $destinationPath = public_path('frontend/uploads/profile');         
-            $fileName = time() . '_' . $file->getClientOriginalName();        
-            $file->move($destinationPath, $fileName);        
-            $imagePath = 'frontend/uploads/profile/' . $fileName;
-        }
-
-        // Update user_profiles table
-        $userProfile = UserProfile::updateOrCreate(
-            ['user_id' => $userId],
-            [
-                'gender'       => $request->gender,
-                'city_id'      => $request->city_id,
-                'religion'     => $request->religion,
-                'birth_date'   => $request->birth_date,
-                'height'       => $request->height,
-                'weight'       => $request->weight,
-                'fathers_name' => $request->fathers_name,
-                'mothers_name' => $request->mothers_name,
-                'address'      => $request->address,
-                'age'          => $request->age,
-                'image'        => $imagePath ?? $editProfile->image
-            ]
-        );
-
-        UserCareer::updateOrCreate(
-            ['user_id' => $userId, 'user_profile_id' => $userProfile->id],
-            [
-                'type'         => $request->type,
-                'company_name' => $request->company_name,
-                'salary'       => $request->salary,
-                'experience'   => $request->experience,
-                'degree'       => $request->degree,
-                'college'      => $request->college,
-                'school'       => $request->school,
-            ]
-        );
-
-        UserHobby::where('user_profile_id', $userProfile->id)->delete();
-
-        // Add new hobbies
-        if ($request->hobbies) {
-            foreach ($request->hobbies as $hobbyId) {
-                UserHobby::create([
-                    'user_id'         => $userId,
-                    'user_profile_id' => $userProfile->id,
-                    'hobby_id'        => $hobbyId,
-                ]);
-            }
-
-        }
-
-        UserSocialmedia::updateOrCreate(
-            ['user_id' => $userId, 'user_profile_id' => $userProfile->id],
-            [
-                'whatsApp'  => $request->whatsApp,
-                'facebook'  => $request->facebook,
-                'instagram' => $request->instagram,
-                'youtube'   => $request->youtube,
-                'linkedin'  => $request->linkedin,
-                'x'         => $request->x,
-            ]
-        );
+        $userProfile = $this->userService->updateUserProfile($request->all(), $user);
 
         Toastr::success('Profile Updated Successfully');
         return redirect('/user/profile');
