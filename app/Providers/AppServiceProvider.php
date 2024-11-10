@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Blog;
 use App\Models\Service;
 use App\Models\Ourteam;
 use App\Models\Contactinfo;
@@ -34,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
         if (Schema::hasTable('ourteams')) {
             $ourteams = Ourteam::where('status', 1)->get();
             view()->share('ourteams', $ourteams);
+            
+            $advisor = Ourteam::where('status', 1)->where('advisor', 1)->first();
+            view()->share('advisor', $advisor);
         }
 
         if (Schema::hasTable('cities')) {
@@ -50,5 +54,11 @@ class AppServiceProvider extends ServiceProvider
             $generalsetting = GeneralSetting::where('status', 1)->first();
             view()->share('generalsetting', $generalsetting);
         }
+
+        if (Schema::hasTable('blogs')) {
+            $blogs = Blog::where('status', true)->latest()->limit(4)->get();
+            view()->share('blogs', $blogs);
+        }
+
     }
 }

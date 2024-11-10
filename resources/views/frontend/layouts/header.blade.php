@@ -30,10 +30,8 @@
             </div>
             <div class="rhs">
                 <ul>
-                    <li><a href="tel:01678337722"><i class="fa fa-phone"
-                                aria-hidden="true"></i>&nbsp;01678337722</a></li>
-                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o"
-                                aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
+                    <li><a href="tel:01678337722"><i class="fa fa-phone"`aria-hidden="true"></i>&nbsp;01678337722</a></li>
+                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
                     <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
@@ -62,15 +60,15 @@
         <div class="menu-pop-help">
             <h4>Support Team</h4>
             <div class="user-pro">
-                <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+                <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
             </div>
             <div class="user-bio">
-                <h5>Ashley emyy</h5>
-                <span>Senior personal advisor</span>
+                <h5>{{ $advisor->title }}</h5>
+                <span>{{ $advisor->designation }}</span>
                 <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
         </div>
-        <div class="menu-pop-soci">
+        {{-- <div class="menu-pop-soci">
             <ul>
                 <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                 <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -79,7 +77,7 @@
                 <li><a href="#!"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
                 <li><a href="#!"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
-        </div>
+        </div> --}}
     </div>
 </div>
 <!-- END -->
@@ -91,15 +89,15 @@
         <div class="menu-pop-help">
             <h4>Support Team</h4>
             <div class="user-pro">
-                <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+                <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
             </div>
             <div class="user-bio">
-                <h5>Ashley emyy</h5>
-                <span>Senior personal advisor</span>
+                <h5>{{ $advisor->title }}</h5>
+                <span>{{ $advisor->designation }}</span>
                 <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
         </div>
-        <div class="menu-pop-soci">
+        {{-- <div class="menu-pop-soci">
             <ul>
                 <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                 <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -108,41 +106,23 @@
                 <li><a href="#!"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
                 <li><a href="#!"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
-        </div>
+        </div> --}}
 
         <div class="late-news">
             <h4>Latest news</h4>
             <ul>
+                @foreach($blogs as $blog)
                 <li>
                     <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/1.jpg') }}" alt="" loading="lazy">
+                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
                     </div>
                     <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
+                        <h5>{{ $blog->title }}</h5>
+                        <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
                     </div>
-                    <a href="blog-detail.html" class="fclick"></a>
+                    <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
                 </li>
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/3.jpg') }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
-                    </div>
-                    <a href="blog-detail.html" class="fclick"></a>
-                </li>
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/4.jpg') }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
-                    </div>
-                    <a href="blog-detail.html" class="fclick"></a>
-                </li>
+                @endforeach
             </ul>
         </div>
 
@@ -151,7 +131,7 @@
             <div class="inn">
                 <h3>Tell us your Needs</h3>
                 <p>Tell us what kind of service you are looking for.</p>
-                <a href="/enquiry">Register for free</a>
+                <a href="/enquiry">Ask your doubts</a>
             </div>
         </div>
         <!-- END HELP BOX -->
@@ -233,7 +213,20 @@
                         <h4>{{ Auth::guard('user')->user()->name }}</h4>
                         <span class="fclick"></span>
                     </div>
+                    <a href="/user/dashboard" class="stretched-link position-absolute" style="top: 0;left: 0;right: 0;bottom: 0;z-index: 5;"></a>
                 </div>
+                @else
+                    @if($advisor)
+                        <div class="al position-relative">
+                            <div class="head-pro head-pro-popup">
+                                <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
+                                <b>{{ Str::limit($advisor->designation, 10, '...') }}</b><br>
+                                <h4>{{ $advisor->title }}</h4>
+                                <span class="fclick"></span>
+                            </div>
+                        </div>
+                    @endif
+                @endif
 
                 <!--MOBILE MENU-->
                 <div class="mob-menu">
@@ -250,7 +243,6 @@
                     </div>
                 </div>
                 <!--END MOBILE MENU-->
-                @endif
             </div>
         </div>
     </div>

@@ -99,29 +99,20 @@
                 <div class="col-md-4">
                     <h4>HELP &amp; SUPPORT</h4>
                     <ul>
-                        <li><a href="about-us.html">About company</a>
-                        </li>
-                        <li><a href="#!">Contact us</a>
-                        </li>
-                        <li><a href="#!">Feedback</a>
-                        </li>
-                        <li><a href="about-us.html#faq">FAQs</a>
-                        </li>
-                        <li><a href="about-us.html#testimonials">Testimonials</a>
-                        </li>
+                        <li><a href="about-us.html">About company</a></li>
+                        <li><a href="#!">Contact us</a></li>
+                        <li><a href="#!">Feedback</a></li>
+                        <li><a href="about-us.html#faq">FAQs</a></li>
+                        <li><a href="about-us.html#testimonials">Testimonials</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 fot-soc">
                     <h4>SOCIAL MEDIA</h4>
                     <ul>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/1.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/2.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/3.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/5.png') }}"
-                                    alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/1.png') }}" alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/2.png') }}" alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/3.png') }}" alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/5.png') }}" alt=""></a></li>
                     </ul>
                 </div>
             </div>

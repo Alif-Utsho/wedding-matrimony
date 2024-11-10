@@ -15,12 +15,12 @@
         <div class="menu-pop-help">
             <h4>Support Team</h4>
             <div class="user-pro">
-                <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+                <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
             </div>
             <div class="user-bio">
-                <h5>Ashley emyy</h5>
-                <span>Senior personal advisor</span>
-                <a href="enquiry.html" class="btn btn-primary btn-sm">Ask your doubts</a>
+                <h5>{{ $advisor->title }}</h5>
+                <span>{{ $advisor->designation }}</span>
+                <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
         </div>
         <div class="menu-pop-soci">
@@ -36,43 +36,25 @@
         <div class="late-news">
             <h4>Latest news</h4>
             <ul>
+                @foreach($blogs as $blog)
                 <li>
                     <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/1.jpg') }}" alt="" loading="lazy">
+                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
                     </div>
                     <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
+                        <h5>{{ $blog->title }}</h5>
+                        <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
                     </div>
-                    <a href="blog-detail.html" class="fclick"></a>
+                    <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
                 </li>
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/3.jpg') }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
-                    </div>
-                    <a href="blog-detail.html" class="fclick"></a>
-                </li>
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset('frontend/images/couples/4.jpg') }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>Long established fact that a reader distracted</h5>
-                        <span class="ic-date">12 Dec 2023</span>
-                    </div>
-                    <a href="blog-detail.html" class="fclick"></a>
-                </li>
+                @endforeach
             </ul>
         </div>
         <div class="prof-rhs-help">
             <div class="inn">
                 <h3>Tell us your Needs</h3>
                 <p>Tell us what kind of service you are looking for.</p>
-                <a href="enquiry.html">Register for free</a>
+                <a href="/enquiry">Send Enquiry</a>
             </div>
         </div>
     </div>
@@ -83,17 +65,24 @@
 <div class="mob-me-all dashbord_menu">
     <div class="mob-me-clo"><img src="{{ asset('frontend/images/icon/close.svg') }}" alt=""></div>
     <div class="mv-bus">
+        @if(Auth::guard('user')->check())
         <div class="head-pro">
-            <img src="{{ asset('frontend/images/profiles/1.jpg') }}" alt="" loading="lazy">
+            <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}" alt="" loading="lazy">
             <b>user profile</b><br>
-            <h4>Ashley emyy</h4>
+            <h4>{{ Auth::guard('user')->user()->name }}</h4>
         </div>
         <ul>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="sign-up.html">Sign-up</a></li>
-            <li><a href="plans.html">Pricing plans</a></li>
-            <li><a href="all-profiles.html">Browse profiles</a></li>
+            <li><a href="/plans">Pricing plans</a></li>
+            <li><a href="/all-profile">Browse profiles</a></li>
         </ul>
+        @else
+        <ul>
+            <li><a href="/user/login">Login</a></li>
+            <li><a href="/user/register">Sign-up</a></li>
+            <li><a href="/plans">Pricing plans</a></li>
+            <li><a href="/all-profile">Browse profiles</a></li>
+        </ul>
+        @endif
     </div>
 </div>
 <!-- END USER PROFILE MENU POPUP -->

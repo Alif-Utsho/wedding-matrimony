@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 200);
             $table->string('designation', 50)->nullable();
             $table->string('image', 200);
+            $table->tinyInteger('advisor')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
