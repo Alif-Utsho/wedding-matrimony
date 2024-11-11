@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\File;
 use App\Models\UserProfile;
 use App\Models\UserCareer;
 use App\Models\UserHobby;
+use App\Models\UserImage;
 use App\Models\UserSocialmedia;
+use Exception;
 
 class UserService
 {
@@ -110,5 +112,45 @@ class UserService
         );
 
         return $userProfile;
+    }
+
+    public function uploadProfileImages($images, $userId){
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        $counter = 0;
+        foreach ($images as $image) {
+            $destinationPath = public_path('frontend/uploads/userimages');
+            
+            $fileName = time() . '_' . $image->getClientOriginalName();
+
+            $image->move($destinationPath, $fileName);
+
+            $imagePath = 'frontend/uploads/userimages/' . $fileName;
+
+            UserImage::create([
+                'user_id'        => $userId,
+                'user_profile_id'=> $userProfile->id,
+                'image'          => $imagePath,
+            ]);
+            $counter++;
+        }
+
+        return $counter;
+    }
+
+    public function deleteImage($id){
+        try{
+            $userImage = UserImage::findOrFail($id);
+            $imagePath = public_path($userImage->image);
+
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+
+            $userImage->delete();
+            return true;
+        } catch(Exception $e){
+            return false;
+        }
     }
 }

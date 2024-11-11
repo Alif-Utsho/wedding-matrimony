@@ -278,38 +278,22 @@ class UserController extends Controller {
             return response()->json(['message' => 'User profile not found'], 404);
         }
 
-        foreach ($request->file('images') as $image) {
-            $destinationPath = public_path('frontend/uploads/userimages');
-            
-            $fileName = time() . '_' . $image->getClientOriginalName();
+        $uploaded = $this->userService->uploadProfileImages($request->file('images'), $userId);
 
-            $image->move($destinationPath, $fileName);
-
-            $imagePath = 'frontend/uploads/userimages/' . $fileName;
-
-            UserImage::create([
-                'user_id'        => $userId,
-                'user_profile_id'=> $userProfile->id,
-                'image'          => $imagePath,
-            ]);
-        }
-
-        Toastr::success('Images uploaded successfully!');
+        Toastr::success("$uploaded Images uploaded successfully!");
         return redirect()->back();
     }
 
     public function deleteImage(Request $request) {
         $id = $request->imageId;
-        $userImage = UserImage::findOrFail($id);
-        $imagePath = public_path($userImage->image);
+        $result = $this->userService->deleteImage($id);
 
-        if (File::exists($imagePath)) {
-            File::delete($imagePath);
+        if($result){
+            Toastr::success('Image deleted successfully.');
+        } else {
+            Toastr::error('Something went wrong!');
         }
-
-        $userImage->delete();
-
-        Toastr::success('Image deleted successfully.');
+        
         return redirect()->back();
     }
 

@@ -3,7 +3,10 @@
     WEB
         
     API
-        
+        API Authorization
+        Ensure profile updated
+        Image upload & delete
+        Get full profile
 
 ---------------------------------------------
 

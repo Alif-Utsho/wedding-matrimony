@@ -23,6 +23,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::middleware('ensure.profile.updated')->group(function(){
-        Route::get('dashboard', [UserController::class, 'dashboard']);
+        Route::get('profile', [UserController::class, 'profile']);
+        Route::post('image-upload', [UserController::class, 'imageUpload']);
+        Route::post('image-delete', [UserController::class, 'deleteImage']);
     });
 });

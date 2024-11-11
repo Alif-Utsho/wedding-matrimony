@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,7 +94,58 @@ class UserController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function dashboard(){
-        return "Working";
+    public function profile(){
+        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia')->find(Auth::guard('api')->id());
+        return response()->json(compact('user'));
+    }
+
+    public function imageUpload(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'images' => [
+                'required',
+                'array',
+                'min:1', 
+            ],
+            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048', 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $userId = Auth::guard('api')->id();
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        if (!$userProfile) {
+            return response()->json(['message' => 'User profile not found'], 404);
+        }
+
+        $uploaded = $this->userService->uploadProfileImages($request->file('images'), $userId);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "$uploaded Images uploaded successfully!",
+        ], Response::HTTP_OK);
+    }
+
+    public function deleteImage(Request $request) {
+        $id = $request->imageId;
+        $result = $this->userService->deleteImage($id);
+
+        if($result){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Image deleted successfully',
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
