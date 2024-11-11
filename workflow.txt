@@ -5,8 +5,9 @@
     API
         API Authorization
         Ensure profile updated
-        Image upload & delete
         Get full profile
+        Image upload & delete
+        Get all profile
 
 ---------------------------------------------
 
