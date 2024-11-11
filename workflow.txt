@@ -9,6 +9,7 @@
         Image upload & delete
         Get all profile
         Search Profile
+        Profile view and authorization
 
 ---------------------------------------------
 

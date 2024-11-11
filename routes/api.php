@@ -14,6 +14,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('/all-profile', [FrontendController::class, 'allProfile']);
 Route::get('/search-profile', [FrontendController::class, 'searchProfile']);
+Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
 
 Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/user/register', [AuthController::class, 'register']);

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invitation;
+use App\Models\ProfileClick;
+use App\Models\ProfileView;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
 use App\Services\FrontendService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
@@ -39,5 +44,62 @@ class FrontendController extends Controller
         $users = $this->frontendService->getUsers($request);
 
         return response()->json(compact('users'));
+    }
+
+    public function profileDetails($slug)
+    {
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => 'required|string|exists:users,slug', // Ensuring slug exists in the users table
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $user = User::where('slug', $slug)
+                    ->where('profile_visibility', '<>', 'no-visible')
+                    ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $alreadyViewed = ProfileView::where('user_id', $user->id)
+            ->where('viewer_id', Auth::guard('api')->id())
+            ->exists();
+
+        if (!$alreadyViewed) {
+            ProfileView::create([
+                'user_id' => $user->id,
+                'viewer_id' => Auth::guard('api')->id(),
+            ]);
+        }
+
+        ProfileClick::create([
+            'user_id' => $user->id,
+            'clicker_id' => Auth::guard('api')->id(),
+        ]);
+
+        $related_users = User::where('id', '!=', $user->id)
+            ->whereHas('profile', function ($query) use ($user) {
+                $query->where('gender', $user->profile->gender)
+                    ->whereBetween('age', [$user->profile->age - 5, $user->profile->age + 5]);
+            })
+            ->limit(6)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'user' => $user,
+                'related_users' => $related_users,
+            ],
+        ], Response::HTTP_OK);
     }
 }
