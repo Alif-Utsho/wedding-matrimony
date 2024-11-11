@@ -8,20 +8,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Toastr;
-
+use App\Services\InvitationService;
 
 class InvitationController extends Controller
 {
-    function __construct()
+    protected $invitationService;
+
+    function __construct(InvitationService $invitationService)
     {
         $this->middleware('check.access:send-interest')->only(['sendInvitation']);
+        $this->invitationService = $invitationService;
     }
     
     public function invitations(){
         $user = User::find(Auth::guard('user')->user()->id);
 
-        $invitations = Invitation::where('sent_to', $user->id)->latest()->get();
-        $sent_invitations = Invitation::where('sent_from', $user->id)->latest()->get();
+        $invitations = $this->invitationService->getAllReceived($user->id);
+        $sent_invitations = $this->invitationService->getAllSent($user->id);
         return view('frontend.user.invitations', compact('invitations', 'sent_invitations'));
     }
 
@@ -30,14 +33,17 @@ class InvitationController extends Controller
             'userId' => 'required',  
         ]);
     
-        Invitation::create([
-            'sent_from' => Auth::guard('user')->user()->id, 
-            'sent_to' => $request->userId,  
-        ]);
+        $result = $this->invitationService->send(Auth::guard('user')->id(), $request->userId);
     
-        return response()->json([
-            'message' => 'Invitation sent successfully!'
-        ], 200);
+        if($result){
+            return response()->json([
+                'message' => 'Invitation sent successfully!'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong!'
+            ], 400);
+        }
 
     }
 
@@ -47,17 +53,16 @@ class InvitationController extends Controller
             'invitationId' => 'required|exists:invitations,id',
         ]);
 
-        $invitation = Invitation::findOrFail($request->invitationId);
         $userId = Auth::guard('user')->user()->id;
+        $result = $this->invitationService->cancel($request->invitationId, $userId);
 
-        if ($invitation->sent_from === $userId || $invitation->sent_to === $userId) {
-            $invitation->delete();
-    
+        if($result){
             Toastr::success('Invitation canceled successfully.');
             return redirect()->back();
+        } else {
+            Toastr::error('Something went wrong!');
+            return redirect()->back();
         }
-        return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
-
     }
 
     public function acceptInvitation(Request $request)
@@ -66,26 +71,10 @@ class InvitationController extends Controller
             'invitationId' => 'required|exists:invitations,id',
         ]);
 
-        $invitation = Invitation::findOrFail($request->invitationId);
-
-        if ($invitation->sent_to !== Auth::guard('user')->user()->id) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'message' => 'Unauthorized action.',
-                ], 403);
-            }
-            return redirect()->back()->withErrors(['message' => 'Unauthorized action.']);
-        }
-
-        $invitation->status = true;
-        $invitation->save();
-
-        if ($request->ajax()) {
-            return response()->json([
-                'message' => 'Invitation accepted successfully!',
-            ], 200);
-        }
-        Toastr::success('Invitation accepted successfully.');
+        $userId = Auth::guard('user')->user()->id;
+        $result = $this->invitationService->accept($request->invitationId, $userId);
+        
+        Toastr::error($result['message']);
         return redirect()->back();
     }
 

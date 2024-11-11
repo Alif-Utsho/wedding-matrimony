@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\InvitationController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,11 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('profile', [UserController::class, 'profile']);
         Route::post('image-upload', [UserController::class, 'imageUpload']);
         Route::post('image-delete', [UserController::class, 'deleteImage']);
+
+        Route::get('invitations', [InvitationController::class, 'invitations']);
+        Route::post('send-invitation', [InvitationController::class, 'sendInvitation']);
+        Route::post('cancel-invitation', [InvitationController::class, 'cancelInvitation']);
+        Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation']);
+
     });
 });

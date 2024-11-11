@@ -10,6 +10,7 @@
         Get all profile
         Search Profile
         Profile view and authorization
+        Invitations (List, Send, Accept, Cancel)
 
 ---------------------------------------------
 

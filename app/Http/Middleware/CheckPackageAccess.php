@@ -19,7 +19,9 @@ class CheckPackageAccess
      */
     public function handle(Request $request, Closure $next, $feature): Response
     {
-        $user = Auth::guard('user')->user() ?? Auth::guard('api')->user();
+        $userId = Auth::guard('user')->id() ?? Auth::guard('api')->id();
+        $user = User::find($userId);
+
         if(!$user){
             if ($request->ajax() || $request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
