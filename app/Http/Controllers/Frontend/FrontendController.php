@@ -24,13 +24,17 @@ use App\Models\Enquiry;
 use App\Models\ProfileClick;
 use App\Models\ProfileLike;
 use App\Models\ProfileView;
+use App\Services\FrontendService;
 
 class FrontendController extends Controller
 {
 
-    function __construct()
+    protected $frontendService;
+
+    function __construct(FrontendService $frontendService)
     {
         $this->middleware('check.access:profile-view')->only('profileDetails');
+        $this->frontendService = $frontendService;
     }
 
 
@@ -58,49 +62,8 @@ class FrontendController extends Controller
     }
 
     public function allProfile(Request $request){
+        $users = $this->frontendService->getUsers($request);
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
-
-        if(Auth::guard('user')->check()) {
-            $userQuery->where('id', '<>', Auth::guard('user')->user()->id);
-        }
-
-        if ($request->filled('gender')) {
-            $gender = $request->gender === 'Men' ? 'Male' : 'Female';
-            $userQuery->whereHas('profile', function($query) use ($gender) {
-                $query->where('gender', $gender);
-            });
-        }
-
-        if ($request->filled('religion')) {
-            $religion = $request->religion;
-            $userQuery->whereHas('profile', function($query) use ($religion) {
-                $query->where('religion', $religion);
-            });
-        }
-    
-        if ($request->filled('age_range')) {
-            $ageRange = explode('-to-', $request->age_range);
-            if (count($ageRange) == 2) {
-                $minAge = $ageRange[0];
-                $maxAge = $ageRange[1];
-
-                $userQuery->whereHas('profile', function($query) use ($minAge, $maxAge) {
-                    $query->whereBetween('age', [$minAge, $maxAge]);
-                });
-            }
-        }
-    
-        if ($request->filled('location')) {
-            $city = City::where('name', $request->location)->first();
-            if($city){
-                $userQuery->whereHas('profile', function($query) use ($city) {
-                    $query->where('city_id', $city->id);
-                });
-            }
-        }
-
-        $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
-
         
         $likedUsers = ProfileLike::where('liker_id', Auth::guard('user')->id())
                 ->whereIn('user_id', $users->pluck('id'))

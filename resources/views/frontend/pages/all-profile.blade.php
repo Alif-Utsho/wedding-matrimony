@@ -31,9 +31,9 @@
                                 <div class="form-group">
                                     <select class="chosen-select" name="gender">
                                         <option value="">I'm looking for</option>
-                                        <option value="Men" {{ request()->gender == 'Men' ? 'selected' : '' }}>Men</option>
-                                        <option value="Women" {{ request()->gender == 'Women' ? 'selected' : '' }}>Women
-                                        </option>
+                                        @foreach(\App\Enums\GenderEnum::options() as $gender)
+                                        <option value="{{ $gender }}" {{ request()->gender == $gender ? 'selected' : '' }}>{{ $gender }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
