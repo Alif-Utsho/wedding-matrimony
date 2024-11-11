@@ -17,8 +17,12 @@ Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/user/register', [AuthController::class, 'register']);
 
 
-Route::middleware('auth:api')->prefix('user')->group(function () {
+Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::get('profile-edit', [UserController::class, 'profileEdit']);
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::middleware('ensure.profile.updated')->group(function(){
+        Route::get('dashboard', [UserController::class, 'dashboard']);
+    });
 });

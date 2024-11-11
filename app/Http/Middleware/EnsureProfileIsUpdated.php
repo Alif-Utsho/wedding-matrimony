@@ -13,10 +13,10 @@ class EnsureProfileIsUpdated
     
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::guard('user')->user();
+        $user = Auth::guard('user')->user() ?? Auth::guard('api')->user();
         if (!$user->profile || !$user->profile->isComplete()) {
             if (!$request->is('user/profile-edit') && !$request->is('user/profile-edit-submit')) {
-                if ($request->ajax()) {
+                if ($request->ajax() || $request->is('api/*')) {
                     return response()->json([
                         'message' => 'Profile incomplete',
                         'redirect_url' => route('user.profileEdit')

@@ -1,4 +1,12 @@
 
+11-NOV-24
+    WEB
+        
+    API
+        
+
+---------------------------------------------
+
 10-NOV-24
     WEB
         Enquiry sending
@@ -6,7 +14,9 @@
         Religion added
     API
         JWT Login
-        
+        User Register
+        Profile Edit & Update
+
 ---------------------------------------------
 
 07-NOV-24

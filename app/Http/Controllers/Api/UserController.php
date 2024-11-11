@@ -92,4 +92,8 @@ class UserController extends Controller
             ]
         ], Response::HTTP_OK);
     }
+
+    public function dashboard(){
+        return "Working";
+    }
 }
