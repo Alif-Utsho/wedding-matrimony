@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invitation;
+use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
 use App\Models\Service;
@@ -101,5 +102,15 @@ class FrontendController extends Controller
                 'related_users' => $related_users,
             ],
         ], Response::HTTP_OK);
+    }
+
+    public function plans() {
+        $plans = Package::whereStatus(true)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'plans' => $plans
+        ], Response::HTTP_OK);
+
     }
 }

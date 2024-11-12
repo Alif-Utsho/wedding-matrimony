@@ -9,11 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('/', [FrontendController::class, 'index']);
+Route::get('/plans', [FrontendController::class, 'plans']);
 Route::get('/all-profile', [FrontendController::class, 'allProfile']);
 Route::get('/search-profile', [FrontendController::class, 'searchProfile']);
 Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
