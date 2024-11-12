@@ -6,7 +6,8 @@
         Message List
         Message (Fetch, Send)
         Plans
-        
+        User Subscription & Subscribe
+        Profile Setting Update
 
 ---------------------------------------------
 

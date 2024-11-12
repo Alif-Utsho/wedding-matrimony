@@ -148,4 +148,27 @@ class UserController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function updateSetting(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
+            'setting_value' => 'required|string|in:all,premium,no-visible',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $result = $this->userService->updateSetting(
+            $request->input('setting_key'),
+            $request->input('setting_value'),
+            Auth::guard('api')->id()
+        );
+
+        return response()->json($result);
+    }
 }

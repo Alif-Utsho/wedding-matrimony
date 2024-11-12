@@ -29,6 +29,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('profile', [UserController::class, 'profile']);
         Route::post('image-upload', [UserController::class, 'imageUpload']);
         Route::post('image-delete', [UserController::class, 'deleteImage']);
+        Route::post('update-setting', [UserController::class, 'updateSetting']);
 
         Route::get('invitations', [InvitationController::class, 'invitations']);
         Route::post('send-invitation', [InvitationController::class, 'sendInvitation']);

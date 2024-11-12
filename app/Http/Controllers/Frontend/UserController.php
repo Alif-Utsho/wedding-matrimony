@@ -333,22 +333,20 @@ class UserController extends Controller {
 
     public function updateSetting(Request $request)
     {
-        $user = User::find(Auth::guard('user')->id());
-
         $request->validate([
             'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
             'setting_value' => 'required|string|in:all,premium,no-visible',
         ]);
 
-        $settingKey = $request->input('setting_key');
-        $settingValue = $request->input('setting_value');
-
-        $user->$settingKey = $settingValue;
-        $user->save();
+        $result = $this->userService->updateSetting(
+            $request->input('setting_key'),
+            $request->input('setting_value'),
+            Auth::guard('user')->id()
+        );
 
         return response()->json([
             'success' => true,
-            'message' => ucfirst(str_replace('_', ' ', $settingKey)) . ' updated successfully!',
+            'message' => ucfirst(str_replace('_', ' ', $request->input('setting_key'))) . ' updated successfully!',
         ]);
     }
 

@@ -202,4 +202,17 @@ class UserService
 
         return $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
     }
+
+    public function updateSetting($settingKey, $settingValue, $userId)
+    {
+        $user = User::find($userId);
+
+        $user->$settingKey = $settingValue;
+        $user->save();
+
+        return [
+            'success' => true,
+            'message' => ucfirst(str_replace('_', ' ', $settingKey)) . ' updated successfully!',
+        ];
+    }
 }
