@@ -10,7 +10,7 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
-use App\Services\FrontendService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
-    protected $frontendService;
+    protected $userService;
 
-    function __construct(FrontendService $frontendService)
+    function __construct(UserService $userService)
     {
         $this->middleware('check.access:profile-view')->only('profileDetails');
-        $this->frontendService = $frontendService;
+        $this->userService = $userService;
     }
 
     public function index(){
@@ -41,7 +41,7 @@ class FrontendController extends Controller
     }
 
     public function searchProfile(Request $request){
-        $users = $this->frontendService->getUsers($request);
+        $users = $this->userService->getUsers($request);
 
         return response()->json(compact('users'));
     }

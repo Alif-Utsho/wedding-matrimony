@@ -24,17 +24,17 @@ use App\Models\Enquiry;
 use App\Models\ProfileClick;
 use App\Models\ProfileLike;
 use App\Models\ProfileView;
-use App\Services\FrontendService;
+use App\Services\UserService;
 
 class FrontendController extends Controller
 {
 
-    protected $frontendService;
+    protected $userService;
 
-    function __construct(FrontendService $frontendService)
+    function __construct(UserService $userService)
     {
         $this->middleware('check.access:profile-view')->only('profileDetails');
-        $this->frontendService = $frontendService;
+        $this->userService = $userService;
     }
 
 
@@ -62,7 +62,7 @@ class FrontendController extends Controller
     }
 
     public function allProfile(Request $request){
-        $users = $this->frontendService->getUsers($request);
+        $users = $this->userService->getUsers($request);
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
         
         $likedUsers = ProfileLike::where('liker_id', Auth::guard('user')->id())
