@@ -22,14 +22,16 @@ use App\Models\PackagePayment;
 use App\Enums\PaymentStatus;
 use App\Models\ProfileLike;
 use App\Services\UserService;
+use App\Services\MessageService;
 
 class UserController extends Controller {
     
-    protected $userService;
+    protected $userService, $messageService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, MessageService $messageService)
     {
         $this->userService = $userService;
+        $this->messageService = $messageService;
     }
 
     public function index() {
@@ -300,28 +302,7 @@ class UserController extends Controller {
     public function chatList(Request $request) {
         $userId = Auth::guard('user')->id();
 
-        $receiverIds = Message::where('sender_id', $userId)
-                    ->latest()
-                    ->pluck('receiver_id')
-                    ->unique();
-        $senderIds = Message::where('receiver_id', $userId)
-                    ->latest()
-                    ->pluck('sender_id')
-                    ->unique();
-        $chatListUserIds = $receiverIds->merge($senderIds)->unique();
-
-        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
-
-        foreach($chatListUsers as $chatuser){
-            $message = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
-            $unread_count = Message::where('sender_id', $chatuser->id)->where('receiver_id', $userId)->where('is_read', false)->count();
-            $chatuser->message = $message;
-            $chatuser->unread = $unread_count;
-        }
-
-        $chatListUsers = $chatListUsers->sortByDesc(function($chatuser) {
-            return $chatuser->message ? $chatuser->message->created_at : now()->subYears(100);
-        });
+        $chatListUsers = $this->messageService->list($userId);
 
         return view('frontend.user.chat-list', compact('chatListUsers'));
     }

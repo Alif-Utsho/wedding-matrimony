@@ -1,7 +1,16 @@
 
+12-NOV-24
+    WEB
+        --
+    API
+        Message List
+        Message (Fetch, Send)
+
+---------------------------------------------
+
 11-NOV-24
     WEB
-        
+        --
     API
         API Authorization
         Ensure profile updated
