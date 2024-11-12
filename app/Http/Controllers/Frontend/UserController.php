@@ -52,7 +52,7 @@ class UserController extends Controller {
     public function profile(){
         $user    = User::find(Auth::guard('user')->id());
 
-        $profile_completion = $this->getProfileCompletion();
+        $profile_completion = $this->userService->getProfileCompletion($user->id);
 
         $userPackage = UserPackage::where('user_id', $user->id)
             ->where('expired_at', '>', now())

@@ -190,4 +190,14 @@ class UserController extends Controller
             'liked_profiles' => $likedProfiles
         ]);
     }
+
+    public function matchingProfiles(){
+        $userId = Auth::guard('api')->id();
+        $matchingUsers = $this->userService->getMatchingUsers($userId);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $matchingUsers,
+        ], Response::HTTP_OK);
+    }
 }
