@@ -40,6 +40,9 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('fetch-messages', [MessageController::class, 'getMessages']);
         Route::post('send-message', [MessageController::class, 'sendMessage']);
 
+        Route::post('profile/{userId}/like', [UserController::class, 'like']);
+        Route::get('liked-profile/list', [UserController::class, 'listLikedProfiles']);
+
         Route::get('current-package', [SubscriptionController::class, 'currentPackage']);
         Route::post('subscribe', [SubscriptionController::class, 'subscribe']);
     });

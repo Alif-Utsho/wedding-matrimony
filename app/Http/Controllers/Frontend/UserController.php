@@ -4,18 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hobby;
-use App\Models\Message;
 use App\Models\User;
-use App\Models\UserCareer;
-use App\Models\UserHobby;
-use App\Models\UserImage;
 use App\Models\UserProfile;
-use App\Models\UserSocialmedia;
 use App\Models\UserPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\File;
 use App\Helpers\Toastr;
 use App\Models\Package;
 use App\Models\PackagePayment;
@@ -35,8 +29,6 @@ class UserController extends Controller {
     }
 
     public function index() {
-        $profile_completion = $this->getProfileCompletion();
-
         $user = User::find(Auth::guard('user')->id());
         $userPackage = UserPackage::where('user_id', $user->id)
             ->where('expired_at', '>', now())
@@ -50,20 +42,9 @@ class UserController extends Controller {
             $package = Package::where('price', 0)->first();
         }
 
-        $receiverIds = Message::where('sender_id', $user->id)
-                    ->latest()
-                    ->limit(2)
-                    ->pluck('receiver_id')
-                    ->unique();
-        $senderIds = Message::where('receiver_id', $user->id)
-                    ->latest()
-                    ->limit(2)
-                    ->pluck('sender_id')
-                    ->unique();
-        $chatListUserIds = $receiverIds->merge($senderIds)->unique();
-        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
-
-        $matchingUsers = $this->getMatchingUsers();
+        $chatListUsers = $this->messageService->list($user->id);
+        $matchingUsers = $this->userService->getMatchingUsers($user->id);
+        $profile_completion = $this->userService->getProfileCompletion($user->id);
 
         return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers', 'matchingUsers'));
     }
@@ -139,129 +120,7 @@ class UserController extends Controller {
         return redirect('/user/profile');
     }
 
-    public function getMatchingUsers()
-    {
-        $userId = Auth::guard('user')->id();
-        $userProfile = UserProfile::where('user_id', $userId)->first();
-
-        $oppositeGender = $userProfile->gender === 'Male' ? 'Female' : 'Male';
-
-        $cityId = $userProfile->city_id;
-
-        if ($userProfile->gender === 'Male') {
-            $ageMax = $userProfile->age;
-            $heightMax = $userProfile->height;
-        } else {
-            $ageMin = $userProfile->age;
-            $heightMin = $userProfile->height;
-        }
-
-        $query = UserProfile::where('user_id', '!=', $userId)
-            // ->where('city_id', $cityId)
-            ->where('gender', $oppositeGender)
-            ->where('religion', $userProfile->religion);
-
-        if ($userProfile->gender === 'Male') {
-            $query->where('age', '<', $ageMax)
-                ->where('height', '<', $heightMax);
-        } else {
-            $query->where('age', '>', $ageMin)
-                ->where('height', '>', $heightMin);
-        }
-        $matchingProfiles = $query->pluck('user_id');
-        
-        $matchingUsers = User::whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
-
-        return $matchingUsers;
-    }
-
-    public function getMatchingProfiles_pro()
-    {
-        $userId = Auth::guard('user')->id();
-        $userProfile = UserProfile::where('user_id', $userId)->first();
-        $userPreferences = $userProfile->preferences;
-
-        $query = UserProfile::query()->where('user_id', '!=', $userId);
-
-        if ($userPreferences->preferred_gender) {
-            $query->where('gender', $userPreferences->preferred_gender);
-        }
-
-        if ($userPreferences->preferred_city_id) {
-            $query->where('city_id', $userPreferences->preferred_city_id);
-        }
-
-        if ($userPreferences->preferred_min_age && $userPreferences->preferred_max_age) {
-            $query->whereBetween('age', [$userPreferences->preferred_min_age, $userPreferences->preferred_max_age]);
-        }
-
-        if ($userPreferences->preferred_min_height && $userPreferences->preferred_max_height) {
-            $query->whereBetween('height', [$userPreferences->preferred_min_height, $userPreferences->preferred_max_height]);
-        }
-
-        $matchingProfiles = $query->with(['user', 'hobbies'])->get();
-
-        $matchingProfiles = $matchingProfiles->map(function($profile) use ($userPreferences) {
-            $score = 0;
-
-            if ($profile->gender == $userPreferences->preferred_gender) $score += 10;
-            if ($profile->city_id == $userPreferences->preferred_city_id) $score += 15;
-            if (in_array($profile->hobby_id, $userPreferences->hobbies)) $score += 5;
-            
-            // $profile->match_score = $score;
-            return $profile;
-        })->sortByDesc('match_score');
-
-        return response()->json($matchingProfiles);
-    }
-
-    public function getProfileCompletion()
-    {
-        $userId = Auth::guard('user')->id();
-        $userProfile = UserProfile::where('user_id', $userId)->first();
-        $userCareer = UserCareer::where('user_id', $userId)->first();
-        $userSocialmedia = UserSocialmedia::where('user_id', $userId)->first();
-        $userHobbies = UserHobby::where('user_id', $userId)->exists();
-
-        // Define fields to check for completion
-        $fields = [
-            'name'          => Auth::guard('user')->user()->name,
-            'gender'        => $userProfile->gender ?? null,
-            'city_id'       => $userProfile->city_id ?? null,
-            'birth_date'    => $userProfile->birth_date ?? null,
-            'height'        => $userProfile->height ?? null,
-            'weight'        => $userProfile->weight ?? null,
-            'fathers_name'  => $userProfile->fathers_name ?? null,
-            'mothers_name'  => $userProfile->mothers_name ?? null,
-            'address'       => $userProfile->address ?? null,
-            'image'         => $userProfile->image ?? null,
-            'type'          => $userCareer->type ?? null,
-            'company_name'  => $userCareer->company_name ?? null,
-            'salary'        => $userCareer->salary ?? null,
-            'experience'    => $userCareer->experience ?? null,
-            'degree'        => $userCareer->degree ?? null,
-            'college'       => $userCareer->college ?? null,
-            'school'        => $userCareer->school ?? null,
-            'whatsApp'      => $userSocialmedia->whatsApp ?? null,
-            'facebook'      => $userSocialmedia->facebook ?? null,
-            'instagram'     => $userSocialmedia->instagram ?? null,
-            'x'             => $userSocialmedia->x ?? null,
-            'youtube'       => $userSocialmedia->youtube ?? null,
-            'linkedin'      => $userSocialmedia->linkedin ?? null,
-            'hobbies'       => $userHobbies ? 'filled' : null,
-        ];
-
-        // Count completed fields
-        $completedFields = array_filter($fields, fn($value) => !empty($value));
-        $totalFields = count($fields);
-        $completedCount = count($completedFields);
-
-        // Calculate percentage
-        $completionPercentage = ($completedCount / $totalFields) * 100;
-
-        return round($completionPercentage);
-    }
-
+    
     public function imageUpload(Request $request)
     {
         $request->validate([
@@ -353,22 +212,10 @@ class UserController extends Controller {
 
     public function like($userId) {
         $likerId = Auth::guard('user')->id();
-    
-        $alreadyLiked = ProfileLike::where('user_id', $userId)
-            ->where('liker_id', $likerId)
-            ->exists();
-    
-        if (!$alreadyLiked) {
-            ProfileLike::create([
-                'user_id' => $userId,
-                'liker_id' => $likerId,
-            ]);
-    
-            return response()->json(['message' => 'Profile liked']);
-        } else {
-            ProfileLike::where('user_id', $userId)->where('liker_id', $likerId)->delete();
-            return response()->json(['message' => 'Profile unliked']);
-        }
+        
+        $result = $this->userService->toggleLike($userId, $likerId);
+
+        return response()->json($result);
     }
     
 }

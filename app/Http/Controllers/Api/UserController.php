@@ -171,4 +171,23 @@ class UserController extends Controller
 
         return response()->json($result);
     }
+
+    public function like($userId) {
+        $likerId = Auth::guard('api')->id();
+        
+        $result = $this->userService->toggleLike($userId, $likerId);
+
+        return response()->json($result);
+    }
+
+    public function listLikedProfiles()
+    {
+        $likerId = Auth::guard('api')->id();
+        $likedProfiles = $this->userService->listLikedProfiles($likerId);
+
+        return response()->json([
+            'success' => true,
+            'liked_profiles' => $likedProfiles
+        ]);
+    }
 }
