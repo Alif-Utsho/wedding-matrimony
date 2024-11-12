@@ -5,6 +5,8 @@
     API
         Message List
         Message (Fetch, Send)
+        Plans
+        
 
 ---------------------------------------------
 
