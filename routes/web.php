@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\SubscriptionController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UsermanageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -76,6 +77,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('user/manage', [UsermanageController::class, 'usermanage'])->name('user.manage');
 
         
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');

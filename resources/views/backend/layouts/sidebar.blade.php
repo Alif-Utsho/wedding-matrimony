@@ -5,14 +5,11 @@
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 's-act' : '' }}">Dashboard</a>
             </li>
             <li class="ic-user">
-                <a href="#" class="">Users</a>
+                <a href="javascript:void(0);" class="{{ request()->routeIs('admin.user.*') ? 'mact' : '' }}">Users</a>
                 <div>
                     <ol>
                         <li>
-                            <a href="admin-new-user-requests.html">New User Requests</a>
-                        </li>
-                        <li>
-                            <a href="admin-all-users.html">All Users</a>
+                            <a href="{{ route('admin.user.manage') }}" class="{{ request()->routeIs('admin.user.manage') ? 's-act' : '' }}">Manage</a>
                         </li>
                         <li>
                             <a href="admin-free-users.html">Free Users</a>
