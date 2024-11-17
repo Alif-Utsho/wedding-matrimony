@@ -6,6 +6,10 @@ use App\Http\Controllers\Frontend\InvitationController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\MessageController;
 use App\Http\Controllers\Frontend\SubscriptionController;
+
+
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -62,4 +66,13 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     
 
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('login', [AdminAuthController::class, 'login'])->name('login');
+        Route::post('login-submit', [AdminAuthController::class, 'login_submit'])->name('loginSubmit');
+    });
+    
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });

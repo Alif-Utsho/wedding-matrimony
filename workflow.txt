@@ -1,4 +1,15 @@
 
+17-NOV-24
+    WEB
+        Admin Template Setup
+        Admin Login
+        Dashboard(Static)
+        
+    API
+        --
+
+---------------------------------------------
+
 12-NOV-24
     WEB
         --
@@ -8,6 +19,8 @@
         Plans
         User Subscription & Subscribe
         Profile Setting Update
+        Like & Liked List 
+        Matching Users Profile
 
 ---------------------------------------------
 
