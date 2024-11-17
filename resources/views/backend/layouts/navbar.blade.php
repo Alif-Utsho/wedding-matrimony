@@ -115,7 +115,7 @@
                   <div class="smenu-open">
                     <ul>
                       <li>
-                        <a href="#" class="waves-effect">
+                        <a href="{{ route('admin.logout') }}" class="waves-effect">
                           <i class="fa fa-sign-out" aria-hidden="true"></i> Log out </a>
                       </li>
                     </ul>

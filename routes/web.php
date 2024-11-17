@@ -74,5 +74,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login-submit', [AdminAuthController::class, 'login_submit'])->name('loginSubmit');
     });
     
-    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+        
+        Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
+    });
 });

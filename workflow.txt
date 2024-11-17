@@ -4,7 +4,8 @@
         Admin Template Setup
         Admin Login
         Dashboard(Static)
-        
+        Admin Authorization
+        Admin Logout
     API
         --
 

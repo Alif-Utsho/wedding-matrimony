@@ -55,6 +55,12 @@
                                         </div>
                                     @endif
 
+                                    @if (session('success'))
+                                        <div class="text-center alert-success alert">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+
                                     <div class="form-login">
                                         <form action="{{ route('admin.loginSubmit') }}" method="POST">
                                             @csrf

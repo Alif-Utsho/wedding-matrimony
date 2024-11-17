@@ -150,7 +150,7 @@
                 <h4>Sign out </h4>
             </li>
             <li class="ic-lgo">
-                <a href="logout.html">Log out</a>
+                <a href="{{ route('admin.logout') }}">Log out</a>
             </li>
         </ul>
     </div>

@@ -24,4 +24,10 @@ class AuthController extends Controller
 
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout(); 
+        return redirect()->route('admin.login')->with('success', 'You have been logged out.');
+    }
 }
