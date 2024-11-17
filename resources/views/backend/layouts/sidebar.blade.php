@@ -21,7 +21,7 @@
                             <a href="admin-platinum-users.html">Premium Users</a>
                         </li>
                         <li>
-                            <a href="admin-add-new-user.html">Add new User</a>
+                            <a href="{{ route('admin.user.add') }}" class="{{ request()->routeIs('admin.user.add') ? 's-act' : '' }}">Add new User</a>
                         </li>
                     </ol>
                 </div>

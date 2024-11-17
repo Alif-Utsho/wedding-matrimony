@@ -78,7 +78,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-        Route::get('user/manage', [UsermanageController::class, 'usermanage'])->name('user.manage');
+        Route::get('user/manage', [UsermanageController::class, 'manage'])->name('user.manage');
+        Route::get('user/add', [UsermanageController::class, 'add'])->name('user.add');
+        Route::post('user/store', [UsermanageController::class, 'store'])->name('user.store');
 
         
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');

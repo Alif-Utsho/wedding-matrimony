@@ -6,6 +6,8 @@
         Dashboard(Static)
         Admin Authorization
         Admin Logout
+        User Manage
+        User Create
     API
         --
 
