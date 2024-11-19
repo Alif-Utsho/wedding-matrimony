@@ -92,10 +92,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('blog/manage', [BlogController::class, 'manage'])->name('blog.manage');
         Route::get('blog/add', [BlogController::class, 'add'])->name('blog.add');
+        Route::post('blog/store', [BlogController::class, 'store'])->name('blog.store');
+        
         Route::get('blog/category/manage', [BlogController::class, 'categorymanage'])->name('blog.category.manage');
         Route::post('blog/category/store', [BlogController::class, 'categorystore'])->name('blog.category.store');
         Route::post('blog/category/update', [BlogController::class, 'categoryupdate'])->name('blog.category.update');
         Route::get('blog/category/delete/{id}', [BlogController::class, 'categorydelete'])->name('blog.category.delete');
+        
         Route::get('blog/tag/manage', [BlogController::class, 'tagmanage'])->name('blog.tag.manage');
         Route::post('blog/tag/store', [BlogController::class, 'tagstore'])->name('blog.tag.store');
         Route::post('blog/tag/update', [BlogController::class, 'tagupdate'])->name('blog.tag.update');

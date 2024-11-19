@@ -27,11 +27,7 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#addhomreviews">Add new blog post</a></li>
-                                <li><a class="dropdown-item"
-                                        href="https://rn53themes.net/themes/matrimo/index.html#hom-cus-revi">View user
-                                        reviews</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.blog.add') }}">Add new blog post</a></li>
                             </ul>
                         </div>
                     </div>
