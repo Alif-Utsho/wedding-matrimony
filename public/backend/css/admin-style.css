@@ -1598,3 +1598,9 @@ img{
 @media screen and (max-width:1450px) {
 
 }
+
+/* --------------- Custom CSS */
+
+.backend-img{
+    width: 150px;
+}

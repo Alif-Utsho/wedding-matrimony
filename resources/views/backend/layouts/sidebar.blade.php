@@ -26,25 +26,7 @@
                     </ol>
                 </div>
             </li>
-            <li>
-                <h4>SEO Settings</h4>
-            </li>
-            <li class="ic-seo">
-                <a href="#" class="">SEO Settings</a>
-                <div>
-                    <ol>
-                        <li>
-                            <a href="admin-meta.html">Meta tags</a>
-                        </li>
-                        <li>
-                            <a href="seo-google-analytics-code.html">Google Analytics Code</a>
-                        </li>
-                        <li>
-                            <a href="seo-xml-sitemap.html">XML Sitemap</a>
-                        </li>
-                    </ol>
-                </div>
-            </li>
+            
             <li>
                 <h4>Payments</h4>
             </li>
@@ -62,7 +44,7 @@
                 <h4>Settings</h4>
             </li>
             <li class="ic-set">
-                <a href="admin-setting.html">Site Setting</a>
+                <a href="{{ route('admin.generalsetting.edit') }}" class="{{ request()->routeIs('admin.generalsetting.edit') ? 's-act' : '' }}">Site Setting</a>
             </li>
             <li>
                 <h4>Appearance</h4>

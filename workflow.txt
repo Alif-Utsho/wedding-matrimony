@@ -3,6 +3,8 @@
     WEB
         Package wise Users
         Incomplete profile Users
+        User edit & update
+        Website General Setting
     API
         --
 

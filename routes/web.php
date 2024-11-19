@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\SubscriptionController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\UsermanageController;
 use Illuminate\Support\Facades\Route;
 
@@ -85,7 +86,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
 
-        
+        Route::get('general-setting/edit', [GeneralsettingController::class, 'edit'])->name('generalsetting.edit');
+        Route::post('general/setting/update', [GeneralsettingController::class, 'update'])->name('generalsetting.update');
+
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });
