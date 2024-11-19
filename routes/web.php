@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\SubscriptionController;
 
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\UsermanageController;
@@ -88,6 +89,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('general-setting/edit', [GeneralsettingController::class, 'edit'])->name('generalsetting.edit');
         Route::post('general/setting/update', [GeneralsettingController::class, 'update'])->name('generalsetting.update');
+
+        Route::get('blog/manage', [BlogController::class, 'manage'])->name('blog.manage');
+        Route::get('blog/add', [BlogController::class, 'add'])->name('blog.add');
+        Route::get('blog/category/manage', [BlogController::class, 'categorymanage'])->name('blog.category.manage');
+        Route::get('blog/category/store', [BlogController::class, 'categorystore'])->name('blog.category.store');
+        Route::get('blog/category/update', [BlogController::class, 'categoryupdate'])->name('blog.category.update');
+        Route::get('blog/category/delete/{id}', [BlogController::class, 'categorydelete'])->name('blog.category.delete');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

@@ -89,6 +89,26 @@
                     </ol>
                 </div>
             </li>
+
+            <li class="ic-medi">
+                <a href="javascript:void(0);" class="{{ request()->routeIs('admin.blog.*') ? 'mact' : '' }}">Blog & Articles</a>
+                <div>
+                    <ol>
+                        <li>
+                            <a href="{{ route('admin.blog.add') }}" class="{{ request()->routeIs('admin.blog.add') ? 's-act' : '' }}">Add New</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.blog.manage') }}" class="{{ request()->routeIs('admin.blog.manage') ? 's-act' : '' }}">Manage</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.blog.category.manage') }}" class="{{ request()->routeIs('admin.blog.category.manage') ? 's-act' : '' }}">Category</a>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+
             <li class="ic-txt">
                 <a href="admin-profile-filters.html">All profile filters</a>
             </li>

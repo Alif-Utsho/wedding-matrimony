@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="{{ asset('backend/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/admin-style.css') }}">
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -67,6 +70,29 @@
     <script src="{{ asset('backend/js/select-opt.js') }}"></script>
     <script src="{{ asset('backend/js/chart.js') }}"></script>
     <script src="{{ asset('backend/js/admin-custom.js') }}"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if (session('toastr_success'))
+                toastr.success("{{ session('toastr_success') }}");
+            @endif
+    
+            @if (session('toastr_error'))
+                toastr.error("{{ session('toastr_error') }}");
+            @endif
+    
+            @if (session('toastr_warning'))
+                toastr.warning("{{ session('toastr_warning') }}");
+            @endif
+    
+            @if (session('toastr_info'))
+                toastr.info("{{ session('toastr_info') }}");
+            @endif
+        });
+    </script>
+
     <script>
         //ARNING CHART
         var earningCanvas = document.getElementById("Chart_earni");
