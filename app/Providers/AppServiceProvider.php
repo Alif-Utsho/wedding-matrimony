@@ -8,6 +8,7 @@ use App\Models\Ourteam;
 use App\Models\Contactinfo;
 use App\Models\City;
 use App\Models\GeneralSetting;
+use App\Models\Package;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -58,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
         if (Schema::hasTable('blogs')) {
             $blogs = Blog::where('status', true)->latest()->limit(4)->get();
             view()->share('blogs', $blogs);
+        }
+
+        if (Schema::hasTable('blogs')) {
+            $plans = Package::whereStatus(true)->get();
+            view()->share('plans', $plans);
         }
 
     }

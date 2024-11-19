@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Hobby;
+use App\Models\Package;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -18,8 +19,24 @@ class UsermanageController extends Controller
         $this->userService = $userService;
     }
 
-    public function manage(){
-        $users = User::latest()->get();
+    public function manage(Request $request){
+        $userQuery = User::whereHas('profile')->latest();
+
+        if($request->plan){
+            $package = Package::where('name', $request->plan)->first();
+            
+            if ($package) {
+                $users = $userQuery->get();
+
+                $users = $users->filter(function ($user) use ($package) {
+                    return $user->currentPackage()->id === $package->id;
+                });
+
+                return view('backend.user.manage', compact('users'));
+            }
+        }
+
+        $users = $userQuery->get();
 
         return view('backend.user.manage', compact('users'));
     }

@@ -200,8 +200,7 @@ class FrontendController extends Controller
     }
 
     public function plans() {
-        $plans = Package::whereStatus(true)->get();
-        return view('frontend.pages.plans', compact('plans'));
+        return view('frontend.pages.plans');
     }
 
     public function contact() {

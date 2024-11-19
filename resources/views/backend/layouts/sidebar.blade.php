@@ -9,17 +9,13 @@
                 <div>
                     <ol>
                         <li>
-                            <a href="{{ route('admin.user.manage') }}" class="{{ request()->routeIs('admin.user.manage') ? 's-act' : '' }}">Manage</a>
+                            <a href="{{ route('admin.user.manage') }}" class="{{ request()->routeIs('admin.user.manage')&& is_null(request()->plan) ? 's-act' : '' }}">Manage</a>
                         </li>
+                        @foreach($plans as $plan)
                         <li>
-                            <a href="admin-free-users.html">Free Users</a>
+                            <a href="{{ route('admin.user.manage', ['plan'=>strtolower($plan->name)]) }}" class="{{ request()->routeIs('admin.user.manage') && request()->plan==strtolower($plan->name) ? 's-act' : '' }}">{{ $plan->name }} Users</a>
                         </li>
-                        <li>
-                            <a href="admin-gold-users.html">Standard Users</a>
-                        </li>
-                        <li>
-                            <a href="admin-platinum-users.html">Premium Users</a>
-                        </li>
+                        @endforeach
                         <li>
                             <a href="{{ route('admin.user.add') }}" class="{{ request()->routeIs('admin.user.add') ? 's-act' : '' }}">Add new User</a>
                         </li>

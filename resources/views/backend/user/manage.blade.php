@@ -4,7 +4,7 @@
         <div class="row main-head">
             <div class="col-md-4">
                 <div class="tit">
-                    <h1>All users</h1>
+                    <h1>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</h1>
                 </div>
             </div>
             <div class="col-md-8">
@@ -12,7 +12,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Users</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">All users</li>
+                        <li class="breadcrumb-item active" aria-current="page">@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</li>
                     </ol>
                 </nav>
             </div>
@@ -21,8 +21,8 @@
             <div class="col-md-12">
                 <div class="box-com box-qui box-lig box-tab">
                     <div class="tit">
-                        <h3>All users</h3>
-                        <p>All user profiles</p>
+                        <h3>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</h3>
+                        <p>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif user profiles</p>
                         <div class="dropdown">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
@@ -49,38 +49,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset(@$user->profile->image) }}" alt="">
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="prof-table-thum">
+                                            <div class="pro">
+                                                <img src="{{ asset($user->profile->image) }}" alt="">
+                                            </div>
+                                            <div class="pro-info">
+                                                <h5>{{ $user->name }}</h5>
+                                                <p>{{ $user->email }}</p>
+                                            </div>
                                         </div>
-                                        <div class="pro-info">
-                                            <h5>{{ $user->name }}</h5>
-                                            <p>{{ $user->email }}</p>
+                                    </td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->profile->city->name }}</td>
+                                    <td><span
+                                            class="@if ($user->isPremium()) hig-grn @else hig-red @endif">{{ $user->currentPackage()->name }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-toggle="dropdown">
+                                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                <li><a class="dropdown-item" href="#">Billing info</a></li>
+                                                <li><a class="dropdown-item" href="#">View more details</a></li>
+                                                <li><a class="dropdown-item" href="#">View profile</a></li>
+                                            </ul>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{ $user->phone }}</td>
-                                <td>{{ @$user->profile->city->name }}</td>
-                                <td><span class="@if($user->isPremium()) hig-grn @else hig-red @endif">{{ $user->currentPackage()->name }}</span></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Edit</a></li>
-                                            <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            <li><a class="dropdown-item" href="#">Billing info</a></li>
-                                            <li><a class="dropdown-item" href="#">View more details</a></li>
-                                            <li><a class="dropdown-item" href="#">View profile</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             @endforeach
 
                         </tbody>
