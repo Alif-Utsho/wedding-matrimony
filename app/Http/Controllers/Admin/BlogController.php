@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogTag;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -74,6 +76,59 @@ class BlogController extends Controller
         $blogCategory->delete();
         
         Toastr::success('Blog category deleted successfully.');
+        return redirect()->back();
+    }
+
+    public function tagmanage(){
+        $show_data = Tag::latest()->get();
+        return view('backend.blog.tagmanage', compact('show_data'));
+    }
+
+    public function tagstore(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100|unique:tags,name',
+        ]);
+    
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                Toastr::error($error, 'Validation Error');
+            }
+            return redirect()->back();
+        }
+
+        $blogTag = new Tag();
+        $blogTag->name = $request->name;
+        $blogTag->save();
+    
+        Toastr::success('Blog Tag created successfully.');
+        return redirect()->back();
+    }
+
+    public function tagupdate(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100|unique:tags,name',
+        ]);
+    
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                Toastr::error($error, 'Validation Error');
+            }
+            return redirect()->back();
+        }
+
+        $blogTag = Tag::find($request->tag_id);
+        $blogTag->name = $request->name;
+        $blogTag->save();
+    
+        Toastr::success('Blog Tag updated successfully.');
+        return redirect()->back();
+    }
+
+    public function tagdelete($id){
+        $blogTag = Tag::find($id);
+        $blogTag->delete();
+        
+        Toastr::success('Blog Tag deleted successfully.');
         return redirect()->back();
     }
 }

@@ -28,7 +28,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#addblogcategory">Add new blog category</a></li>
+                                        data-bs-target="#addblogtag">Add new blog tag</a></li>
                             </ul>
                         </div>
                     </div>
@@ -56,29 +56,29 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#edit-category-{{ $value->id }}">Edit</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('admin.blog.category.delete', $value->id) }}">Delete</a></li>
+                                                        data-bs-target="#edit-tag-{{ $value->id }}">Edit</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('admin.blog.tag.delete', $value->id) }}">Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="edit-category-{{ $value->id }}">
+                                <div class="modal fade" id="edit-tag-{{ $value->id }}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                             
                                             <!-- Modal Header -->
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Edit category</h4>
+                                                <h4 class="modal-title">Edit tag</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                             
                                             <!-- Modal body -->
                                             <div class="modal-body">
                                                 <div class="form-inp">
-                                                    <form action="{{ route('admin.blog.category.update') }}" method="POST">
+                                                    <form action="{{ route('admin.blog.tag.update') }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" value="{{ $value->id }}" name="category_id">
+                                                        <input type="hidden" value="{{ $value->id }}" name="tag_id">
                                                         <div class="edit-pro-parti">
                                                             <div class="form-group">
                                                                 <label class="lb">Title:</label>
@@ -107,20 +107,20 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addblogcategory">
+    <div class="modal fade" id="addblogtag">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Create new category</h4>
+                    <h4 class="modal-title">Create new tag</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="form-inp">
-                        <form action="{{ route('admin.blog.category.store') }}" method="POST">
+                        <form action="{{ route('admin.blog.tag.store') }}" method="POST">
                             @csrf
                             <!--PROFILE BIO-->
                             <div class="edit-pro-parti">

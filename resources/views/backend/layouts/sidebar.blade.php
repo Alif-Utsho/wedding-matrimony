@@ -105,6 +105,10 @@
                         <li>
                             <a href="{{ route('admin.blog.category.manage') }}" class="{{ request()->routeIs('admin.blog.category.manage') ? 's-act' : '' }}">Category</a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('admin.blog.tag.manage') }}" class="{{ request()->routeIs('admin.blog.tag.manage') ? 's-act' : '' }}">Tag</a>
+                        </li>
                     </ol>
                 </div>
             </li>
