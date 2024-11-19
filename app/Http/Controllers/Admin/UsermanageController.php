@@ -41,6 +41,11 @@ class UsermanageController extends Controller
         return view('backend.user.manage', compact('users'));
     }
 
+    public function incomplete(){
+        $users = User::doesntHave('profile')->latest()->get();
+        return view('backend.user.incomplete', compact('users'));
+    }
+
     public function add(){
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
 

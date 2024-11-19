@@ -17,6 +17,10 @@
                         </li>
                         @endforeach
                         <li>
+                            <a href="{{ route('admin.user.incomplete') }}" class="{{ request()->routeIs('admin.user.incomplete') ? 's-act' : '' }}">Incomplete Users</a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('admin.user.add') }}" class="{{ request()->routeIs('admin.user.add') ? 's-act' : '' }}">Add new User</a>
                         </li>
                     </ol>

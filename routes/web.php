@@ -79,6 +79,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::get('user/manage', [UsermanageController::class, 'manage'])->name('user.manage');
+        Route::get('user/incomplete', [UsermanageController::class, 'incomplete'])->name('user.incomplete');
         Route::get('user/add', [UsermanageController::class, 'add'])->name('user.add');
         Route::post('user/store', [UsermanageController::class, 'store'])->name('user.store');
 
