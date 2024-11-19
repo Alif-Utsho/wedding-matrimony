@@ -36,6 +36,16 @@ class UserService
         ]);
     }
 
+    public function updateUser($data, $user){
+        $updated_user = User::where('id', $user->id)->update([
+            'name'=>$data['name'],
+            'email'=>$data['email'],
+            'phone'=>$data['phone']
+        ]);
+
+        return $updated_user;
+    }
+
     public function updateUserProfile($data, $user){
         // Process image if uploaded
         $imagePath = null;

@@ -75,7 +75,7 @@
                                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
                                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                                                 <li><a class="dropdown-item" href="#">Billing info</a></li>
                                                 <li><a class="dropdown-item" href="#">View more details</a></li>

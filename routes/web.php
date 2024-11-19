@@ -82,6 +82,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user/incomplete', [UsermanageController::class, 'incomplete'])->name('user.incomplete');
         Route::get('user/add', [UsermanageController::class, 'add'])->name('user.add');
         Route::post('user/store', [UsermanageController::class, 'store'])->name('user.store');
+        Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
+        Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
 
         
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
