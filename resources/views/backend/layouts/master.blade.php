@@ -139,6 +139,8 @@
             }
         });
     </script>
+
+    @stack('script')
 </body>
 
 <!-- Mirrored from rn53themes.net/themes/matrimo/admin/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 15 Oct 2024 05:33:26 GMT -->

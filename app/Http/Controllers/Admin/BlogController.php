@@ -9,6 +9,7 @@ use App\Models\BlogCategory;
 use App\Models\Tag;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -136,6 +137,46 @@ class BlogController extends Controller {
         }
 
         Toastr::success('Blog updated successfully!', 'Success');
+
+        return redirect()->route('admin.blog.manage');
+    }
+
+    public function togglefront(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'blog_id'    => 'required|integer|exists:blogs,id',
+            'front_page' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid data provided.',
+            ], 422);
+        }
+
+        $blog = Blog::find($request->blog_id);
+        $blog->update(['front_page' => $request->front_page]);
+
+        return response()->json([
+            'success' => true,
+            'message' => $request->front_page ? 'Blog added to front page successfully!' : 'Blog removed from front page successfully!',
+        ]);
+    }
+
+    public function delete($id) {
+        $blog = Blog::findOrFail($id);
+
+        if ($blog->image && File::exists(public_path('blogs/' . $blog->image))) {
+            File::delete(public_path('blogs/' . $blog->image));
+        }
+
+        if ($blog->author_image && File::exists(public_path('blogs/' . $blog->author_image))) {
+            File::delete(public_path('blogs/' . $blog->author_image));
+        }
+
+        $blog->delete();
+
+        Toastr::success('Blog deleted successfully!', 'Success');
 
         return redirect()->route('admin.blog.manage');
     }

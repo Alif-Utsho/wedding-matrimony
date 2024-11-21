@@ -1,21 +1,17 @@
 <?php
 
-use App\Http\Controllers\Frontend\AuthController;
-use App\Http\Controllers\Frontend\FrontendController;
-use App\Http\Controllers\Frontend\InvitationController;
-use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Frontend\MessageController;
-use App\Http\Controllers\Frontend\SubscriptionController;
-
-
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\UsermanageController;
+use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\InvitationController;
+use App\Http\Controllers\Frontend\MessageController;
+use App\Http\Controllers\Frontend\SubscriptionController;
+use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Support\Facades\Route;
-
-
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('/wedding-details/{id}', [FrontendController::class, 'weddingDetails']);
@@ -35,11 +31,9 @@ Route::middleware('guest:user')->group(function () {
     Route::post('/user/register-submit', [AuthController::class, 'registerSubmit'])->name('user.registerSubmit');
 });
 
-
-
-Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.updated']], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['user.auth', 'ensure.profile.updated']], function () {
     Route::get('dashboard', [UserController::class, 'index'])->name('user.dashboard');
-    
+
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('profile-edit', [UserController::class, 'profileEdit'])->name('user.profileEdit');
     Route::post('profile-edit-submit', [UserController::class, 'profileEditSubmit'])->name('user.profileEdit.submit');
@@ -50,7 +44,6 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
     Route::get('setting', [UserController::class, 'setting'])->name('user.setting');
     Route::post('update-setting', [UserController::class, 'updateSetting'])->name('user.updateSetting');
 
-
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
     Route::post('cancel-invitation', [InvitationController::class, 'cancelInvitation'])->name('cancel.invitation');
@@ -59,14 +52,11 @@ Route::group(['prefix'=>'user', 'middleware' => ['user.auth', 'ensure.profile.up
 
     Route::post('profile/{userId}/like', [UserController::class, 'like'])->name('profile.like');
 
-    
     Route::post('chat-now', [MessageController::class, 'chatNow'])->name('user.chatnow');
     Route::post('chat-send', [MessageController::class, 'sendMessage'])->name('user.chat.send');
     Route::get('chat/messages', [MessageController::class, 'getMessages'])->name('chat.getMessages');
 
     Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('user.subscribe');
-
-    
 
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');
 });
@@ -76,7 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('login', [AdminAuthController::class, 'login'])->name('login');
         Route::post('login-submit', [AdminAuthController::class, 'login_submit'])->name('loginSubmit');
     });
-    
+
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -95,12 +85,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/store', [BlogController::class, 'store'])->name('blog.store');
         Route::get('blog/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
         Route::post('blog/update', [BlogController::class, 'update'])->name('blog.update');
-        
+        Route::post('blog/toggle-front', [BlogController::class, 'togglefront'])->name('blog.togglefront');
+        Route::delete('blog/{id}', [BlogController::class, 'delete'])->name('blog.delete');
+
         Route::get('blog/category/manage', [BlogController::class, 'categorymanage'])->name('blog.category.manage');
         Route::post('blog/category/store', [BlogController::class, 'categorystore'])->name('blog.category.store');
         Route::post('blog/category/update', [BlogController::class, 'categoryupdate'])->name('blog.category.update');
         Route::get('blog/category/delete/{id}', [BlogController::class, 'categorydelete'])->name('blog.category.delete');
-        
+
         Route::get('blog/tag/manage', [BlogController::class, 'tagmanage'])->name('blog.tag.manage');
         Route::post('blog/tag/store', [BlogController::class, 'tagstore'])->name('blog.tag.store');
         Route::post('blog/tag/update', [BlogController::class, 'tagupdate'])->name('blog.tag.update');
