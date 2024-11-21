@@ -65,8 +65,7 @@
                                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#homreviews">Edit</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('admin.blog.edit', $value->id) }}">Edit</a></li>
                                         </ul>
                                     </div>
                                 </td>

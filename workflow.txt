@@ -1,10 +1,22 @@
 
+21-NOV-24
+    WEB
+        
+    API
+        --
+
+---------------------------------------------
+
 19-NOV-24
     WEB
         Package wise Users
         Incomplete profile Users
         User edit & update
         Website General Setting
+        Blog Categories CRUD
+        Blog Tags CRUD
+        Blog Manage
+        Blog Store
     API
         --
 
