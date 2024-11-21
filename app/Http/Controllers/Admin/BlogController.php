@@ -166,12 +166,12 @@ class BlogController extends Controller {
     public function delete($id) {
         $blog = Blog::findOrFail($id);
 
-        if ($blog->image && File::exists(public_path('blogs/' . $blog->image))) {
-            File::delete(public_path('blogs/' . $blog->image));
+        if ($blog->image && File::exists(public_path($blog->image))) {
+            File::delete(public_path($blog->image));
         }
 
-        if ($blog->author_image && File::exists(public_path('blogs/' . $blog->author_image))) {
-            File::delete(public_path('blogs/' . $blog->author_image));
+        if ($blog->author_image && File::exists(public_path($blog->author_image))) {
+            File::delete(public_path($blog->author_image));
         }
 
         $blog->delete();

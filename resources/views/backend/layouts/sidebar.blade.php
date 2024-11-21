@@ -66,25 +66,7 @@
                 <div>
                     <ol>
                         <li>
-                            <a href="admin-home-search.html">Search</a>
-                        </li>
-                        <li>
-                            <a href="admin-home-services.html">Services</a>
-                        </li>
-                        <li>
-                            <a href="admin-home-reviews.html">Customer reviews</a>
-                        </li>
-                        <li>
-                            <a href="admin-home-recent-couples.html">Recent couples</a>
-                        </li>
-                        <li>
-                            <a href="admin-home-meet-team.html">Meet out team</a>
-                        </li>
-                        <li>
-                            <a href="admin-photo-gallery.html">Photo gallery</a>
-                        </li>
-                        <li>
-                            <a href="admin-home-blogs.html">Blog & Articles</a>
+                            <a href="{{ route('admin.banner.manage') }}">Banners</a>
                         </li>
                     </ol>
                 </div>

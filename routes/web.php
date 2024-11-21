@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
@@ -97,6 +98,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/tag/store', [BlogController::class, 'tagstore'])->name('blog.tag.store');
         Route::post('blog/tag/update', [BlogController::class, 'tagupdate'])->name('blog.tag.update');
         Route::get('blog/tag/delete/{id}', [BlogController::class, 'tagdelete'])->name('blog.tag.delete');
+
+        
+        Route::get('banner/manage', [BannerController::class, 'manage'])->name('banner.manage');
+        Route::post('banner/store', [BannerController::class, 'store'])->name('banner.store');
+        Route::delete('banner/{id}', [BannerController::class, 'delete'])->name('banner.delete');
+        Route::post('banner/toggle-status', [BannerController::class, 'togglestatus'])->name('banner.togglestatus');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
