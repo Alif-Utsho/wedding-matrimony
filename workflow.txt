@@ -1,5 +1,5 @@
 
-21-NOV-24
+24-NOV-24
     WEB
         City CRUD
         Hobby CRUD
@@ -7,6 +7,7 @@
         Services CRUD
         Testimonial CRUD
         Contactinfo CRUD
+        Enquiry Show & Destroy
     API
         --
 
