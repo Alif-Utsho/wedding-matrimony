@@ -1,9 +1,18 @@
 
 21-NOV-24
     WEB
+        City CRUD
+    API
+        --
+
+---------------------------------------------
+
+21-NOV-24
+    WEB
         Blog edit & update
         Blog Frontpage toggle
         Blog Delete
+        Banners CRUD
     API
         --
 

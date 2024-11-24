@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\UsermanageController;
@@ -104,6 +105,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('banner/store', [BannerController::class, 'store'])->name('banner.store');
         Route::delete('banner/{id}', [BannerController::class, 'delete'])->name('banner.delete');
         Route::post('banner/toggle-status', [BannerController::class, 'togglestatus'])->name('banner.togglestatus');
+        
+        Route::get('city/manage', [CityController::class, 'manage'])->name('city.manage');
+        Route::post('city/store', [CityController::class, 'store'])->name('city.store');
+        Route::post('city/update', [CityController::class, 'update'])->name('city.update');
+        Route::delete('city/{id}', [CityController::class, 'delete'])->name('city.delete');
+        Route::post('city/toggle-status', [CityController::class, 'togglestatus'])->name('city.togglestatus');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

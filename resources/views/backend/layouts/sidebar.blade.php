@@ -116,6 +116,9 @@
             <li>
                 <h4>Others</h4>
             </li>
+            <li class="ic-feat">
+                <a href="{{ route('admin.city.manage') }}" class="{{ request()->routeIs('admin.city.manage') ? 's-act' : '' }}">Cities</a>
+            </li>
             <li class="ic-febk">
                 <a href="admin-enquiry.html">All Enquiry</a>
             </li>
