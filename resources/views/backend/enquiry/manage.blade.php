@@ -17,19 +17,20 @@
             </div>
         </div>
         <div class="row">
-            {{-- <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="box-com box-qui box-lig box-tab">
                     <div class="tit">
-                        <h3>Enquiries</h3>
+                        <h3>Enquiries &amp; Leads</h3>
+                        <p>Here you can manage your leads and enquiry.</p>
                     </div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Image</th>
-                                <th>Title</th>
-                                <th>Designation</th>
-                                <td>Show on home page</td>
+                                <th>Name</th>
+                                <th>E-mail id</th>
+                                <th>Phone</th>
+                                <td>Message</td>
                                 <th>Posted on</th>
                                 <th>Edit</th>
                             </tr>
@@ -38,21 +39,10 @@
                             @foreach ($show_data as $value)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <div class="pro">
-                                            <img src="{{ asset($value->image) }}" alt="">
-                                        </div>
-                                    </td>
-                                    <td><span class="hig-blu">{{ $value->title }}</span></td>
-                                    <td><span>{{ $value->designation }}</span></td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input toggle-front" type="checkbox"
-                                                id="mySwitch{{ $value->id }}" data-id="{{ $value->id }}"
-                                                name="darkmode" @if ($value->status) checked @endif
-                                                value="yes">
-                                        </div>
-                                    </td>
+                                    <td>{{ $value->name }}</td>
+                                    <td><span class="hig-blu">{{ $value->email }}</span></td>
+                                    <td><span class="hig-red">{{ $value->phone }}</span></td>
+                                    <td>{{ $value->message }}</td>
                                     <td>{{ $value->created_at->format('d, M Y') }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -78,89 +68,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div> --}}
-
-            <div class="col-md-12">
-                <div class="box-com box-qui box-lig box-tab">
-                    <div class="tit">
-                        <h3>Enquiries &amp; Leads</h3>
-                        <p>Here you can manage your leads and enquiry.</p>
-                    </div>
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th>No</th>
-                            <th>User</th>
-                            <th>Name</th>
-                            <th>E-mail id</th>
-                            <th>Phone</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Message</th>
-                            <th>Edit</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>
-                                <div class="prof-table-thum">
-                                    <div class="pro">
-                                        <span class="name-init">a</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Ashley emyy</td>
-                            <td><span class="hig-blu">ashleyipsum@gmail.com</span></td>
-                            <td><span class="hig-red">3216548778</span></td>
-                            <td>22, Feb 2024</td>
-                            <td>12:30 PM</td>
-                            <td>Lorem ipsum enquiry message dummy content</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" style="">
-                                      <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                </div>
             </div>
         </div>
     </div>
-
-    @push('script')
-        <script>
-            $(document).on('change', '.toggle-front', function() {
-                const enquiryId = $(this).data('id');
-                const isChecked = $(this).is(':checked');
-
-                $.ajax({
-                    url: "{{ route('admin.enquiry.togglestatus') }}", // Add this route in your Laravel backend
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        enquiry_id: enquiryId,
-                        status: isChecked ? 1 : 0
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            toastr.success(response.message, 'Success');
-                        } else {
-                            toastr.error(response.message, 'Error');
-                        }
-                    },
-                    error: function() {
-                        toastr.error('An error occurred. Please try again.', 'Error');
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection
