@@ -20,37 +20,38 @@
         <div class="row">
             <h2 class="db-tit">Profile Images</h2>
 
-            @foreach($user->profile->images as $userimage)
-            <div class="col-md-3 col-lg-3 col-xl-3 db-sec-com">
-                <div class="db-profile"
-                    style="
+            @foreach ($user->profile->images as $userimage)
+                <div class="col-md-3 col-lg-3 col-xl-3 db-sec-com">
+                    <div class="db-profile"
+                        style="
                         background: transparent;
                         box-shadow: none;
                         padding: 0;
                     ">
-                    <div class="img">
-                        <img src="{{ asset($userimage->image) }}" loading="lazy" alt="">
-                    </div>
-                    <form action="{{ route('user.imageDelete') }}" method="POST">
-                        @csrf
-                        <input type="hidden" value="{{ $userimage->id }}" name="imageId">
-                        <div class="edit">
-                            <button type="submit" class="col-12">
-                                <a class="cta-dark">Delete</a>
-                            </button>
+                        <div class="img">
+                            <img src="{{ asset($userimage->image) }}" loading="lazy" alt="">
                         </div>
-                    </form>
+                        <form action="{{ route('user.imageDelete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{ $userimage->id }}" name="imageId">
+                            <div class="edit">
+                                <button type="submit" class="col-12">
+                                    <a class="cta-dark">Delete</a>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
             @endforeach
 
             <div class="col-md-3 col-lg-3 col-xl-3 db-sec-com">
                 <div class="db-profile text-center"
-                        style="
+                    style="
                         background: #fff;
                         padding: 0;
                     ">
-                    <form action="{{ route('user.imageUpload') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                    <form action="{{ route('user.imageUpload') }}" method="POST" enctype="multipart/form-data"
+                        id="uploadForm">
                         @csrf
 
 
@@ -64,7 +65,7 @@
                         <div id="preview" class="mb-2"></div>
                         <div class="edit">
                             <button type="submit" class="col-12">
-                            <a class="cta-dark">Upload</a>
+                                <a class="cta-dark">Upload</a>
                             </button>
                         </div>
                     </form>

@@ -64,7 +64,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#updatecity-{{ $value->id }}">Edit</a></li>
+                                                        data-bs-target="#updatecity-{{ $value->id }}">Edit</a></li>
 
                                                 <form action="{{ route('admin.city.delete', $value->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this city?');"
@@ -81,35 +81,39 @@
                                 <div class="modal fade" id="updatecity-{{ $value->id }}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                            
+
                                             <!-- Modal Header -->
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Update city</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
-                            
+
                                             <!-- Modal body -->
                                             <div class="modal-body">
                                                 <div class="form-inp">
-                                                    <form action="{{ route('admin.city.update') }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('admin.city.update') }}" method="POST"
+                                                        enctype="multipart/form-data">
                                                         @csrf
                                                         <!--PROFILE BIO-->
                                                         <input type="hidden" name="city_id" value="{{ $value->id }}">
                                                         <div class="edit-pro-parti">
                                                             <div class="form-group">
                                                                 <label class="lb">Name:</label>
-                                                                <input type="text" class="form-control" placeholder="Enter name*" required="" name="name" value="{{ $value->name }}">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter name*" required="" name="name"
+                                                                    value="{{ $value->name }}">
                                                             </div>
-                            
+
                                                             <!-- Modal footer -->
                                                             <div class="modal-footer">
-                                                                <button type="submit" class="cta-full cta-colr">Submit</button>
+                                                                <button type="submit"
+                                                                    class="cta-full cta-colr">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
-                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +145,8 @@
                             <div class="edit-pro-parti">
                                 <div class="form-group">
                                     <label class="lb">Name:</label>
-                                    <input type="text" class="form-control" placeholder="Enter name*" required="" name="name">
+                                    <input type="text" class="form-control" placeholder="Enter name*" required=""
+                                        name="name">
                                 </div>
 
                                 <!-- Modal footer -->

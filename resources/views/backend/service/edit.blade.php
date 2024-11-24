@@ -25,7 +25,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.service.manage') }}">Manage service posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.service.manage') }}">Manage service posts</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -35,7 +36,7 @@
                 <form action="{{ route('admin.service.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--PROFILE BIO-->
-                    <input type="hidden" name="service_id" value="{{ $service->id }}">    
+                    <input type="hidden" name="service_id" value="{{ $service->id }}">
                     <div class="edit-pro-parti">
                         <div class="form-group">
                             <label class="lb">Name:</label>
@@ -61,7 +62,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="lb">Service photo:</label>
                             <div class="fil-img-uplo">
@@ -74,7 +75,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group">
                             <label class="lb">Icon:</label>
                             <div class="fil-img-uplo">
@@ -87,7 +88,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group">
                             <label class="lb">Status</label>

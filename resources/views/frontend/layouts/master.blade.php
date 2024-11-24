@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" type="image/x-icon">
-    
+
     <!--== CSS FILES ==-->
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
@@ -109,10 +109,14 @@
                 <div class="col-md-4 fot-soc">
                     <h4>SOCIAL MEDIA</h4>
                     <ul>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/1.png') }}" alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/2.png') }}" alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/3.png') }}" alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/5.png') }}" alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/1.png') }}"
+                                    alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/2.png') }}"
+                                    alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/3.png') }}"
+                                    alt=""></a></li>
+                        <li><a href="#!"><img src="{{ asset('frontend/images/social/5.png') }}"
+                                    alt=""></a></li>
                     </ul>
                 </div>
             </div>
@@ -154,21 +158,21 @@
             @if (session('toastr_success'))
                 toastr.success("{{ session('toastr_success') }}");
             @endif
-    
+
             @if (session('toastr_error'))
                 toastr.error("{{ session('toastr_error') }}");
             @endif
-    
+
             @if (session('toastr_warning'))
                 toastr.warning("{{ session('toastr_warning') }}");
             @endif
-    
+
             @if (session('toastr_info'))
                 toastr.info("{{ session('toastr_info') }}");
             @endif
         });
     </script>
-    
+
 
     <script>
         $(document).ready(function() {
@@ -199,7 +203,7 @@
                         scrollToBottom();
                         $(`li[data-user-id="${receiverId}"] .unread-count`).hide();
                         $(`li[data-user-id="${receiverId}"] .message-text`).removeClass('fw-bold');
-                        
+
                     },
                     error: function(xhr) {
                         console.log('Error:', xhr.responseText);
@@ -211,14 +215,14 @@
                 const chatContainer = $('.chat-box-messages');
                 chatContainer.scrollTop(chatContainer[0].scrollHeight);
             }
-            
+
             $('.chat-now-btn').on('click', function(e) {
                 var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
                 if (!isAuthenticated) {
                     $('#loginModal').modal('show');
                     return;
                 }
-                
+
                 e.preventDefault();
                 $(".chatbox").removeClass("open");
                 var userId = $(this).data('user-id');
@@ -227,12 +231,12 @@
                     url: "{{ route('user.chatnow') }}",
                     type: 'POST',
                     data: {
-                        userId: userId, 
-                        _token: '{{ csrf_token() }}' 
+                        userId: userId,
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         $('#chat-box-content').html(response);
-                        $(".chatbox").addClass("open");  
+                        $(".chatbox").addClass("open");
                         loadMessages(userId);
                     },
                     error: function(xhr) {

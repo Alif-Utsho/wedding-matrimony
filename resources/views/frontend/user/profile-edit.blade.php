@@ -7,7 +7,8 @@
                     <div class="inn">
                         <div class="rhs">
                             <div class="form-login">
-                                <form action="{{ route('user.profileEdit.submit') }}" method="POST" id="profile-edit-form" enctype="multipart/form-data">
+                                <form action="{{ route('user.profileEdit.submit') }}" method="POST" id="profile-edit-form"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <!--PROFILE BIO-->
                                     <div class="edit-pro-parti">
@@ -18,7 +19,8 @@
                                         <div class="form-group">
                                             <label class="lb">Name:</label>
                                             <input type="text" class="form-control" placeholder="Enter your full name"
-                                                value="{{ Auth::guard('user')->user()->name ?? old('name') }}" name="name">
+                                                value="{{ Auth::guard('user')->user()->name ?? old('name') }}"
+                                                name="name">
                                             @error('name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -30,8 +32,9 @@
                                             @error('image')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
-                                            @if($user->profile && $user->profile->image)
-                                                <img src="{{ asset($user->profile->image) }}" width="150" loading="lazy" alt="">
+                                            @if ($user->profile && $user->profile->image)
+                                                <img src="{{ asset($user->profile->image) }}" width="150" loading="lazy"
+                                                    alt="">
                                             @endif
                                         </div>
 
@@ -62,9 +65,9 @@
                                                 <select class="form-select chosen-select"
                                                     data-placeholder="Select your Gender" name="gender">
                                                     <option value="">Select</option>
-                                                    @foreach(\App\Enums\GenderEnum::options() as $value => $label)
-                                                        <option value="{{ $value }}" 
-                                                            {{ (isset($user->profile->gender) && $user->profile->gender == $value) ? 'selected' : (old('gender') == $value ? 'selected' : '') }}>
+                                                    @foreach (\App\Enums\GenderEnum::options() as $value => $label)
+                                                        <option value="{{ $value }}"
+                                                            {{ isset($user->profile->gender) && $user->profile->gender == $value ? 'selected' : (old('gender') == $value ? 'selected' : '') }}>
                                                             {{ $label }}
                                                         </option>
                                                     @endforeach
@@ -79,9 +82,9 @@
                                                 <select class="form-select chosen-select"
                                                     data-placeholder="Select your Religion" name="religion">
                                                     <option value="">Select</option>
-                                                    @foreach(\App\Enums\Religion::all() as $value => $label)
-                                                        <option value="{{ $label }}" 
-                                                            {{ (isset($user->profile->religion) && $user->profile->religion == $label) ? 'selected' : (old('religion') == $label ? 'selected' : '') }}>
+                                                    @foreach (\App\Enums\Religion::all() as $value => $label)
+                                                        <option value="{{ $label }}"
+                                                            {{ isset($user->profile->religion) && $user->profile->religion == $label ? 'selected' : (old('religion') == $label ? 'selected' : '') }}>
                                                             {{ $label }}
                                                         </option>
                                                     @endforeach
@@ -90,7 +93,7 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                            
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
@@ -149,12 +152,13 @@
                                         </div>
                                         <div class="col-md-12 form-group">
                                             <label class="lb">City:</label>
-                                            <select class="form-select chosen-select"
-                                                data-placeholder="Select your City" name="city_id"
-                                                value="{{ $user->profile->city_id ?? old('city_id') }}">
+                                            <select class="form-select chosen-select" data-placeholder="Select your City"
+                                                name="city_id" value="{{ $user->profile->city_id ?? old('city_id') }}">
                                                 <option value="">Select</option>
                                                 @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}" {{ $user->profile && $city->id===$user->profile->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                    <option value="{{ $city->id }}"
+                                                        {{ $user->profile && $city->id === $user->profile->city_id ? 'selected' : '' }}>
+                                                        {{ $city->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('city_id')
@@ -182,8 +186,9 @@
                                             <select class="form-select chosen-select"
                                                 data-placeholder="Select your Hobbies" name="type">
                                                 <option value="">Select</option>
-                                                @foreach(\App\Enums\JobType::getValues() as $jobType)
-                                                    <option value="{{ $jobType }}" {{ $user->profile && $user->profile->career->type == $jobType ? 'selected' : '' }}>
+                                                @foreach (\App\Enums\JobType::getValues() as $jobType)
+                                                    <option value="{{ $jobType }}"
+                                                        {{ $user->profile && $user->profile->career->type == $jobType ? 'selected' : '' }}>
                                                         {{ $jobType }}
                                                     </option>
                                                 @endforeach
@@ -321,7 +326,9 @@
                                                     multiple name="hobbies[]">
                                                     <option></option>
                                                     @php
-                                                        $userHobbies = $user->profile ? $user->profile->hobbies->pluck('hobby_id')->toArray() : [];
+                                                        $userHobbies = $user->profile
+                                                            ? $user->profile->hobbies->pluck('hobby_id')->toArray()
+                                                            : [];
                                                     @endphp
                                                     @foreach ($hobbies as $hobby)
                                                         <option value="{{ $hobby->id }}"

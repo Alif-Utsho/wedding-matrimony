@@ -38,6 +38,7 @@ class BannerController extends Controller {
         ]);
 
         Toastr::success('Banner uplaoded successfully');
+
         return redirect()->back();
     }
 
@@ -51,13 +52,14 @@ class BannerController extends Controller {
         $banner->delete();
 
         Toastr::success('Banner deleted successfully!', 'Success');
+
         return redirect()->route('admin.banner.manage');
     }
 
     public function togglestatus(Request $request) {
         $validator = Validator::make($request->all(), [
-            'banner_id'    => 'required|integer|exists:banners,id',
-            'status' => 'required|boolean',
+            'banner_id' => 'required|integer|exists:banners,id',
+            'status'    => 'required|boolean',
         ]);
 
         if ($validator->fails()) {

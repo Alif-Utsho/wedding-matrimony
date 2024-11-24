@@ -11,26 +11,29 @@
                                 <img src="{{ asset($user->profile->image) }}" loading="lazy" class="pro" alt="">
                             </div>
                             <div class="s3">
-                                <a href="#!" class="cta fol cta-chat chat-now chat-now-btn" data-user-id="{{ $user->id }}">
+                                <a href="#!" class="cta fol cta-chat chat-now chat-now-btn"
+                                    data-user-id="{{ $user->id }}">
                                     Chat Now
-                                    
-                                    @if(!auth('user')->user()->hasAccessTo('send-message'))
-                                    <i class="fa fa-lock"></i>
+
+                                    @if (!auth('user')->user()->hasAccessTo('send-message'))
+                                        <i class="fa fa-lock"></i>
                                     @endif
                                 </a>
-                                
-                                <button class="cta cta-sendint send-invitation" 
-                                    data-loading-text="Sending..."
-                                    {{ $invitationSent || $invitationAccepted ? 'disabled' : '' }}
-                                    >
-                                    @if($invitationSent) Invited
-                                    @elseif($invitationReceived) Requested
-                                    @elseif($invitationAccepted) Connected
-                                    @else Send Interest
+
+                                <button class="cta cta-sendint send-invitation" data-loading-text="Sending..."
+                                    {{ $invitationSent || $invitationAccepted ? 'disabled' : '' }}>
+                                    @if ($invitationSent)
+                                        Invited
+                                    @elseif($invitationReceived)
+                                        Requested
+                                    @elseif($invitationAccepted)
+                                        Connected
+                                    @else
+                                        Send Interest
                                     @endif
 
-                                    @if(!auth('user')->user()->hasAccessTo('send-interest'))
-                                    <i class="fa fa-lock"></i>
+                                    @if (!auth('user')->user()->hasAccessTo('send-interest'))
+                                        <i class="fa fa-lock"></i>
                                     @endif
                                 </button>
                             </div>
@@ -39,51 +42,52 @@
                     <div class="profi-pg profi-bio">
                         <div class="lhs">
                             @auth('user')
-                            @if(auth('user')->user()->hasAccessTo('profile-view'))
-                            <div class="pro-pg-intro">
-                                <h1>{{ $user->name }}</h1>
-                                <div class="pro-info-status">
-                                    <span class="stat-1"><b>{{ $user->profileViews()->count() }}</b> viewers</span>
-                                    <span class="stat-2"><b>Available</b> online</span>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
-                                                alt="">
-                                            <span>City: <strong>{{ $user->profile->city->name }}</strong></span>
+                                @if (auth('user')->user()->hasAccessTo('profile-view'))
+                                    <div class="pro-pg-intro">
+                                        <h1>{{ $user->name }}</h1>
+                                        <div class="pro-info-status">
+                                            <span class="stat-1"><b>{{ $user->profileViews()->count() }}</b> viewers</span>
+                                            <span class="stat-2"><b>Available</b> online</span>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="{{ asset('frontend/images/icon/pro-age.png') }}" loading="lazy"
-                                                alt="">
-                                            <span>Age: <strong>{{ $user->profile->age }}</strong></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
-                                                alt="">
-                                            <span>Height: 
-                                                <strong class="heightToFeet" data-height="{{ $user->profile->height }}">
-                                                    {{ $user->profile->height }}
-                                                </strong>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
-                                                alt="">
-                                            <span>Job: <strong>{{ $user->profile->career->type }}</strong></span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            @else
-                            <h1>Please Subscribe
-                            @endif
+                                        <ul>
+                                            <li>
+                                                <div>
+                                                    <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
+                                                        alt="">
+                                                    <span>City: <strong>{{ $user->profile->city->name }}</strong></span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>
+                                                    <img src="{{ asset('frontend/images/icon/pro-age.png') }}" loading="lazy"
+                                                        alt="">
+                                                    <span>Age: <strong>{{ $user->profile->age }}</strong></span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>
+                                                    <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
+                                                        alt="">
+                                                    <span>Height:
+                                                        <strong class="heightToFeet"
+                                                            data-height="{{ $user->profile->height }}">
+                                                            {{ $user->profile->height }}
+                                                        </strong>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>
+                                                    <img src="{{ asset('frontend/images/icon/pro-city.png') }}" loading="lazy"
+                                                        alt="">
+                                                    <span>Job: <strong>{{ $user->profile->career->type }}</strong></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @else
+                                    <h1>Please Subscribe
+                                @endif
                             @endauth
                             <!-- PROFILE ABOUT -->
                             <div class="pr-bio-c pr-bio-abo">
@@ -140,8 +144,9 @@
                                     <li><b>Date of Birth: </b>
                                         {{ Carbon\Carbon::parse($user->profile->birth_date)->format('d M, Y') }}
                                     </li>
-                                    <li><b>Height:</b> <span class="heightToFeet" data-height="{{ $user->profile->height }}">
-                                        {{ $user->profile->height }}</li>
+                                    <li><b>Height:</b> <span class="heightToFeet"
+                                            data-height="{{ $user->profile->height }}">
+                                            {{ $user->profile->height }}</li>
                                     <li><b>Weight:</b> {{ $user->profile->weight }}kg</li>
                                     <li><b>Degree:</b> {{ $user->profile->career->degree }}</li>
                                     <li><b>Religion:</b> {{ $user->profile->religion }}</li>
@@ -256,7 +261,7 @@
                         <circle class="success-checkmark__circle" cx="26" cy="26" r="25" fill="none" />
                         <path class="success-checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                     </svg>
-                    
+
                     <p class="my-4 text-center successText">Your Invitation has been Successfully Sent!</p>
                 </div>
                 <div class="modal-footer">
@@ -267,7 +272,8 @@
     </div>
 
     <!-- Modal for Accepting or Denying Invitation -->
-    <div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-labelledby="invitationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-labelledby="invitationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -296,7 +302,7 @@
                     e.preventDefault();
 
                     var $this = $(this);
-                    var originalText = $this.html(); 
+                    var originalText = $this.html();
                     var userId = {{ $user->id }};
 
                     var isAuthenticated = {{ Auth::guard('user')->check() ? 'true' : 'false' }};
@@ -313,11 +319,11 @@
                     $this.prop('disabled', true).html($this.data('loading-text'));
 
                     $.ajax({
-                        url: "{{ route('send.invitation') }}", 
+                        url: "{{ route('send.invitation') }}",
                         method: 'POST',
                         data: {
-                            userId: userId, 
-                            _token: '{{ csrf_token() }}' 
+                            userId: userId,
+                            _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
                             $this.html('Invited')
@@ -335,7 +341,7 @@
                                 alert('Something went wrong!');
                             }
                         }
-                        
+
                     });
                 });
 
@@ -347,7 +353,7 @@
                         _token: '{{ csrf_token() }}'
                     }, function(response) {
                         $('#invitationModal').modal('hide');
-                        
+
                         $('.send-invitation').html('Connected')
                             .addClass('sent')
                             .prop('disabled', true);

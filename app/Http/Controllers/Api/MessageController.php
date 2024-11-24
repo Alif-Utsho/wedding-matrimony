@@ -9,27 +9,24 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class MessageController extends Controller
-{
+class MessageController extends Controller {
     protected $messageService;
 
-    function __construct(MessageService $messageService)
-    {
+    function __construct(MessageService $messageService) {
         $this->middleware('check.access:send-message')->only(['chatNow', 'sendMessage', 'getMessages']);
         $this->messageService = $messageService;
     }
 
-    public function sendMessage(Request $request)
-    {
+    public function sendMessage(Request $request) {
         $validator = Validator::make($request->all(), [
             'receiver_id' => 'required|integer',
-            'message' => 'required|string',
+            'message'     => 'required|string',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'Validation failed',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -40,13 +37,12 @@ class MessageController extends Controller
         );
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Message sent successfully'
+            'status'  => 'success',
+            'message' => 'Message sent successfully',
         ], Response::HTTP_OK);
     }
 
-    public function getMessages(Request $request)
-    {
+    public function getMessages(Request $request) {
         $validator = Validator::make($request->all(), [
             'receiver_id' => 'required|integer',
         ]);
@@ -54,28 +50,28 @@ class MessageController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'Validation failed',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $senderId = Auth::guard('api')->user()->id;
+        $senderId   = Auth::guard('api')->user()->id;
         $receiverId = $request->input('receiver_id');
 
         $messages = $this->messageService->fetch($senderId, $receiverId);
 
         return response()->json([
             'status' => 'success',
-            'data' => $messages,
+            'data'   => $messages,
         ], Response::HTTP_OK);
     }
 
-    public function chatList(){
+    public function chatList() {
         $userId = Auth::guard('api')->id();
 
         $chatlist = $this->messageService->list($userId);
 
         return response()->json([
-            'status' => 'success',
+            'status'   => 'success',
             'chatlist' => $chatlist,
         ], Response::HTTP_OK);
     }

@@ -42,7 +42,7 @@
         <div class="main">
             <div class="incon" <div class="row">
                 @include('backend.layouts.sidebar')
-                
+
                 @yield('content')
             </div>
         </div>
@@ -78,15 +78,15 @@
             @if (session('toastr_success'))
                 toastr.success("{{ session('toastr_success') }}");
             @endif
-    
+
             @if (session('toastr_error'))
                 toastr.error("{{ session('toastr_error') }}");
             @endif
-    
+
             @if (session('toastr_warning'))
                 toastr.warning("{{ session('toastr_warning') }}");
             @endif
-    
+
             @if (session('toastr_info'))
                 toastr.info("{{ session('toastr_info') }}");
             @endif

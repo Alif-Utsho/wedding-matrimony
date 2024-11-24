@@ -25,7 +25,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.testimonial.manage') }}">Manage testimonial posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.testimonial.manage') }}">Manage testimonial
+                                posts</a></li>
 
                     </ul>
                 </div>
@@ -35,7 +36,7 @@
                 <form action="{{ route('admin.testimonial.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--PROFILE BIO-->
-                    <input type="hidden" name="testimonial_id" value="{{ $testimonial->id }}">    
+                    <input type="hidden" name="testimonial_id" value="{{ $testimonial->id }}">
                     <div class="edit-pro-parti">
                         <div class="form-group">
                             <label class="lb">Title:</label>
@@ -64,7 +65,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="lb">Description:</label>
                             <input type="text" class="form-control" placeholder="Enter description*" name="description"

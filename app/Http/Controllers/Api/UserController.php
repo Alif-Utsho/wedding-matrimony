@@ -8,38 +8,35 @@ use App\Enums\Religion;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Hobby;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\UserService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-
-class UserController extends Controller
-{
+class UserController extends Controller {
     protected $userService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(UserService $userService) {
         $this->userService = $userService;
     }
 
-    public function profileEdit(Request $request){
-        $cities = City::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $genders = GenderEnum::options();
+    public function profileEdit(Request $request) {
+        $cities    = City::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $hobbies   = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $genders   = GenderEnum::options();
         $religions = Religion::all();
-        $jobtypes = JobType::getValues();
-                
+        $jobtypes  = JobType::getValues();
+
         return response()->json(compact('cities', 'hobbies', 'genders', 'religions', 'jobtypes'));
     }
 
     public function profileUpdate(Request $request) {
         $userId = Auth::guard('api')->id();
-        $user = User::find($userId);
+        $user   = User::find($userId);
 
         $validator = Validator::make($request->all(), [
             'name'         => 'required|string|max:200',
@@ -47,7 +44,7 @@ class UserController extends Controller
             'city_id'      => 'required|string',
             'religion'     => 'required|string',
             'birth_date'   => 'required|date',
-            'age'   => 'required',
+            'age'          => 'required',
             'height'       => 'required|numeric|min:30|max:300',
             'weight'       => 'required|numeric|min:10|max:300',
             'fathers_name' => 'required|string|max:200',
@@ -71,53 +68,52 @@ class UserController extends Controller
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',
-                'mimes:png,jpg,jpeg'
-            ]
+                'mimes:png,jpg,jpeg',
+            ],
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
         $userProfile = $this->userService->updateUserProfile($request->all(), $user);
-        
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Profile updated successfully',
-            'data' => [
+            'data'    => [
                 'user' => $user,
-            ]
+            ],
         ], Response::HTTP_OK);
     }
 
-    public function profile(){
+    public function profile() {
         $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia')->find(Auth::guard('api')->id());
+
         return response()->json(compact('user'));
     }
 
-    public function imageUpload(Request $request)
-    {
+    public function imageUpload(Request $request) {
         $validator = Validator::make($request->all(), [
-            'images' => [
+            'images'   => [
                 'required',
                 'array',
-                'min:1', 
+                'min:1',
             ],
-            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048', 
+            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
-        $userId = Auth::guard('api')->id();
+        $userId      = Auth::guard('api')->id();
         $userProfile = UserProfile::where('user_id', $userId)->first();
 
         if (!$userProfile) {
@@ -127,39 +123,39 @@ class UserController extends Controller
         $uploaded = $this->userService->uploadProfileImages($request->file('images'), $userId);
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => "$uploaded Images uploaded successfully!",
         ], Response::HTTP_OK);
     }
 
     public function deleteImage(Request $request) {
-        $id = $request->imageId;
+        $id     = $request->imageId;
         $result = $this->userService->deleteImage($id);
 
-        if($result){
+        if ($result) {
             return response()->json([
-                'status' => 'success',
+                'status'  => 'success',
                 'message' => 'Image deleted successfully',
             ], Response::HTTP_OK);
         } else {
             return response()->json([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Something went wrong',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
     }
 
-    public function updateSetting(Request $request)
-    {
+    public function updateSetting(Request $request) {
         $validator = Validator::make($request->all(), [
-            'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
+            'setting_key'   => 'required|string|in:profile_visibility,interest_request_access',
             'setting_value' => 'required|string|in:all,premium,no-visible',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'errors' => $validator->errors()
+                'errors'  => $validator->errors(),
             ], 422);
         }
 
@@ -174,30 +170,30 @@ class UserController extends Controller
 
     public function like($userId) {
         $likerId = Auth::guard('api')->id();
-        
+
         $result = $this->userService->toggleLike($userId, $likerId);
 
         return response()->json($result);
     }
 
-    public function listLikedProfiles()
-    {
-        $likerId = Auth::guard('api')->id();
+    public function listLikedProfiles() {
+        $likerId       = Auth::guard('api')->id();
         $likedProfiles = $this->userService->listLikedProfiles($likerId);
 
         return response()->json([
-            'success' => true,
-            'liked_profiles' => $likedProfiles
+            'success'        => true,
+            'liked_profiles' => $likedProfiles,
         ]);
     }
 
-    public function matchingProfiles(){
-        $userId = Auth::guard('api')->id();
+    public function matchingProfiles() {
+        $userId        = Auth::guard('api')->id();
         $matchingUsers = $this->userService->getMatchingUsers($userId);
 
         return response()->json([
             'status' => 'success',
-            'data' => $matchingUsers,
+            'data'   => $matchingUsers,
         ], Response::HTTP_OK);
     }
+
 }

@@ -25,7 +25,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.service.manage') }}">Manage service posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.service.manage') }}">Manage service posts</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -60,7 +61,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="lb">Service photo:</label>
                             <div class="fil-img-uplo">
@@ -72,20 +73,20 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="lb">Icon:</label>
                             <div class="fil-img-uplo">
                                 <span class="dumfil">Upload image</span>
                                 <input type="file" name="icon" value="{{ old('icon') }}"
                                     accept="image/*,.jpg,.jpeg,.png" id="fileInput">
-                                    @error('icon')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
+                                @error('icon')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group">
                             <label class="lb">Status</label>

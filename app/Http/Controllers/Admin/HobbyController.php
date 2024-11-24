@@ -8,8 +8,7 @@ use App\Models\Hobby;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class HobbyController extends Controller
-{
+class HobbyController extends Controller {
     public function manage() {
         $show_data = Hobby::latest()->get();
 
@@ -35,13 +34,14 @@ class HobbyController extends Controller
         ]);
 
         Toastr::success('Hobby created successfully');
+
         return redirect()->back();
     }
 
     public function update(Request $request) {
         $validator = Validator::make($request->all(), [
-            'hobby_id'    => 'required|integer|exists:hobbies,id',
-            'name' => 'required|string',
+            'hobby_id' => 'required|integer|exists:hobbies,id',
+            'name'     => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -57,6 +57,7 @@ class HobbyController extends Controller
         $hobby->update(['name' => $request->name]);
 
         Toastr::success('Hobby updated successfully');
+
         return redirect()->back();
     }
 
@@ -66,13 +67,14 @@ class HobbyController extends Controller
         $hobby->delete();
 
         Toastr::success('Hobby deleted successfully!', 'Success');
+
         return redirect()->route('admin.hobby.manage');
     }
 
     public function togglestatus(Request $request) {
         $validator = Validator::make($request->all(), [
-            'hobby_id'    => 'required|integer|exists:hobbies,id',
-            'status' => 'required|boolean',
+            'hobby_id' => 'required|integer|exists:hobbies,id',
+            'status'   => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -90,4 +92,5 @@ class HobbyController extends Controller
             'message' => 'Status toggled successfully!',
         ]);
     }
+
 }

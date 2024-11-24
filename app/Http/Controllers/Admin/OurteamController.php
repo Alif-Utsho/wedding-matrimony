@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class OurteamController extends Controller
-{
+class OurteamController extends Controller {
     public function manage() {
         $show_data = Ourteam::latest()->get();
 
@@ -24,11 +23,11 @@ class OurteamController extends Controller
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'title'             => 'required|string|max:200|unique:ourteams,title',
+            'title'       => 'required|string|max:200|unique:ourteams,title',
             'designation' => 'required|string|max:50',
-            'image'             => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'advisor'          => 'nullable',
-            'status'          => 'nullable'
+            'image'       => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'advisor'     => 'nullable',
+            'status'      => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -40,14 +39,14 @@ class OurteamController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $imagePath       = ImageService::uploadImage($request->file('image'), '', 'ourteams');
+        $imagePath = ImageService::uploadImage($request->file('image'), '', 'ourteams');
 
         $ourteam = Ourteam::create([
-            'title'             => $request->title,
-            'designation'       => $request->designation,
-            'image'             => $imagePath,
-            'advisor'        => $request->boolean('advisor'),
-            'status'          => $request->boolean('status'),
+            'title'       => $request->title,
+            'designation' => $request->designation,
+            'image'       => $imagePath,
+            'advisor'     => $request->boolean('advisor'),
+            'status'      => $request->boolean('status'),
         ]);
 
         Toastr::success('A Team Member created successfully!', 'Success');
@@ -56,23 +55,23 @@ class OurteamController extends Controller
     }
 
     public function edit($id) {
-        $ourteam            = Ourteam::find($id);
+        $ourteam = Ourteam::find($id);
 
         return view('backend.ourteam.edit', compact('ourteam'));
     }
 
     public function update(Request $request) {
         $validator = Validator::make($request->all(), [
-            'ourteam_id'           => 'required|integer',
-            'title'             => [
+            'ourteam_id'  => 'required|integer',
+            'title'       => [
                 'required',
                 'string',
-                'max:200'
+                'max:200',
             ],
             'designation' => 'required|string|max:50',
-            'image'             => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'advisor'          => 'nullable',
-            'status'        => 'nullable'
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'advisor'     => 'nullable',
+            'status'      => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -84,15 +83,15 @@ class OurteamController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $ourteam            = Ourteam::find($request->ourteam_id);
-        $imagePath       = ImageService::uploadImage($request->file('image'), $ourteam->image, 'ourteams');
+        $ourteam   = Ourteam::find($request->ourteam_id);
+        $imagePath = ImageService::uploadImage($request->file('image'), $ourteam->image, 'ourteams');
 
         $ourteam->update([
-            'title'             => $request->title,
-            'designation'       => $request->designation,
-            'image'             => $imagePath,            
-            'advisor'        => $request->boolean('advisor'),
-            'status'          => $request->boolean('status'),
+            'title'       => $request->title,
+            'designation' => $request->designation,
+            'image'       => $imagePath,
+            'advisor'     => $request->boolean('advisor'),
+            'status'      => $request->boolean('status'),
         ]);
 
         Toastr::success('A Team Member updated successfully!', 'Success');
@@ -102,8 +101,8 @@ class OurteamController extends Controller
 
     public function togglestatus(Request $request) {
         $validator = Validator::make($request->all(), [
-            'ourteam_id'    => 'required|integer|exists:ourteams,id',
-            'status' => 'required|boolean',
+            'ourteam_id' => 'required|integer|exists:ourteams,id',
+            'status'     => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -118,7 +117,7 @@ class OurteamController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Status toggled of a Team Member!'
+            'message' => 'Status toggled of a Team Member!',
         ]);
     }
 
@@ -135,4 +134,5 @@ class OurteamController extends Controller
 
         return redirect()->route('admin.ourteam.manage');
     }
+
 }

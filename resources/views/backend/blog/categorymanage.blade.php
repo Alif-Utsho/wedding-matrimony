@@ -57,7 +57,9 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                                         data-bs-target="#edit-category-{{ $value->id }}">Edit</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('admin.blog.category.delete', $value->id) }}">Delete</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('admin.blog.category.delete', $value->id) }}">Delete</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
@@ -66,35 +68,38 @@
                                 <div class="modal fade" id="edit-category-{{ $value->id }}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                            
+
                                             <!-- Modal Header -->
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Edit category</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
-                            
+
                                             <!-- Modal body -->
                                             <div class="modal-body">
                                                 <div class="form-inp">
                                                     <form action="{{ route('admin.blog.category.update') }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" value="{{ $value->id }}" name="category_id">
+                                                        <input type="hidden" value="{{ $value->id }}"
+                                                            name="category_id">
                                                         <div class="edit-pro-parti">
                                                             <div class="form-group">
                                                                 <label class="lb">Title:</label>
-                                                                <input type="text" class="form-control" placeholder="Enter title*" name="name" value="{{ $value->name }}"
-                                                                    required>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter title*" name="name"
+                                                                    value="{{ $value->name }}" required>
                                                             </div>
-                            
+
                                                             <!-- Modal footer -->
                                                             <div class="modal-footer">
-                                                                <button type="submit" class="cta-full cta-colr">Submit</button>
+                                                                <button type="submit"
+                                                                    class="cta-full cta-colr">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
-                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -142,5 +147,4 @@
             </div>
         </div>
     </div>
-
 @endsection

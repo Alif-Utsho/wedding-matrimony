@@ -113,12 +113,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/tag/update', [BlogController::class, 'tagupdate'])->name('blog.tag.update');
         Route::get('blog/tag/delete/{id}', [BlogController::class, 'tagdelete'])->name('blog.tag.delete');
 
-        
         Route::get('banner/manage', [BannerController::class, 'manage'])->name('banner.manage');
         Route::post('banner/store', [BannerController::class, 'store'])->name('banner.store');
         Route::delete('banner/{id}', [BannerController::class, 'delete'])->name('banner.delete');
         Route::post('banner/toggle-status', [BannerController::class, 'togglestatus'])->name('banner.togglestatus');
-        
+
         Route::get('city/manage', [CityController::class, 'manage'])->name('city.manage');
         Route::post('city/store', [CityController::class, 'store'])->name('city.store');
         Route::post('city/update', [CityController::class, 'update'])->name('city.update');

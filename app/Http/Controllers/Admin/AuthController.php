@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
-{
-    public function login(){
+class AuthController extends Controller {
+    public function login() {
         return view('backend.auth.login');
     }
 
-    public function login_submit(Request $request){
+    public function login_submit(Request $request) {
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
@@ -25,9 +24,10 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
 
-    public function logout()
-    {
-        Auth::guard('admin')->logout(); 
+    public function logout() {
+        Auth::guard('admin')->logout();
+
         return redirect()->route('admin.login')->with('success', 'You have been logged out.');
     }
+
 }

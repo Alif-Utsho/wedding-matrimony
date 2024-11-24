@@ -8,8 +8,7 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CityController extends Controller
-{
+class CityController extends Controller {
     public function manage() {
         $show_data = City::latest()->get();
 
@@ -35,13 +34,14 @@ class CityController extends Controller
         ]);
 
         Toastr::success('City created successfully');
+
         return redirect()->back();
     }
 
     public function update(Request $request) {
         $validator = Validator::make($request->all(), [
-            'city_id'    => 'required|integer|exists:cities,id',
-            'name' => 'required|string',
+            'city_id' => 'required|integer|exists:cities,id',
+            'name'    => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -57,6 +57,7 @@ class CityController extends Controller
         $city->update(['name' => $request->name]);
 
         Toastr::success('City updated successfully');
+
         return redirect()->back();
     }
 
@@ -66,13 +67,14 @@ class CityController extends Controller
         $city->delete();
 
         Toastr::success('City deleted successfully!', 'Success');
+
         return redirect()->route('admin.city.manage');
     }
 
     public function togglestatus(Request $request) {
         $validator = Validator::make($request->all(), [
-            'city_id'    => 'required|integer|exists:cities,id',
-            'status' => 'required|boolean',
+            'city_id' => 'required|integer|exists:cities,id',
+            'status'  => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -90,4 +92,5 @@ class CityController extends Controller
             'message' => 'Status toggled successfully!',
         ]);
     }
+
 }

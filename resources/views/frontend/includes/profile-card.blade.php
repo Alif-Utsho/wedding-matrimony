@@ -18,10 +18,18 @@
             <span><b class="count">{{ $profile_completion }}</b>%</span>
         </div>
         <ul class="pro-stat-ic">
-            <li><span><i class="fa fa-heart-o like" aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileLikes()->count() }}</b>Likes</span></li>
-            <li><span><i class="fa fa-eye view" aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileViews()->count() }}</b>Views</span></li>
-            <li><span><i class="fa fa-handshake-o inte" aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->invitations()->count() }}</b>Interests</span></li>
-            <li><span><i class="fa fa-hand-pointer-o clic" aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileClicks()->count() }}</b>Clicks</span></li>
+            <li><span><i class="fa fa-heart-o like"
+                        aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileLikes()->count() }}</b>Likes</span>
+            </li>
+            <li><span><i class="fa fa-eye view"
+                        aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileViews()->count() }}</b>Views</span>
+            </li>
+            <li><span><i class="fa fa-handshake-o inte"
+                        aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->invitations()->count() }}</b>Interests</span>
+            </li>
+            <li><span><i class="fa fa-hand-pointer-o clic"
+                        aria-hidden="true"></i><b>{{ Auth::guard('user')->user()->profileClicks()->count() }}</b>Clicks</span>
+            </li>
         </ul>
     </div>
 </div>

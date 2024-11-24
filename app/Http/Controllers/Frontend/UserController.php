@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\PaymentStatus;
+use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Hobby;
+use App\Models\Package;
+use App\Models\PackagePayment;
 use App\Models\User;
-use App\Models\UserProfile;
 use App\Models\UserPackage;
+use App\Models\UserProfile;
+use App\Services\MessageService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use App\Helpers\Toastr;
-use App\Models\Package;
-use App\Models\PackagePayment;
-use App\Enums\PaymentStatus;
-use App\Models\ProfileLike;
-use App\Services\UserService;
-use App\Services\MessageService;
 
 class UserController extends Controller {
-    
+
     protected $userService, $messageService;
 
-    public function __construct(UserService $userService, MessageService $messageService)
-    {
-        $this->userService = $userService;
+    public function __construct(UserService $userService, MessageService $messageService) {
+        $this->userService    = $userService;
         $this->messageService = $messageService;
     }
 
     public function index() {
-        $user = User::find(Auth::guard('user')->id());
+        $user        = User::find(Auth::guard('user')->id());
         $userPackage = UserPackage::where('user_id', $user->id)
             ->where('expired_at', '>', now())
             ->latest()
@@ -42,15 +40,15 @@ class UserController extends Controller {
             $package = Package::where('price', 0)->first();
         }
 
-        $chatListUsers = $this->messageService->list($user->id);
-        $matchingUsers = $this->userService->getMatchingUsers($user->id);
+        $chatListUsers      = $this->messageService->list($user->id);
+        $matchingUsers      = $this->userService->getMatchingUsers($user->id);
         $profile_completion = $this->userService->getProfileCompletion($user->id);
 
         return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers', 'matchingUsers'));
     }
 
-    public function profile(){
-        $user    = User::find(Auth::guard('user')->id());
+    public function profile() {
+        $user = User::find(Auth::guard('user')->id());
 
         $profile_completion = $this->userService->getProfileCompletion($user->id);
 
@@ -65,7 +63,8 @@ class UserController extends Controller {
         } else {
             $package = Package::where('price', 0)->first();
         }
-        return view('frontend.user.profile', compact('user', 'profile_completion', 'userPackage','package'));
+
+        return view('frontend.user.profile', compact('user', 'profile_completion', 'userPackage', 'package'));
     }
 
     public function profileEdit() {
@@ -77,14 +76,14 @@ class UserController extends Controller {
 
     public function profileEditSubmit(Request $request) {
         $userId = Auth::guard('user')->id();
-        $user = User::find($userId);
+        $user   = User::find($userId);
 
         // Validate the request
         $request->validate([
             'name'         => 'required|string|max:200',
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
-            'religion'      => 'required|string',
+            'religion'     => 'required|string',
             'birth_date'   => 'required|date',
             'height'       => 'required|numeric|min:30|max:300',
             'weight'       => 'required|numeric|min:10|max:300',
@@ -110,29 +109,28 @@ class UserController extends Controller {
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',
-                'mimes:png,jpg,jpeg'
-            ]
+                'mimes:png,jpg,jpeg',
+            ],
         ]);
 
         $userProfile = $this->userService->updateUserProfile($request->all(), $user);
 
         Toastr::success('Profile Updated Successfully');
+
         return redirect('/user/profile');
     }
 
-    
-    public function imageUpload(Request $request)
-    {
+    public function imageUpload(Request $request) {
         $request->validate([
-            'images' => [
+            'images'   => [
                 'required',
                 'array',
-                'min:1', 
+                'min:1',
             ],
-            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048', 
+            'images.*' => 'image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        $userId = Auth::guard('user')->id();
+        $userId      = Auth::guard('user')->id();
         $userProfile = UserProfile::where('user_id', $userId)->first();
 
         if (!$userProfile) {
@@ -142,19 +140,20 @@ class UserController extends Controller {
         $uploaded = $this->userService->uploadProfileImages($request->file('images'), $userId);
 
         Toastr::success("$uploaded Images uploaded successfully!");
+
         return redirect()->back();
     }
 
     public function deleteImage(Request $request) {
-        $id = $request->imageId;
+        $id     = $request->imageId;
         $result = $this->userService->deleteImage($id);
 
-        if($result){
+        if ($result) {
             Toastr::success('Image deleted successfully.');
         } else {
             Toastr::error('Something went wrong!');
         }
-        
+
         return redirect()->back();
     }
 
@@ -167,7 +166,7 @@ class UserController extends Controller {
     }
 
     public function userPlan() {
-        $user = User::find(Auth::guard('user')->id());
+        $user        = User::find(Auth::guard('user')->id());
         $userPackage = UserPackage::where('user_id', $user->id)
             ->where('expired_at', '>', now())
             ->latest()
@@ -181,19 +180,17 @@ class UserController extends Controller {
         }
 
         $payments = PackagePayment::where('user_id', $user->id)->where('status', PaymentStatus::PAID)->get();
-       
 
         return view('frontend.user.plan', compact('userPackage', 'package', 'payments'));
     }
 
-    public function setting(){
+    public function setting() {
         return view('frontend.user.setting');
     }
 
-    public function updateSetting(Request $request)
-    {
+    public function updateSetting(Request $request) {
         $request->validate([
-            'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
+            'setting_key'   => 'required|string|in:profile_visibility,interest_request_access',
             'setting_value' => 'required|string|in:all,premium,no-visible',
         ]);
 
@@ -209,13 +206,12 @@ class UserController extends Controller {
         ]);
     }
 
-
     public function like($userId) {
         $likerId = Auth::guard('user')->id();
-        
+
         $result = $this->userService->toggleLike($userId, $likerId);
 
         return response()->json($result);
     }
-    
+
 }

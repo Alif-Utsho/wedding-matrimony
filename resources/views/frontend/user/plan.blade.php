@@ -24,11 +24,11 @@
                                 <tr>
                                     <td>{{ $payment->package_name }}</td>
                                     <td>
-                                        @if($months > 0)
-                                            {{ $months }} Month{{ $months > 1 ? 's' : '' }} 
+                                        @if ($months > 0)
+                                            {{ $months }} Month{{ $months > 1 ? 's' : '' }}
                                         @endif
-                                        @if($days > 0)
-                                            {{ $days }} Day{{ $days > 1 ? 's' : '' }} 
+                                        @if ($days > 0)
+                                            {{ $days }} Day{{ $days > 1 ? 's' : '' }}
                                         @endif
                                         ({{ \Carbon\Carbon::parse($payment->created_at)->format('F Y') }} -
                                         {{ \Carbon\Carbon::parse($payment->expired_at)->format('F Y') }})
@@ -41,9 +41,9 @@
                                     </td>
                                 </tr>
                             @empty
-                            <tr>
-                                <td colspan="4" class="text-center">No invoices available.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4" class="text-center">No invoices available.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

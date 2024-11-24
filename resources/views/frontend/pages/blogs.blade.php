@@ -24,43 +24,48 @@
                                 <h2>Latest &amp; Popular</h2>
                             </div>
                             <!--BIG POST START-->
-                            
-                            @foreach($blogs as $blog)
-                            <div class="blog-home-box">
-                                <div class="im">
-                                    <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
-                                    <span class="blog-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
-                                    <div class="shar-1">
-                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
-                                        <ul>
-                                            <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                            <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                            <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
-                                            <li><span><i class="fa fa-link" aria-hidden="true" data-toggle="modal"
-                                                        data-target="#sharepop"></i></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="txt">
-                                    @foreach($blog->tags as $tag)
-                                    <span class="blog-cate">{{ $tag->name }}</span>
-                                    @endforeach
 
-                                    <h2>{{ $blog->title }}</h2>
-                                    <p>{{ $blog->short_description }}</p>
-                                    @if($blog->author_image && $blog->author_name)
-                                    <div class="blog-info">
-                                        <div class="blog-pro-info">
-                                            <img src="{{ asset($blog->author_image) }}" alt="" loading="lazy">
-                                            <h5>{{ $blog->author_name }} <span>Author</span></h5>
+                            @foreach ($blogs as $blog)
+                                <div class="blog-home-box">
+                                    <div class="im">
+                                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
+                                        <span
+                                            class="blog-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
+                                        <div class="shar-1">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <ul>
+                                                <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li><span><i class="fa fa-link" aria-hidden="true" data-toggle="modal"
+                                                            data-target="#sharepop"></i></span></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    @endif
-                                    <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
+                                    <div class="txt">
+                                        @foreach ($blog->tags as $tag)
+                                            <span class="blog-cate">{{ $tag->name }}</span>
+                                        @endforeach
+
+                                        <h2>{{ $blog->title }}</h2>
+                                        <p>{{ $blog->short_description }}</p>
+                                        @if ($blog->author_image && $blog->author_name)
+                                            <div class="blog-info">
+                                                <div class="blog-pro-info">
+                                                    <img src="{{ asset($blog->author_image) }}" alt=""
+                                                        loading="lazy">
+                                                    <h5>{{ $blog->author_name }} <span>Author</span></h5>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
-                            
+
                         </div>
                         <div class="rhs">
                             <div class="blog-com-rhs">
@@ -83,8 +88,10 @@
                                 <div class="blog-rhs-cate">
                                     <h4>Category</h4>
                                     <ul>
-                                        @foreach($blog_categories as $category)
-                                        <li><a href="/blogs?category={{ $category->slug }}"><span>{{ $loop->iteration }}</span><b>{{ $category->name }}</b></a></li>
+                                        @foreach ($blog_categories as $category)
+                                            <li><a
+                                                    href="/blogs?category={{ $category->slug }}"><span>{{ $loop->iteration }}</span><b>{{ $category->name }}</b></a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -93,16 +100,16 @@
                                 <div class="hot-page2-hom-pre blog-rhs-trends">
                                     <h4>Trending Posts</h4>
                                     <ul>
-                                        @foreach($trending_blogs as $trending)
-                                        <li>
-                                            <div class="hot-page2-hom-pre-1">
-                                                <img src="{{ asset($trending->image) }}" alt="" loading="lazy">
-                                            </div>
-                                            <div class="hot-page2-hom-pre-2">
-                                                <h5>{{ $trending->title }}</h5>
-                                            </div>
-                                            <a href="/blog-details/{{ $trending->id }}" class="fclick"></a>
-                                        </li>
+                                        @foreach ($trending_blogs as $trending)
+                                            <li>
+                                                <div class="hot-page2-hom-pre-1">
+                                                    <img src="{{ asset($trending->image) }}" alt="" loading="lazy">
+                                                </div>
+                                                <div class="hot-page2-hom-pre-2">
+                                                    <h5>{{ $trending->title }}</h5>
+                                                </div>
+                                                <a href="/blog-details/{{ $trending->id }}" class="fclick"></a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>

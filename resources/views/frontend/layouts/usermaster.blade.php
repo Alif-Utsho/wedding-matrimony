@@ -7,30 +7,40 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-3">
                         <div class="db-nav">
-                            <div class="db-nav-pro"><img src="{{ asset(Auth::guard('user')->user()->profile->image) }}" class="img-fluid"
-                                    alt=""></div>
+                            <div class="db-nav-pro"><img src="{{ asset(Auth::guard('user')->user()->profile->image) }}"
+                                    class="img-fluid" alt=""></div>
                             <div class="db-nav-list">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'act' : '' }}">
+                                        <a href="{{ route('user.dashboard') }}"
+                                            class="{{ request()->routeIs('user.dashboard') ? 'act' : '' }}">
                                             <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'act' : '' }}">
+                                        <a href="{{ route('user.profile') }}"
+                                            class="{{ request()->routeIs('user.profile') ? 'act' : '' }}">
                                             <i class="fa fa-male" aria-hidden="true"></i> Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('user.invitations') }}" class="{{ request()->routeIs('user.invitations') ? 'act' : '' }}">
+                                        <a href="{{ route('user.invitations') }}"
+                                            class="{{ request()->routeIs('user.invitations') ? 'act' : '' }}">
                                             <i class="fa fa-handshake-o" aria-hidden="true"></i>Interests
                                         </a>
                                     </li>
-                                    <li><a href="{{ route('user.chat.list') }}" class="{{ request()->routeIs('user.chat.list') ? 'act' : '' }}"><i class="fa fa-commenting-o" aria-hidden="true"></i>Chat list</a></li>
-                                    <li><a href="{{ route('user.plan') }}" class="{{ request()->routeIs('user.plan') ? 'act' : '' }}"><i class="fa fa-money" aria-hidden="true"></i>Plan</a></li>
-                                    <li><a href="{{ route('user.setting') }}" class="{{ request()->routeIs('user.setting') ? 'act' : '' }}"><i class="fa fa-cog" aria-hidden="true"></i>Setting</a></li>
+                                    <li><a href="{{ route('user.chat.list') }}"
+                                            class="{{ request()->routeIs('user.chat.list') ? 'act' : '' }}"><i
+                                                class="fa fa-commenting-o" aria-hidden="true"></i>Chat list</a></li>
+                                    <li><a href="{{ route('user.plan') }}"
+                                            class="{{ request()->routeIs('user.plan') ? 'act' : '' }}"><i
+                                                class="fa fa-money" aria-hidden="true"></i>Plan</a></li>
+                                    <li><a href="{{ route('user.setting') }}"
+                                            class="{{ request()->routeIs('user.setting') ? 'act' : '' }}"><i
+                                                class="fa fa-cog" aria-hidden="true"></i>Setting</a></li>
                                     <li>
-                                        <a href="{{ route('user.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a>
+                                        <a href="{{ route('user.logout') }}"><i class="fa fa-sign-out"
+                                                aria-hidden="true"></i>Log out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -44,7 +54,7 @@
 
     @push('script')
         <script src="{{ asset('frontend/js/Chart.js') }}"></script>
-        
+
         <script>
             //COMMON SLIDER
             $('.slider').slick({
@@ -111,5 +121,4 @@
         </script>
         @stack('user-script')
     @endpush
-
 @endsection

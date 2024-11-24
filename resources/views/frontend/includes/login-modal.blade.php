@@ -19,7 +19,8 @@
                         <label for="loginPassword">Password</label>
                         <input type="password" class="form-control" id="loginPassword" name="password" required>
                     </div>
-                    <p class="float-end my-auto">Not a member? <a href="{{ route('user.register') }}" class="text-primary">Sign up now</a></p>
+                    <p class="float-end my-auto">Not a member? <a href="{{ route('user.register') }}"
+                            class="text-primary">Sign up now</a></p>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
                         <label class="form-check-label" for="rememberMe">Remember Me</label>
@@ -33,43 +34,39 @@
 </div>
 
 @push('script')
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
 
-<script>
+                var $form = $(this);
+                var $submitButton = $('#loginSubmit');
+                var $errorDiv = $('#loginError');
 
-$(document).ready(function() {
-    $('#loginForm').on('submit', function(e) {
-        e.preventDefault();
+                $submitButton.prop('disabled', true).text('Logging in...');
 
-        var $form = $(this);
-        var $submitButton = $('#loginSubmit');
-        var $errorDiv = $('#loginError');
+                $.ajax({
+                    url: "{{ route('user.loginSubmit') }}",
+                    method: 'POST',
+                    data: $form.serialize(),
+                    success: function(response) {
+                        window.location.reload();
+                    },
+                    error: function(xhr) {
+                        $submitButton.prop('disabled', false).text('Login');
 
-        $submitButton.prop('disabled', true).text('Logging in...');
-
-        $.ajax({
-            url: "{{ route('user.loginSubmit') }}",
-            method: 'POST',
-            data: $form.serialize(),
-            success: function(response) {
-                window.location.reload();
-            },
-            error: function(xhr) {
-                $submitButton.prop('disabled', false).text('Login');
-                
-                var errors = xhr.responseJSON.errors;
-                if (errors.email) {
-                    $errorDiv.text(errors.email[0]).removeClass('d-none');
-                } else if (errors.password) {
-                    $errorDiv.text(errors.password[0]).removeClass('d-none');
-                } else {
-                    $errorDiv.text('Invalid credentials, please try again.').removeClass('d-none');
-                }
-            }
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.email) {
+                            $errorDiv.text(errors.email[0]).removeClass('d-none');
+                        } else if (errors.password) {
+                            $errorDiv.text(errors.password[0]).removeClass('d-none');
+                        } else {
+                            $errorDiv.text('Invalid credentials, please try again.')
+                                .removeClass('d-none');
+                        }
+                    }
+                });
+            });
         });
-    });
-});
-
-
-</script>
-    
+    </script>
 @endpush

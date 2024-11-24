@@ -3,9 +3,12 @@
     <div class="col-md-8 col-lg-9">
         <div class="row">
             <div class="col-md-12 db-sec-com">
-                <h2 class="db-tit">Interest request @if($invitations->count()>0) ({{ $invitations->count() }}) @endif</h2>
+                <h2 class="db-tit">Interest request @if ($invitations->count() > 0)
+                        ({{ $invitations->count() }})
+                    @endif
+                </h2>
                 <div class="db-pro-stat">
-                    
+
                     <div class="db-inte-main">
 
                         <ul class="nav nav-tabs" role="tablist">
@@ -28,49 +31,67 @@
                             <div id="allinvitations" class="container tab-pane active"><br>
                                 <div class="db-inte-prof-list">
                                     <ul>
-                                        
+
                                         @forelse($invitations as $invitation)
-                                            @if($invitation->status===null)
-                                            <li>
-                                                <div class="db-int-pro-1"> <img src="{{ asset($invitation->from_user->profile->image) }}" alt="">
-                                                    <span class="badge bg-primary user-pla-pat">Platinum user</span></div>
-                                                <div class="db-int-pro-2">
-                                                    <h5>{{ $invitation->from_user->name }}</h5>
-                                                    <ol class="poi">
-                                                        <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
-                                                        <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: 
-                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
-                                                                {{ $invitation->from_user->profile->height }}
-                                                            </strong>
-                                                        </li>
-                                                        <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
-                                                    </ol>
-                                                    <ol class="poi poi-date">
-                                                        <li>Request on: {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
-                                                    </ol>
-                                                    <a href="/profile/{{ $invitation->from_user->slug }}" class="cta-5" target="_blank">View full
-                                                        profile</a>
-                                                </div>
-                                                <div class="db-int-pro-3">
-                                                    <form action="{{ route('accept.invitation') }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
-                                                        <button type="submit" class="btn btn-success btn-sm">Accept</button>
-                                                    </form>
-                                                    
-                                                    <form action="{{ route('deny.invitation') }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Deny</button>
-                                                    </form>
-                                                </div>
-                                            </li>
+                                            @if ($invitation->status === null)
+                                                <li>
+                                                    <div class="db-int-pro-1"> <img
+                                                            src="{{ asset($invitation->from_user->profile->image) }}"
+                                                            alt="">
+                                                        <span class="badge bg-primary user-pla-pat">Platinum user</span>
+                                                    </div>
+                                                    <div class="db-int-pro-2">
+                                                        <h5>{{ $invitation->from_user->name }}</h5>
+                                                        <ol class="poi">
+                                                            <li>City:
+                                                                <strong>{{ $invitation->from_user->profile->city->name }}</strong>
+                                                            </li>
+                                                            <li>Age:
+                                                                <strong>{{ $invitation->from_user->profile->age }}</strong>
+                                                            </li>
+                                                            <li>Height:
+                                                                <strong class="heightToFeet"
+                                                                    data-height="{{ $invitation->from_user->profile->height }}">
+                                                                    {{ $invitation->from_user->profile->height }}
+                                                                </strong>
+                                                            </li>
+                                                            <li>Job:
+                                                                <strong>{{ $invitation->from_user->profile->career->type }}</strong>
+                                                            </li>
+                                                        </ol>
+                                                        <ol class="poi poi-date">
+                                                            <li>Request on:
+                                                                {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
+                                                        </ol>
+                                                        <a href="/profile/{{ $invitation->from_user->slug }}" class="cta-5"
+                                                            target="_blank">View full
+                                                            profile</a>
+                                                    </div>
+                                                    <div class="db-int-pro-3">
+                                                        <form action="{{ route('accept.invitation') }}" method="POST"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="invitationId"
+                                                                value="{{ $invitation->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-success btn-sm">Accept</button>
+                                                        </form>
+
+                                                        <form action="{{ route('deny.invitation') }}" method="POST"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="invitationId"
+                                                                value="{{ $invitation->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm">Deny</button>
+                                                        </form>
+                                                    </div>
+                                                </li>
                                             @endif
                                         @empty
-                                        <p>No Invitations</p>
+                                            <p>No Invitations</p>
                                         @endforelse
-                                        
+
                                     </ul>
                                 </div>
                             </div>
@@ -78,39 +99,54 @@
                                 <div class="db-inte-prof-list">
                                     <ul>
                                         @forelse($invitations as $invitation)
-                                            @if($invitation->status==1)
-                                            <li>
-                                                <div class="db-int-pro-1"> <img src="{{ asset($invitation->from_user->profile->image) }}" alt="">
-                                                    <span class="badge bg-primary user-pla-pat">Platinum user</span></div>
-                                                <div class="db-int-pro-2">
-                                                    <h5>{{ $invitation->from_user->name }}</h5>
-                                                    <ol class="poi">
-                                                        <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
-                                                        <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: 
-                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
-                                                                {{ $invitation->from_user->profile->height }}
-                                                            </strong>
-                                                        </li>
-                                                        <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
-                                                    </ol>
-                                                    <ol class="poi poi-date">
-                                                        <li>Request on: {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
-                                                    </ol>
-                                                    <a href="/profile/{{ $invitation->from_user->slug }}" class="cta-5" target="_blank">View full
-                                                        profile</a>
-                                                </div>
-                                                <div class="db-int-pro-3">
-                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
-                                                    </form>
-                                                </div>
-                                            </li>
+                                            @if ($invitation->status == 1)
+                                                <li>
+                                                    <div class="db-int-pro-1"> <img
+                                                            src="{{ asset($invitation->from_user->profile->image) }}"
+                                                            alt="">
+                                                        <span class="badge bg-primary user-pla-pat">Platinum user</span>
+                                                    </div>
+                                                    <div class="db-int-pro-2">
+                                                        <h5>{{ $invitation->from_user->name }}</h5>
+                                                        <ol class="poi">
+                                                            <li>City:
+                                                                <strong>{{ $invitation->from_user->profile->city->name }}</strong>
+                                                            </li>
+                                                            <li>Age:
+                                                                <strong>{{ $invitation->from_user->profile->age }}</strong>
+                                                            </li>
+                                                            <li>Height:
+                                                                <strong class="heightToFeet"
+                                                                    data-height="{{ $invitation->from_user->profile->height }}">
+                                                                    {{ $invitation->from_user->profile->height }}
+                                                                </strong>
+                                                            </li>
+                                                            <li>Job:
+                                                                <strong>{{ $invitation->from_user->profile->career->type }}</strong>
+                                                            </li>
+                                                        </ol>
+                                                        <ol class="poi poi-date">
+                                                            <li>Request on:
+                                                                {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
+                                                        </ol>
+                                                        <a href="/profile/{{ $invitation->from_user->slug }}"
+                                                            class="cta-5" target="_blank">View full
+                                                            profile</a>
+                                                    </div>
+                                                    <div class="db-int-pro-3">
+                                                        <form action="{{ route('cancel.invitation') }}" method="POST"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="invitationId"
+                                                                value="{{ $invitation->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </li>
                                             @endif
                                         @empty
-                                        <p>No Invitations</p>
+                                            <p>No Invitations</p>
                                         @endforelse
                                     </ul>
                                 </div>
@@ -119,39 +155,54 @@
                                 <div class="db-inte-prof-list">
                                     <ul>
                                         @forelse($invitations as $invitation)
-                                            @if($invitation->status===0)
-                                            <li>
-                                                <div class="db-int-pro-1"> <img src="{{ asset($invitation->from_user->profile->image) }}" alt="">
-                                                    <span class="badge bg-primary user-pla-pat">Platinum user</span></div>
-                                                <div class="db-int-pro-2">
-                                                    <h5>{{ $invitation->from_user->name }}</h5>
-                                                    <ol class="poi">
-                                                        <li>City: <strong>{{ $invitation->from_user->profile->city->name }}</strong></li>
-                                                        <li>Age: <strong>{{ $invitation->from_user->profile->age }}</strong></li>
-                                                        <li>Height: 
-                                                            <strong class="heightToFeet" data-height="{{ $invitation->from_user->profile->height }}">
-                                                                {{ $invitation->from_user->profile->height }}
-                                                            </strong>
-                                                        </li>
-                                                        <li>Job: <strong>{{ $invitation->from_user->profile->career->type }}</strong></li>
-                                                    </ol>
-                                                    <ol class="poi poi-date">
-                                                        <li>Request on: {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
-                                                    </ol>
-                                                    <a href="/profile/{{ $invitation->from_user->slug }}" class="cta-5" target="_blank">View full
-                                                        profile</a>
-                                                </div>
-                                                <div class="db-int-pro-3">
-                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
-                                                    </form>
-                                                </div>
-                                            </li>
+                                            @if ($invitation->status === 0)
+                                                <li>
+                                                    <div class="db-int-pro-1"> <img
+                                                            src="{{ asset($invitation->from_user->profile->image) }}"
+                                                            alt="">
+                                                        <span class="badge bg-primary user-pla-pat">Platinum user</span>
+                                                    </div>
+                                                    <div class="db-int-pro-2">
+                                                        <h5>{{ $invitation->from_user->name }}</h5>
+                                                        <ol class="poi">
+                                                            <li>City:
+                                                                <strong>{{ $invitation->from_user->profile->city->name }}</strong>
+                                                            </li>
+                                                            <li>Age:
+                                                                <strong>{{ $invitation->from_user->profile->age }}</strong>
+                                                            </li>
+                                                            <li>Height:
+                                                                <strong class="heightToFeet"
+                                                                    data-height="{{ $invitation->from_user->profile->height }}">
+                                                                    {{ $invitation->from_user->profile->height }}
+                                                                </strong>
+                                                            </li>
+                                                            <li>Job:
+                                                                <strong>{{ $invitation->from_user->profile->career->type }}</strong>
+                                                            </li>
+                                                        </ol>
+                                                        <ol class="poi poi-date">
+                                                            <li>Request on:
+                                                                {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
+                                                        </ol>
+                                                        <a href="/profile/{{ $invitation->from_user->slug }}"
+                                                            class="cta-5" target="_blank">View full
+                                                            profile</a>
+                                                    </div>
+                                                    <div class="db-int-pro-3">
+                                                        <form action="{{ route('cancel.invitation') }}" method="POST"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="invitationId"
+                                                                value="{{ $invitation->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </li>
                                             @endif
                                         @empty
-                                        <p>No Invitations</p>
+                                            <p>No Invitations</p>
                                         @endforelse
                                     </ul>
                                 </div>
@@ -162,36 +213,50 @@
                                     <ul>
                                         @forelse($sent_invitations as $invitation)
                                             <li>
-                                                <div class="db-int-pro-1"> <img src="{{ asset($invitation->to_user->profile->image) }}" alt="">
-                                                    <span class="badge bg-primary user-pla-pat">Platinum user</span></div>
+                                                <div class="db-int-pro-1"> <img
+                                                        src="{{ asset($invitation->to_user->profile->image) }}"
+                                                        alt="">
+                                                    <span class="badge bg-primary user-pla-pat">Platinum user</span>
+                                                </div>
                                                 <div class="db-int-pro-2">
                                                     <h5>{{ $invitation->to_user->name }}</h5>
                                                     <ol class="poi">
-                                                        <li>City: <strong>{{ $invitation->to_user->profile->city->name }}</strong></li>
-                                                        <li>Age: <strong>{{ $invitation->to_user->profile->age }}</strong></li>
-                                                        <li>Height: 
-                                                            <strong class="heightToFeet" data-height="{{ $invitation->to_user->profile->height }}">
+                                                        <li>City:
+                                                            <strong>{{ $invitation->to_user->profile->city->name }}</strong>
+                                                        </li>
+                                                        <li>Age: <strong>{{ $invitation->to_user->profile->age }}</strong>
+                                                        </li>
+                                                        <li>Height:
+                                                            <strong class="heightToFeet"
+                                                                data-height="{{ $invitation->to_user->profile->height }}">
                                                                 {{ $invitation->from_user->profile->height }}
                                                             </strong>
                                                         </li>
-                                                        <li>Job: <strong>{{ $invitation->to_user->profile->career->type }}</strong></li>
+                                                        <li>Job:
+                                                            <strong>{{ $invitation->to_user->profile->career->type }}</strong>
+                                                        </li>
                                                     </ol>
                                                     <ol class="poi poi-date">
-                                                        <li>Request on: {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
+                                                        <li>Request on:
+                                                            {{ $invitation->created_at->format('h:i A, d F Y') }}</li>
                                                     </ol>
-                                                    <a href="/profile/{{ $invitation->to_user->slug }}" class="cta-5" target="_blank">View full
+                                                    <a href="/profile/{{ $invitation->to_user->slug }}" class="cta-5"
+                                                        target="_blank">View full
                                                         profile</a>
                                                 </div>
                                                 <div class="db-int-pro-3">
-                                                    <form action="{{ route('cancel.invitation') }}" method="POST" style="display:inline;">
+                                                    <form action="{{ route('cancel.invitation') }}" method="POST"
+                                                        style="display:inline;">
                                                         @csrf
-                                                        <input type="hidden" name="invitationId" value="{{ $invitation->id }}">
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                                        <input type="hidden" name="invitationId"
+                                                            value="{{ $invitation->id }}">
+                                                        <button type="submit"
+                                                            class="btn btn-outline-danger btn-sm">Cancel</button>
                                                     </form>
                                                 </div>
                                             </li>
                                         @empty
-                                        <p>No Invitations</p>
+                                            <p>No Invitations</p>
                                         @endforelse
                                     </ul>
                                 </div>

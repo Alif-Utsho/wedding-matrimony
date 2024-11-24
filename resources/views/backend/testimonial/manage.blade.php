@@ -26,7 +26,8 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.testimonial.add') }}">Add new testimonial</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.testimonial.add') }}">Add new
+                                        testimonial</a></li>
                             </ul>
                         </div>
                     </div>
@@ -68,8 +69,10 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('admin.testimonial.edit', $value->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.testimonial.delete', $value->id) }}" method="POST"
+                                                        href="{{ route('admin.testimonial.edit', $value->id) }}">Edit</a>
+                                                </li>
+                                                <form action="{{ route('admin.testimonial.delete', $value->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this testimonial?');"
                                                     style="display: inline;">
                                                     @csrf

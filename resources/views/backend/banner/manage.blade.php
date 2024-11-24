@@ -108,7 +108,8 @@
                                     <label class="lb">Banner:</label>
                                     <div class="fil-img-uplo">
                                         <span class="dumfil">Upload image</span>
-                                        <input type="file" name="image" accept="image/*,.jpg,.jpeg,.png" id="fileInput">
+                                        <input type="file" name="image" accept="image/*,.jpg,.jpeg,.png"
+                                            id="fileInput">
                                     </div>
                                 </div>
 

@@ -31,8 +31,10 @@
                                 <div class="form-group">
                                     <select class="chosen-select" name="gender">
                                         <option value="">I'm looking for</option>
-                                        @foreach(\App\Enums\GenderEnum::options() as $gender)
-                                        <option value="{{ $gender }}" {{ request()->gender == $gender ? 'selected' : '' }}>{{ $gender }}</option>
+                                        @foreach (\App\Enums\GenderEnum::options() as $gender)
+                                            <option value="{{ $gender }}"
+                                                {{ request()->gender == $gender ? 'selected' : '' }}>{{ $gender }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -44,21 +46,29 @@
                                 <div class="form-group">
                                     <select class="chosen-select" name="age_range">
                                         <option value="">Select age</option>
-                                        <option value="18-to-30" {{ request()->age_range == '18-to-30' ? 'selected' : '' }}>18
+                                        <option value="18-to-30" {{ request()->age_range == '18-to-30' ? 'selected' : '' }}>
+                                            18
                                             to 30</option>
-                                        <option value="31-to-40" {{ request()->age_range == '31-to-40' ? 'selected' : '' }}>31
+                                        <option value="31-to-40" {{ request()->age_range == '31-to-40' ? 'selected' : '' }}>
+                                            31
                                             to 40</option>
-                                        <option value="41-to-50" {{ request()->age_range == '41-to-50' ? 'selected' : '' }}>41
+                                        <option value="41-to-50" {{ request()->age_range == '41-to-50' ? 'selected' : '' }}>
+                                            41
                                             to 50</option>
-                                        <option value="51-to-60" {{ request()->age_range == '51-to-60' ? 'selected' : '' }}>51
+                                        <option value="51-to-60" {{ request()->age_range == '51-to-60' ? 'selected' : '' }}>
+                                            51
                                             to 60</option>
-                                        <option value="61-to-70" {{ request()->age_range == '61-to-70' ? 'selected' : '' }}>61
+                                        <option value="61-to-70" {{ request()->age_range == '61-to-70' ? 'selected' : '' }}>
+                                            61
                                             to 70</option>
-                                        <option value="71-to-80" {{ request()->age_range == '71-to-80' ? 'selected' : '' }}>71
+                                        <option value="71-to-80" {{ request()->age_range == '71-to-80' ? 'selected' : '' }}>
+                                            71
                                             to 80</option>
-                                        <option value="81-to-90" {{ request()->age_range == '81-to-90' ? 'selected' : '' }}>81
+                                        <option value="81-to-90" {{ request()->age_range == '81-to-90' ? 'selected' : '' }}>
+                                            81
                                             to 90</option>
-                                        <option value="91-to-100" {{ request()->age_range == '91-to-100' ? 'selected' : '' }}>
+                                        <option value="91-to-100"
+                                            {{ request()->age_range == '91-to-100' ? 'selected' : '' }}>
                                             91 to 100</option>
                                     </select>
                                 </div>
@@ -72,7 +82,9 @@
                                         <option value="">Religion</option>
                                         <option value="">Any</option>
                                         @foreach (App\Enums\Religion::all() as $religion)
-                                            <option value="{{ $religion }}" {{ request()->religion == $religion ? 'selected' : '' }}>{{ $religion }}</option>
+                                            <option value="{{ $religion }}"
+                                                {{ request()->religion == $religion ? 'selected' : '' }}>
+                                                {{ $religion }}</option>
                                         @endforeach
                                     </select>
                                 </div>

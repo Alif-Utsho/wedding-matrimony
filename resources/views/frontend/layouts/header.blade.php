@@ -30,8 +30,10 @@
             </div>
             <div class="rhs">
                 <ul>
-                    <li><a href="tel:01678337722"><i class="fa fa-phone"`aria-hidden="true"></i>&nbsp;01678337722</a></li>
-                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
+                    <li><a href="tel:01678337722"><i class="fa fa-phone"`aria-hidden="true"></i>&nbsp;01678337722</a>
+                    </li>
+                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o"
+                                aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
                     <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
@@ -51,11 +53,13 @@
             fringilla.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
         <ul class="menu-pop-info">
             <li><a href="#!"><i class="fa fa-phone" aria-hidden="true"></i> {{ $contactinfo->phone }}</a></li>
-            <li><a href="{{ $contactinfo->whatsapp }}"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{ $contactinfo->phone }}
+            <li><a href="{{ $contactinfo->whatsapp }}"><i class="fa fa-whatsapp"
+                        aria-hidden="true"></i>{{ $contactinfo->phone }}
                 </a></li>
             <li><a href="#!"><i class="fa fa-envelope-o" aria-hidden="true"></i>{{ $contactinfo->email }} </a>
             </li>
-            <li><a href="#!"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ $contactinfo->address }}</a></li>
+            <li><a href="#!"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ $contactinfo->address }}</a>
+            </li>
         </ul>
         <div class="menu-pop-help">
             <h4>Support Team</h4>
@@ -111,17 +115,17 @@
         <div class="late-news">
             <h4>Latest news</h4>
             <ul>
-                @foreach($blogs as $blog)
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>{{ $blog->title }}</h5>
-                        <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
-                    </div>
-                    <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
-                </li>
+                @foreach ($blogs as $blog)
+                    <li>
+                        <div class="rel-pro-img">
+                            <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
+                        </div>
+                        <div class="rel-pro-con">
+                            <h5>{{ $blog->title }}</h5>
+                            <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
+                        </div>
+                        <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -149,8 +153,8 @@
                     <span class="menu desk-menu">
                         <i></i><i></i><i></i>
                     </span>
-                    <a href="/" class="logo-brand"><img src="{{ asset($generalsetting->logo) }}"
-                            alt="" loading="lazy" class="ic-logo"></a>
+                    <a href="/" class="logo-brand"><img src="{{ asset($generalsetting->logo) }}" alt=""
+                            loading="lazy" class="ic-logo"></a>
                 </div>
 
                 <!-- EXPLORE MENU -->
@@ -163,60 +167,64 @@
                                     <div class="row">
                                         <h4 class="tit">Explore category</h4>
                                         <ul>
-                                            @foreach($navServices as $service)
-                                            <li>
-                                                <div class="menu-box menu-box-{{ $loop->iteration }}" style="background-image: url({{ asset($service->image) }})">
-                                                    <h5>{{ $service->name }} <span>{{ $service->title }}</span></h5>
-                                                    <span class="explor-cta">More details</span>
-                                                    <a href="{{ url($service->link) }}" class="fclick"></a>
-                                                </div>
-                                            </li>
+                                            @foreach ($navServices as $service)
+                                                <li>
+                                                    <div class="menu-box menu-box-{{ $loop->iteration }}"
+                                                        style="background-image: url({{ asset($service->image) }})">
+                                                        <h5>{{ $service->name }} <span>{{ $service->title }}</span>
+                                                        </h5>
+                                                        <span class="explor-cta">More details</span>
+                                                        <a href="{{ url($service->link) }}" class="fclick"></a>
+                                                    </div>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        
+
                         <li><a href="/all-profile">All Profiles</a></li>
                         <li><a href="/plans">Plans</a></li>
-                        @if(!Auth::guard('user')->check())
-                        <li><a href="/user/register">Register</a></li>
+                        @if (!Auth::guard('user')->check())
+                            <li><a href="/user/register">Register</a></li>
                         @endif
                         <li><a href="/contact">Contact</a></li>
-                        @if(Auth::guard('user')->check())
-                        <li class="smenu-pare">
-                            <span class="smenu">Dashboard</span>
-                            <div class="smenu-open smenu-single">
-                                <ul>
-                                    <li><a href="/user/dashboard">Dashboard</a></li>
-                                    <li><a href="/user/profile">My profile</a></li>
-                                    <li><a href="/user/invitations">Interests</a></li>
-                                    <li><a href="{{ route('user.chat.list') }}">Chat lists</a></li>
-                                    <li><a href="/user/plan">My plan details</a></li>
-                                    <li><a href="/user/setting">Profile settings</a></li>
-                                    <li><a href="/user/profile-edit">Edit full profile</a></li>
-                                </ul>
-                            </div>
-                        </li>
+                        @if (Auth::guard('user')->check())
+                            <li class="smenu-pare">
+                                <span class="smenu">Dashboard</span>
+                                <div class="smenu-open smenu-single">
+                                    <ul>
+                                        <li><a href="/user/dashboard">Dashboard</a></li>
+                                        <li><a href="/user/profile">My profile</a></li>
+                                        <li><a href="/user/invitations">Interests</a></li>
+                                        <li><a href="{{ route('user.chat.list') }}">Chat lists</a></li>
+                                        <li><a href="/user/plan">My plan details</a></li>
+                                        <li><a href="/user/setting">Profile settings</a></li>
+                                        <li><a href="/user/profile-edit">Edit full profile</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
                     </ul>
                 </div>
 
-                
+
                 <!-- USER PROFILE -->
-                @if(Auth::guard('user')->check())
-                <div class="al">
-                    <div class="head-pro">
-                        <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}" alt="" loading="lazy">
-                        <b>Welcome</b><br>
-                        <h4>{{ Auth::guard('user')->user()->name }}</h4>
-                        <span class="fclick"></span>
+                @if (Auth::guard('user')->check())
+                    <div class="al">
+                        <div class="head-pro">
+                            <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}"
+                                alt="" loading="lazy">
+                            <b>Welcome</b><br>
+                            <h4>{{ Auth::guard('user')->user()->name }}</h4>
+                            <span class="fclick"></span>
+                        </div>
+                        <a href="/user/dashboard" class="stretched-link position-absolute"
+                            style="top: 0;left: 0;right: 0;bottom: 0;z-index: 5;"></a>
                     </div>
-                    <a href="/user/dashboard" class="stretched-link position-absolute" style="top: 0;left: 0;right: 0;bottom: 0;z-index: 5;"></a>
-                </div>
                 @else
-                    @if($advisor)
+                    @if ($advisor)
                         <div class="al position-relative">
                             <div class="head-pro head-pro-popup">
                                 <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">

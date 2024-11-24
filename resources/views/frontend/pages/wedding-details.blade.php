@@ -141,7 +141,7 @@
                         <span class="leaf1"></span>
                         <span class="tit-ani-"></span>
                     </div>
-                    
+
                     @foreach ($wedding->galleries->chunk(2) as $chunkIndex => $galleryChunk)
                         @if ($chunkIndex % 2 == 0)
                             <!-- Use col-md-2 for odd chunks -->

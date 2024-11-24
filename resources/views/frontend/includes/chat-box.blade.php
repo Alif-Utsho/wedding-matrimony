@@ -6,12 +6,12 @@
         <div class="s1">
             <img src="{{ asset($user->profile->image) }}" class="intephoto2" alt="">
             <h4><b class="intename2">{{ $user->name }}</b>,</h4>
-                <span class="avlsta avilyes">Available online</span>
+            <span class="avlsta avilyes">Available online</span>
         </div>
         <div class="s2 chat-box-messages h-100">
-            
+
             <div class="chat-con" id="chat-box-message">
-                
+
             </div>
             <div class=""></div>
         </div>
@@ -64,7 +64,7 @@
             }
 
             $.ajax({
-                url: "{{ route('user.chat.send') }}",  
+                url: "{{ route('user.chat.send') }}",
                 type: 'POST',
                 data: {
                     receiver_id: receiverId,
@@ -86,7 +86,7 @@
 </script>
 
 <script>
-    $(".comm-msg-pop-clo").on('click', function () {
+    $(".comm-msg-pop-clo").on('click', function() {
         $(".chatbox").removeClass("open")
     });
 </script>

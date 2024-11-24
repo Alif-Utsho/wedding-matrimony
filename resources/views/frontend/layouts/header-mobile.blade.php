@@ -1,5 +1,3 @@
-
-
 <!-- EXPLORE MENU POPUP -->
 <div class="mob-me-all mobile_menu">
     <div class="mob-me-clo"><img src="{{ asset('frontend/images/icon/close.svg') }}" alt=""></div>
@@ -11,7 +9,7 @@
             <li><a href="sign-up.html">Register</a></li>
             <li><a href="/contact">Contact</a></li>
         </ul>
-        
+
         <div class="menu-pop-help">
             <h4>Support Team</h4>
             <div class="user-pro">
@@ -36,17 +34,17 @@
         <div class="late-news">
             <h4>Latest news</h4>
             <ul>
-                @foreach($blogs as $blog)
-                <li>
-                    <div class="rel-pro-img">
-                        <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
-                    </div>
-                    <div class="rel-pro-con">
-                        <h5>{{ $blog->title }}</h5>
-                        <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
-                    </div>
-                    <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
-                </li>
+                @foreach ($blogs as $blog)
+                    <li>
+                        <div class="rel-pro-img">
+                            <img src="{{ asset($blog->image) }}" alt="" loading="lazy">
+                        </div>
+                        <div class="rel-pro-con">
+                            <h5>{{ $blog->title }}</h5>
+                            <span class="ic-date">{{ \Carbon\Carbon::parse($blog->date)->format('d, M Y') }}</span>
+                        </div>
+                        <a href="/blog-details/{{ $blog->id }}" class="fclick"></a>
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -65,23 +63,24 @@
 <div class="mob-me-all dashbord_menu">
     <div class="mob-me-clo"><img src="{{ asset('frontend/images/icon/close.svg') }}" alt=""></div>
     <div class="mv-bus">
-        @if(Auth::guard('user')->check())
-        <div class="head-pro">
-            <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}" alt="" loading="lazy">
-            <b>user profile</b><br>
-            <h4>{{ Auth::guard('user')->user()->name }}</h4>
-        </div>
-        <ul>
-            <li><a href="/plans">Pricing plans</a></li>
-            <li><a href="/all-profile">Browse profiles</a></li>
-        </ul>
+        @if (Auth::guard('user')->check())
+            <div class="head-pro">
+                <img src="{{ asset(Auth::guard('user')->user()->profile ? Auth::guard('user')->user()->profile->image : 'frontend/images/logoo.png') }}"
+                    alt="" loading="lazy">
+                <b>user profile</b><br>
+                <h4>{{ Auth::guard('user')->user()->name }}</h4>
+            </div>
+            <ul>
+                <li><a href="/plans">Pricing plans</a></li>
+                <li><a href="/all-profile">Browse profiles</a></li>
+            </ul>
         @else
-        <ul>
-            <li><a href="/user/login">Login</a></li>
-            <li><a href="/user/register">Sign-up</a></li>
-            <li><a href="/plans">Pricing plans</a></li>
-            <li><a href="/all-profile">Browse profiles</a></li>
-        </ul>
+            <ul>
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register">Sign-up</a></li>
+                <li><a href="/plans">Pricing plans</a></li>
+                <li><a href="/all-profile">Browse profiles</a></li>
+            </ul>
         @endif
     </div>
 </div>

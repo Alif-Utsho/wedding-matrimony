@@ -36,7 +36,7 @@
                 <form action="{{ route('admin.blog.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--PROFILE BIO-->
-                    <input type="hidden" name="blog_id" value="{{ $blog->id }}">    
+                    <input type="hidden" name="blog_id" value="{{ $blog->id }}">
                     <div class="edit-pro-parti">
                         <div class="form-group">
                             <label class="lb">Title:</label>
@@ -77,7 +77,7 @@
 
                         <div class="form-group">
                             <label class="lb">Category:</label>
-                            <select class="form-select chosen-select" data-placeholder="Select Category" name="category"    >
+                            <select class="form-select chosen-select" data-placeholder="Select Category" name="category">
                                 <option value="">Select</option>
                                 @foreach ($blog_categories as $category)
                                     <option value="{{ $category->id }}"
@@ -97,7 +97,9 @@
                                 <select class="chosen-select" data-placeholder="Select blog Tags" multiple name="tags[]">
                                     <option></option>
                                     @foreach ($blog_tags as $tag)
-                                        <option value="{{ $tag->id }}" {{ in_array($tag->id, $blog->tags->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}"
+                                            {{ in_array($tag->id, $blog->tags->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('tags')

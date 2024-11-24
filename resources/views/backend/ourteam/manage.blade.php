@@ -26,7 +26,8 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.ourteam.add') }}">Add new ourteam post</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.ourteam.add') }}">Add new ourteam
+                                        post</a></li>
                             </ul>
                         </div>
                     </div>
@@ -71,7 +72,8 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('admin.ourteam.edit', $value->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.ourteam.delete', $value->id) }}" method="POST"
+                                                <form action="{{ route('admin.ourteam.delete', $value->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this ourteam?');"
                                                     style="display: inline;">
                                                     @csrf

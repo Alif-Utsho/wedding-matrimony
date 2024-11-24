@@ -32,7 +32,8 @@
                                 <p>{{ $contactinfo->bio }}</p>
                                 <span><i class="fa fa-phone" aria-hidden="true"></i>{{ $contactinfo->phone }}</span>
                                 <span><i class="fa fa-envelope-o" aria-hidden="true"></i> {{ $contactinfo->email }} </span>
-                                <span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $contactinfo->address }} </span>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $contactinfo->address }}
+                                </span>
                             </div>
                         </li>
                         <li>

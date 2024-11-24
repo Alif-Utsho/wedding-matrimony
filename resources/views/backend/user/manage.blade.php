@@ -4,7 +4,13 @@
         <div class="row main-head">
             <div class="col-md-4">
                 <div class="tit">
-                    <h1>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</h1>
+                    <h1>
+                        @if (request()->plan)
+                            {{ ucfirst(request()->plan) }}
+                        @else
+                            All
+                        @endif users
+                    </h1>
                 </div>
             </div>
             <div class="col-md-8">
@@ -12,7 +18,13 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Users</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @if (request()->plan)
+                                {{ ucfirst(request()->plan) }}
+                            @else
+                                All
+                            @endif users
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -21,8 +33,20 @@
             <div class="col-md-12">
                 <div class="box-com box-qui box-lig box-tab">
                     <div class="tit">
-                        <h3>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif users</h3>
-                        <p>@if(request()->plan) {{ ucfirst(request()->plan) }} @else All @endif user profiles</p>
+                        <h3>
+                            @if (request()->plan)
+                                {{ ucfirst(request()->plan) }}
+                            @else
+                                All
+                            @endif users
+                        </h3>
+                        <p>
+                            @if (request()->plan)
+                                {{ ucfirst(request()->plan) }}
+                            @else
+                                All
+                            @endif user profiles
+                        </p>
                         <div class="dropdown">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
@@ -75,7 +99,8 @@
                                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
                                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                                                 <li><a class="dropdown-item" href="#">Billing info</a></li>
                                                 <li><a class="dropdown-item" href="#">View more details</a></li>

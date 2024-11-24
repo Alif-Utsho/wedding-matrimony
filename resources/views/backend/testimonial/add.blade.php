@@ -25,7 +25,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.testimonial.manage') }}">Manage testimonial posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.testimonial.manage') }}">Manage testimonial
+                                posts</a></li>
 
                     </ul>
                 </div>
@@ -44,7 +45,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="lb">Photo:</label>
                             <div class="fil-img-uplo">

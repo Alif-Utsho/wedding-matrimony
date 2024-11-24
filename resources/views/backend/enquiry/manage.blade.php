@@ -51,8 +51,9 @@
                                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                
-                                                <form action="{{ route('admin.enquiry.delete', $value->id) }}" method="POST"
+
+                                                <form action="{{ route('admin.enquiry.delete', $value->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this enquiry?');"
                                                     style="display: inline;">
                                                     @csrf

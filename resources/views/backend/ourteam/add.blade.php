@@ -25,7 +25,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.ourteam.manage') }}">Manage ourteam posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.ourteam.manage') }}">Manage ourteam posts</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -63,7 +64,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
 
                         <div class="form-group">
                             <label class="lb">Advisor</label>

@@ -26,7 +26,8 @@
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.ourteam.manage') }}">Manage ourteam posts</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.ourteam.manage') }}">Manage ourteam posts</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -36,7 +37,7 @@
                 <form action="{{ route('admin.ourteam.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--PROFILE BIO-->
-                    <input type="hidden" name="ourteam_id" value="{{ $ourteam->id }}">    
+                    <input type="hidden" name="ourteam_id" value="{{ $ourteam->id }}">
                     <div class="edit-pro-parti">
                         <div class="form-group">
                             <label class="lb">Title:</label>
@@ -66,7 +67,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group">
                             <label class="lb">Advisor</label>
