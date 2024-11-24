@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -127,6 +128,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('ourteam/update', [OurteamController::class, 'update'])->name('ourteam.update');
         Route::post('ourteam/toggle-front', [OurteamController::class, 'togglestatus'])->name('ourteam.togglestatus');
         Route::delete('ourteam/{id}', [OurteamController::class, 'delete'])->name('ourteam.delete');
+
+        Route::get('service/manage', [ServiceController::class, 'manage'])->name('service.manage');
+        Route::get('service/add', [ServiceController::class, 'add'])->name('service.add');
+        Route::post('service/store', [ServiceController::class, 'store'])->name('service.store');
+        Route::get('service/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
+        Route::post('service/update', [ServiceController::class, 'update'])->name('service.update');
+        Route::post('service/toggle-status', [ServiceController::class, 'togglestatus'])->name('service.togglestatus');
+        Route::delete('service/{id}', [ServiceController::class, 'delete'])->name('service.delete');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

@@ -89,7 +89,7 @@
             </li>
 
             <li class="ic-txt">
-                <a href="admin-profile-filters.html">All profile filters</a>
+                <a href="{{ route('admin.service.manage') }}" class="{{ request()->routeIs('admin.service.manage') ? 's-act' : '' }}">Services</a>
             </li>
             <li class="ic-txt">
                 <a href="admin-all-static-page.html">All Pages</a>
