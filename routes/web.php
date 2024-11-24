@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ContactinfoController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EnquirymanageController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
@@ -83,6 +84,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('user/store', [UsermanageController::class, 'store'])->name('user.store');
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
+
+        Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
+        Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');
+        Route::delete('enquiry/{id}', [EnquirymanageController::class, 'delete'])->name('enquiry.delete');
 
         Route::get('general-setting/edit', [GeneralsettingController::class, 'edit'])->name('generalsetting.edit');
         Route::post('general/setting/update', [GeneralsettingController::class, 'update'])->name('generalsetting.update');

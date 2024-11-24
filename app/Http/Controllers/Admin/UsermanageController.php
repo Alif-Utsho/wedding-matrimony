@@ -11,21 +11,19 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UsermanageController extends Controller
-{
+class UsermanageController extends Controller {
     protected $userService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(UserService $userService) {
         $this->userService = $userService;
     }
 
-    public function manage(Request $request){
+    public function manage(Request $request) {
         $userQuery = User::whereHas('profile')->latest();
 
-        if($request->plan){
+        if ($request->plan) {
             $package = Package::where('name', $request->plan)->first();
-            
+
             if ($package) {
                 $users = $userQuery->get();
 
@@ -35,6 +33,7 @@ class UsermanageController extends Controller
 
                 return view('backend.user.manage', compact('users'));
             }
+
         }
 
         $users = $userQuery->get();
@@ -42,18 +41,19 @@ class UsermanageController extends Controller
         return view('backend.user.manage', compact('users'));
     }
 
-    public function incomplete(){
+    public function incomplete() {
         $users = User::doesntHave('profile')->latest()->get();
+
         return view('backend.user.incomplete', compact('users'));
     }
 
-    public function add(){
+    public function add() {
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
 
         return view('backend.user.add', compact('hobbies'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $request->validate([
             'name'         => 'required|string|max:200',
             'email'        => 'required|email|string',
@@ -69,6 +69,7 @@ class UsermanageController extends Controller
             'address'      => 'required|string|max:255',
             'type'         => 'required|string',
             'phone'        => 'nullable|string|min:10|max:20',
+            'profile_for'  => 'nullable|string|max:50',
             'company_name' => 'nullable|string|max:200',
             'salary'       => 'nullable|string|max:20',
             'experience'   => 'nullable|string|max:20',
@@ -85,31 +86,33 @@ class UsermanageController extends Controller
             'image'        => [
                 'required',
                 'image',
-                'mimes:png,jpg,jpeg'
-            ]
+                'mimes:png,jpg,jpeg',
+            ],
         ]);
         $user = $this->userService->createUser($request->all());
 
         $this->userService->updateUserProfile($request->all(), $user);
 
         Toastr::success('User Created Successfully');
+
         return redirect()->route('admin.user.manage');
     }
 
-    public function edit($id){
-        $user = User::with('profile')->find($id);
+    public function edit($id) {
+        $user    = User::with('profile')->find($id);
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
-        
+
         return view('backend.user.edit', compact('user', 'hobbies'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request) {
         $userId = $request->user_id;
-        $user = User::find($userId);
+        $user   = User::find($userId);
 
         $request->validate([
             'name'         => 'required|string|max:200',
             'email'        => 'required|email|string',
+            'profile_for'  => 'nullable|string|max:50',
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
             'religion'     => 'required|string',
@@ -137,14 +140,16 @@ class UsermanageController extends Controller
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',
-                'mimes:png,jpg,jpeg'
-            ]
+                'mimes:png,jpg,jpeg',
+            ],
         ]);
 
         $updated_user = $this->userService->updateUser($request->all(), $user);
-        $userProfile = $this->userService->updateUserProfile($request->all(), $user);
+        $userProfile  = $this->userService->updateUserProfile($request->all(), $user);
 
         Toastr::success('Profile Updated Successfully');
+
         return redirect()->back();
     }
+
 }

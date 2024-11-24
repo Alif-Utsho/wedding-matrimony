@@ -6,6 +6,7 @@
         Ourteam CRUD
         Services CRUD
         Testimonial CRUD
+        Contactinfo CRUD
     API
         --
 

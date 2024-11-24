@@ -41,13 +41,10 @@
             </li>
 
             <li>
-                <h4>Settings</h4>
+                <h4>Enquiries</h4>
             </li>
-            <li class="ic-set">
-                <a href="{{ route('admin.generalsetting.edit') }}" class="{{ request()->routeIs('admin.generalsetting.edit') ? 's-act' : '' }}">Site Setting</a>
-            </li>
-            <li class="ic-set">
-                <a href="{{ route('admin.contactinfo.edit') }}" class="{{ request()->routeIs('admin.contactinfo.edit') ? 's-act' : '' }}">Contact Infos</a>
+            <li class="ic-feat">
+                <a href="{{ route('admin.enquiry.manage') }}" class="{{ request()->routeIs('admin.enquiry.manage') ? 's-act' : '' }}">Enquiries</a>
             </li>
             
             <li>
@@ -68,27 +65,37 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('admin.blog.category.manage') }}" class="{{ request()->routeIs('admin.blog.category.manage') ? 's-act' : '' }}">Category</a>
+                            <a href="{{ route('admin.blog.category.manage') }}" class="{{ request()->routeIs('admin.blog.category.manage') ? 's-act' : '' }}">Categories</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('admin.blog.tag.manage') }}" class="{{ request()->routeIs('admin.blog.tag.manage') ? 's-act' : '' }}">Tag</a>
+                            <a href="{{ route('admin.blog.tag.manage') }}" class="{{ request()->routeIs('admin.blog.tag.manage') ? 's-act' : '' }}">Tags</a>
                         </li>
                     </ol>
                 </div>
             </li>
 
-            <li class="ic-txt">
+            <li class="ic-act">
                 <a href="{{ route('admin.service.manage') }}" class="{{ request()->routeIs('admin.service.manage') ? 's-act' : '' }}">Services</a>
             </li>
-            <li class="ic-txt">
-                <a href="{{ route('admin.banner.manage') }}" class="{{ request()->routeIs('admin.banner.manage') ? 's-act' : '' }}">Banner</a>
+            <li class="ic-slid">
+                <a href="{{ route('admin.banner.manage') }}" class="{{ request()->routeIs('admin.banner.manage') ? 's-act' : '' }}">Banners</a>
             </li>
-            <li class="ic-txt">
-                <a href="{{ route('admin.ourteam.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Team</a>
+            <li class="ic-upd">
+                <a href="{{ route('admin.ourteam.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
             </li>
-            <li class="ic-txt">
-                <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonial</a>
+            <li class="ic-febk">
+                <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonials</a>
+            </li>
+
+            <li>
+                <h4>Settings</h4>
+            </li>
+            <li class="ic-set">
+                <a href="{{ route('admin.generalsetting.edit') }}" class="{{ request()->routeIs('admin.generalsetting.edit') ? 's-act' : '' }}">Site Setting</a>
+            </li>
+            <li class="ic-set">
+                <a href="{{ route('admin.contactinfo.edit') }}" class="{{ request()->routeIs('admin.contactinfo.edit') ? 's-act' : '' }}">Contact Infos</a>
             </li>
 
             <li>
@@ -102,18 +109,6 @@
             </li>
             <li class="ic-febk">
                 <a href="admin-enquiry.html">All Enquiry</a>
-            </li>
-            <li class="ic-imp">
-                <a href="admin-export.html">Export</a>
-            </li>
-            <li>
-                <h4>Template </h4>
-            </li>
-            <li class="ic-act">
-                <a href="activate.html" class="">Activation</a>
-            </li>
-            <li class="ic-upd">
-                <a href="updates.html" class="">Template updates</a>
             </li>
             <li>
                 <h4>Sign out </h4>

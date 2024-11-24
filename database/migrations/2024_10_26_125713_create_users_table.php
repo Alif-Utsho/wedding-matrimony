@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug', 200);
             $table->string('email', 250);
             $table->string('phone', 20)->nullable();
+            $table->string('profile_for', 50)->nullable();
             $table->string('profile_visibility')->default('all');
             $table->string('interest_request_access')->default('all');
             $table->string('password', 250);

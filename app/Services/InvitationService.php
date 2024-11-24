@@ -5,28 +5,29 @@ namespace App\Services;
 use App\Models\Invitation;
 use Exception;
 
-class InvitationService
-{
+class InvitationService {
 
-    public function getAllReceived($userId){
+    public function getAllReceived($userId) {
         return Invitation::where('sent_to', $userId)->latest()->get();
     }
 
-    public function getAllSent($userId){
+    public function getAllSent($userId) {
         return Invitation::where('sent_from', $userId)->latest()->get();
     }
 
-    public function send($from, $to){
-        $exist = Invitation::where(['sent_from'=> $from, 'sent_to'=>$to])->count();
-        if($exist){
+    public function send($from, $to) {
+        $exist = Invitation::where(['sent_from' => $from, 'sent_to' => $to])->count();
+
+        if ($exist) {
             return false;
         }
-        try{
+
+        try {
             Invitation::create([
-                'sent_from' => $from, 
-                'sent_to' => $to,  
+                'sent_from' => $from,
+                'sent_to'   => $to,
             ]);
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
 
@@ -38,6 +39,7 @@ class InvitationService
 
         if ($invitation->sent_from === $userId || $invitation->sent_to === $userId) {
             $invitation->delete();
+
             return true;
         }
 
@@ -49,7 +51,7 @@ class InvitationService
 
         if ($invitation->sent_to !== $userId) {
             return [
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Unauthorized action.',
             ];
         }
@@ -58,8 +60,9 @@ class InvitationService
         $invitation->save();
 
         return [
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Invitation accepted successfully!',
         ];
     }
+
 }

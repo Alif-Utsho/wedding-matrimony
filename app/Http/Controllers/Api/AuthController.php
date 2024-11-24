@@ -7,68 +7,70 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-
-class AuthController extends Controller
-{
+class AuthController extends Controller {
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required|string|min:6',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422); 
+                'errors' => $validator->errors(),
+            ], 422);
         }
 
         $credentials = $request->only('email', 'password');
 
         try {
-            if (! $token = Auth::guard('api')->attempt($credentials)) {
+
+            if (!$token = Auth::guard('api')->attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
+
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
         return response()->json([
-            'success' => true,
+            'success'    => true,
             'token_type' => 'bearer',
-            'token' => $token,
+            'token'      => $token,
         ]);
     }
 
-    public function register(Request $request){
+    public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255', 
-            'phone' => 'required|numeric|digits_between:10,15',
-            'password' => 'required|string|min:6',
+            'name'        => 'required|string|max:255',
+            'email'       => 'required|email|unique:users,email|max:255',
+            'phone'       => 'required|numeric|digits_between:10,15',
+            'profile_for' => 'nullable|string|max:50',
+            'password'    => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
         $userService = new UserService();
-        $user = $userService->createUser($request->all());
+        $user        = $userService->createUser($request->all());
 
         return response()->json([
             'status' => 'success',
-            'user' => $user,
+            'user'   => $user,
         ], 201);
     }
 
-    public function logout(){
+    public function logout() {
         Auth::guard('api')->logout();
+
         return response()->json(['message' => 'Successfully logged out']);
     }
+
 }
