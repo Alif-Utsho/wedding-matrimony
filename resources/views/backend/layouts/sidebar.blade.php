@@ -50,24 +50,7 @@
             <li>
                 <h4>CMS</h4>
             </li>
-            <li class="ic-hom">
-                <a href="#">Home Page</a>
-                <div>
-                    <ol>
-                        <li>
-                            <a href="{{ route('admin.banner.manage') }}" class="{{ request()->routeIs('admin.banner.manage') ? 's-act' : '' }}">Banners</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonials</a>
-                        </li>
-                    </ol>
-                </div>
-            </li>
+            
 
             <li class="ic-medi">
                 <a href="javascript:void(0);" class="{{ request()->routeIs('admin.blog.*') ? 'mact' : '' }}">Blog & Articles</a>
@@ -96,20 +79,15 @@
                 <a href="{{ route('admin.service.manage') }}" class="{{ request()->routeIs('admin.service.manage') ? 's-act' : '' }}">Services</a>
             </li>
             <li class="ic-txt">
-                <a href="admin-all-static-page.html">All Pages</a>
+                <a href="{{ route('admin.banner.manage') }}" class="{{ request()->routeIs('admin.banner.manage') ? 's-act' : '' }}">Banner</a>
             </li>
             <li class="ic-txt">
-                <a href="admin-all-text-update.html">All Text Update</a>
+                <a href="{{ route('admin.ourteam.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Team</a>
             </li>
             <li class="ic-txt">
-                <a href="admin-footer.html">Footer</a>
+                <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonial</a>
             </li>
-            <li class="ic-dum">
-                <a href="admin-dummy-images.html">Dummy Images</a>
-            </li>
-            <li class="ic-mail">
-                <a href="admin-all-mail.html" class="">Mail Templates</a>
-            </li>
+
             <li>
                 <h4>Others</h4>
             </li>
