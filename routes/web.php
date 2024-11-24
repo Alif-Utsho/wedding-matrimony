@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
+use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -111,6 +112,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('city/update', [CityController::class, 'update'])->name('city.update');
         Route::delete('city/{id}', [CityController::class, 'delete'])->name('city.delete');
         Route::post('city/toggle-status', [CityController::class, 'togglestatus'])->name('city.togglestatus');
+
+        Route::get('hobby/manage', [HobbyController::class, 'manage'])->name('hobby.manage');
+        Route::post('hobby/store', [HobbyController::class, 'store'])->name('hobby.store');
+        Route::post('hobby/update', [HobbyController::class, 'update'])->name('hobby.update');
+        Route::delete('hobby/{id}', [HobbyController::class, 'delete'])->name('hobby.delete');
+        Route::post('hobby/toggle-status', [HobbyController::class, 'togglestatus'])->name('hobby.togglestatus');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
