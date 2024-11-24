@@ -46,18 +46,7 @@
             <li class="ic-set">
                 <a href="{{ route('admin.generalsetting.edit') }}" class="{{ request()->routeIs('admin.generalsetting.edit') ? 's-act' : '' }}">Site Setting</a>
             </li>
-            <li>
-                <h4>Appearance</h4>
-            </li>
-            <li class="ic-logo">
-                <a href="admin-logo.html">Website Logo</a>
-            </li>
-            <li class="ic-colr">
-                <a href="color-settings.html">Color Setting</a>
-            </li>
-            <li class="ic-medi">
-                <a href="media-library.html">Media Library</a>
-            </li>
+            
             <li>
                 <h4>CMS</h4>
             </li>
@@ -66,7 +55,11 @@
                 <div>
                     <ol>
                         <li>
-                            <a href="{{ route('admin.banner.manage') }}">Banners</a>
+                            <a href="{{ route('admin.banner.manage') }}" class="{{ request()->routeIs('admin.banner.manage') ? 's-act' : '' }}">Banners</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.ourteam.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
                         </li>
                     </ol>
                 </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
+use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -118,6 +119,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('hobby/update', [HobbyController::class, 'update'])->name('hobby.update');
         Route::delete('hobby/{id}', [HobbyController::class, 'delete'])->name('hobby.delete');
         Route::post('hobby/toggle-status', [HobbyController::class, 'togglestatus'])->name('hobby.togglestatus');
+
+        Route::get('ourteam/manage', [OurteamController::class, 'manage'])->name('ourteam.manage');
+        Route::get('ourteam/add', [OurteamController::class, 'add'])->name('ourteam.add');
+        Route::post('ourteam/store', [OurteamController::class, 'store'])->name('ourteam.store');
+        Route::get('ourteam/edit/{id}', [OurteamController::class, 'edit'])->name('ourteam.edit');
+        Route::post('ourteam/update', [OurteamController::class, 'update'])->name('ourteam.update');
+        Route::post('ourteam/toggle-front', [OurteamController::class, 'togglestatus'])->name('ourteam.togglestatus');
+        Route::delete('ourteam/{id}', [OurteamController::class, 'delete'])->name('ourteam.delete');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
