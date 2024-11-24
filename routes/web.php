@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -136,6 +137,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('service/update', [ServiceController::class, 'update'])->name('service.update');
         Route::post('service/toggle-status', [ServiceController::class, 'togglestatus'])->name('service.togglestatus');
         Route::delete('service/{id}', [ServiceController::class, 'delete'])->name('service.delete');
+
+        Route::get('testimonial/manage', [TestimonialController::class, 'manage'])->name('testimonial.manage');
+        Route::get('testimonial/add', [TestimonialController::class, 'add'])->name('testimonial.add');
+        Route::post('testimonial/store', [TestimonialController::class, 'store'])->name('testimonial.store');
+        Route::get('testimonial/edit/{id}', [TestimonialController::class, 'edit'])->name('testimonial.edit');
+        Route::post('testimonial/update', [TestimonialController::class, 'update'])->name('testimonial.update');
+        Route::post('testimonial/toggle-status', [TestimonialController::class, 'togglestatus'])->name('testimonial.togglestatus');
+        Route::delete('testimonial/{id}', [TestimonialController::class, 'delete'])->name('testimonial.delete');
 
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

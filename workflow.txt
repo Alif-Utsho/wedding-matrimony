@@ -4,6 +4,8 @@
         City CRUD
         Hobby CRUD
         Ourteam CRUD
+        Services CRUD
+        Testimonial CRUD
     API
         --
 

@@ -59,7 +59,11 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('admin.ourteam.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
+                            <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.testimonial.manage') }}" class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonials</a>
                         </li>
                     </ol>
                 </div>
