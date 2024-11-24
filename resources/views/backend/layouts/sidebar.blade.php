@@ -46,6 +46,9 @@
             <li class="ic-set">
                 <a href="{{ route('admin.generalsetting.edit') }}" class="{{ request()->routeIs('admin.generalsetting.edit') ? 's-act' : '' }}">Site Setting</a>
             </li>
+            <li class="ic-set">
+                <a href="{{ route('admin.contactinfo.edit') }}" class="{{ request()->routeIs('admin.contactinfo.edit') ? 's-act' : '' }}">Contact Infos</a>
+            </li>
             
             <li>
                 <h4>CMS</h4>

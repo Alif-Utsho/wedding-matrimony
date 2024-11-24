@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ContactinfoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
@@ -85,6 +86,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('general-setting/edit', [GeneralsettingController::class, 'edit'])->name('generalsetting.edit');
         Route::post('general/setting/update', [GeneralsettingController::class, 'update'])->name('generalsetting.update');
+
+        Route::get('contact-info/edit', [ContactinfoController::class, 'edit'])->name('contactinfo.edit');
+        Route::post('contact-info/update', [ContactinfoController::class, 'update'])->name('contactinfo.update');
 
         Route::get('blog/manage', [BlogController::class, 'manage'])->name('blog.manage');
         Route::get('blog/add', [BlogController::class, 'add'])->name('blog.add');
