@@ -1,6 +1,14 @@
 
 24-NOV-24
     WEB
+        Wedding CRUD
+    API
+        --
+
+---------------------------------------------
+
+24-NOV-24
+    WEB
         City CRUD
         Hobby CRUD
         Ourteam CRUD
@@ -9,7 +17,7 @@
         Contactinfo CRUD
         Enquiry Show & Destroy
     API
-        --
+        User profile_for field add
 
 ---------------------------------------------
 

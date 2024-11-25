@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
+use App\Http\Controllers\Admin\WeddingController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\InvitationController;
@@ -94,6 +95,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('contact-info/edit', [ContactinfoController::class, 'edit'])->name('contactinfo.edit');
         Route::post('contact-info/update', [ContactinfoController::class, 'update'])->name('contactinfo.update');
+
+        Route::get('wedding/manage', [WeddingController::class, 'manage'])->name('wedding.manage');
+        Route::get('wedding/add', [WeddingController::class, 'add'])->name('wedding.add');
+        Route::post('wedding/store', [WeddingController::class, 'store'])->name('wedding.store');
+        Route::get('wedding/edit/{id}', [WeddingController::class, 'edit'])->name('wedding.edit');
+        Route::post('wedding/update', [WeddingController::class, 'update'])->name('wedding.update');
+        Route::post('wedding/toggle-front', [WeddingController::class, 'togglefront'])->name('wedding.togglefront');
+        Route::delete('wedding/{id}', [WeddingController::class, 'delete'])->name('wedding.delete');
 
         Route::get('blog/manage', [BlogController::class, 'manage'])->name('blog.manage');
         Route::get('blog/add', [BlogController::class, 'add'])->name('blog.add');

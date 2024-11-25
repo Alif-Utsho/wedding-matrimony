@@ -9,6 +9,8 @@ class Wedding extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function stories(){
         return $this->hasMany(WeddingStory::class);
     }

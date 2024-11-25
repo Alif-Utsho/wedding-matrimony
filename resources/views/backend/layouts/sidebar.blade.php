@@ -59,8 +59,24 @@
                 <h4>CMS</h4>
             </li>
 
-
             <li class="ic-medi">
+                <a href="javascript:void(0);" class="{{ request()->routeIs('admin.wedding.*') ? 'mact' : '' }}">Weddings</a>
+                <div>
+                    <ol>
+                        <li>
+                            <a href="{{ route('admin.wedding.add') }}"
+                                class="{{ request()->routeIs('admin.wedding.add') ? 's-act' : '' }}">Add New</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.wedding.manage') }}"
+                                class="{{ request()->routeIs('admin.wedding.manage') ? 's-act' : '' }}">Manage</a>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+
+            <li class="ic-txt">
                 <a href="javascript:void(0);" class="{{ request()->routeIs('admin.blog.*') ? 'mact' : '' }}">Blog &
                     Articles</a>
                 <div>
