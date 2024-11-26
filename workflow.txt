@@ -1,9 +1,10 @@
 
 26-NOV-24
     WEB
-        
+        Wedding Gallery complete
+        Wedding Story CRUD
     API
-        --
+        Profile edit get
 
 ---------------------------------------------
 

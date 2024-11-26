@@ -16,9 +16,9 @@ Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
 
 Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/user/register', [AuthController::class, 'register']);
+Route::get('/user/profile-edit', [UserController::class, 'profileEdit']);
 
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
-    Route::get('profile-edit', [UserController::class, 'profileEdit']);
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
     Route::post('logout', [AuthController::class, 'logout']);
 

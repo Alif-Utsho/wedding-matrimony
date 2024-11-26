@@ -11,7 +11,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Wedding</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.wedding.manage') }}">Weddings</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Gallery</li>
                     </ol>
                 </nav>
@@ -106,7 +106,7 @@
                             <input type="hidden" name="wedding_id" value="{{ request()->id }}">
                             <div class="edit-pro-parti">
                                 <div class="form-group">
-                                    <label class="lb">Banner:</label>
+                                    <label class="lb">Image:</label>
                                     <div class="fil-img-uplo">
                                         <span class="dumfil">Upload image</span>
                                         <input type="file" name="image" accept="image/*,.jpg,.jpeg,.png"

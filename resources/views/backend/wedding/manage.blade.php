@@ -26,7 +26,8 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.wedding.add') }}">Add new wedding post</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.wedding.add') }}">Add new wedding
+                                        post</a></li>
                             </ul>
                         </div>
                     </div>
@@ -67,13 +68,18 @@
                                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="/wedding-details/{{ $value->id }}"
+                                                        target="_blank">View</a></li>
                                                 <li><a class="dropdown-item"
-                                                    href="/wedding-details/{{ $value->id }}" target="_blank">View</a></li>
-                                                    <li><a class="dropdown-item"
-                                                        href="{{ route('admin.weddinggallery.manage', $value->id) }}">Galleries</a></li>
+                                                        href="{{ route('admin.weddinggallery.manage', $value->id) }}">Galleries</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('admin.weddingstory.manage', $value->id) }}">Stories</a>
+                                                </li>
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('admin.wedding.edit', $value->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.wedding.delete', $value->id) }}" method="POST"
+                                                <form action="{{ route('admin.wedding.delete', $value->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this wedding?');"
                                                     style="display: inline;">
                                                     @csrf
