@@ -35,13 +35,14 @@
             </li>
 
             <li>
-                <h4>Payments</h4>
+                <h4>Subscriptions</h4>
+            </li>
+            <li class="ic-pay">
+                <a href="{{ route('admin.package.manage') }}"
+                    class="{{ request()->routeIs('admin.package.manage') && is_null(request()->plan) ? 's-act' : '' }}">Packages</a>
             </li>
             <li class="ic-pay">
                 <a href="admin-all-payments.html">All Payments</a>
-            </li>
-            <li class="ic-pri">
-                <a href="admin-price.html">Pricing Plans</a>
             </li>
             <li class="ic-pay">
                 <a href="admin-payment-credentials.html">Payment gateway</a>

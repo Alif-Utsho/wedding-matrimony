@@ -4,6 +4,7 @@
         Wedding Gallery complete
         Wedding Story CRUD
         Event Steps CRUD
+        Package CRUD
     API
         Profile edit get
 

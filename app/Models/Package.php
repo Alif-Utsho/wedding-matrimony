@@ -9,6 +9,8 @@ class Package extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function accesses()
     {
         return $this->belongsToMany(Access::class, 'package_accesses', 'package_id', 'access_id');

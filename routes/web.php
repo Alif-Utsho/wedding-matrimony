@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EnquirymanageController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
+use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
@@ -89,6 +90,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
 
+        Route::get('package/manage', [PackageController::class, 'manage'])->name('package.manage');
+        Route::get('package/add', [PackageController::class, 'add'])->name('package.add');
+        Route::post('package/store', [PackageController::class, 'store'])->name('package.store');
+        Route::get('package/edit/{id}', [PackageController::class, 'edit'])->name('package.edit');
+        Route::post('package/update', [PackageController::class, 'update'])->name('package.update');
+        Route::post('package/toggle-status', [PackageController::class, 'togglestatus'])->name('package.togglestatus');
+        Route::delete('package/{id}', [PackageController::class, 'delete'])->name('package.delete');
+
         Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
         Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');
         Route::delete('enquiry/{id}', [EnquirymanageController::class, 'delete'])->name('enquiry.delete');
@@ -106,8 +115,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('wedding/update', [WeddingController::class, 'update'])->name('wedding.update');
         Route::post('wedding/toggle-front', [WeddingController::class, 'togglefront'])->name('wedding.togglefront');
         Route::delete('wedding/{id}', [WeddingController::class, 'delete'])->name('wedding.delete');
-        
-        
+
         Route::get('wedding-gallery/manage/{id}', [WeddingGalleryController::class, 'manage'])->name('weddinggallery.manage');
         Route::post('wedding-gallery/store', [WeddingGalleryController::class, 'store'])->name('weddinggallery.store');
         Route::delete('wedding-gallery/{id}', [WeddingGalleryController::class, 'delete'])->name('weddinggallery.delete');
