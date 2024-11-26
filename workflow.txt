@@ -3,6 +3,7 @@
     WEB
         Wedding Gallery complete
         Wedding Story CRUD
+        Event Steps CRUD
     API
         Profile edit get
 

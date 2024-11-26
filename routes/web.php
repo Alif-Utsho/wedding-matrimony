@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Admin\WeddingController;
 use App\Http\Controllers\Admin\WeddingGalleryController;
+use App\Http\Controllers\Admin\WeddingStepController;
 use App\Http\Controllers\Admin\WeddingStoryController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -117,6 +118,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('wedding-story/update', [WeddingStoryController::class, 'update'])->name('weddingstory.update');
         Route::delete('wedding-story/{id}', [WeddingStoryController::class, 'delete'])->name('weddingstory.delete');
         Route::post('wedding-story/toggle-status', [WeddingStoryController::class, 'togglestatus'])->name('weddingstory.togglestatus');
+
+        Route::get('wedding-step/manage', [WeddingStepController::class, 'manage'])->name('weddingstep.manage');
+        Route::post('wedding-step/store', [WeddingStepController::class, 'store'])->name('weddingstep.store');
+        Route::post('wedding-step/update', [WeddingStepController::class, 'update'])->name('weddingstep.update');
+        Route::delete('wedding-step/{id}', [WeddingStepController::class, 'delete'])->name('weddingstep.delete');
+        Route::post('wedding-step/toggle-status', [WeddingStepController::class, 'togglestatus'])->name('weddingstep.togglestatus');
 
         Route::get('blog/manage', [BlogController::class, 'manage'])->name('blog.manage');
         Route::get('blog/add', [BlogController::class, 'add'])->name('blog.add');

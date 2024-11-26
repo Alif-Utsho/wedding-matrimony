@@ -122,6 +122,11 @@
                     class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonials</a>
             </li>
 
+            <li class="ic-inv">
+                <a href="{{ route('admin.weddingstep.manage') }}"
+                    class="{{ request()->routeIs('admin.weddingstep.manage') ? 's-act' : '' }}">Event Steps</a>
+            </li>
+
             <li>
                 <h4>Settings</h4>
             </li>
