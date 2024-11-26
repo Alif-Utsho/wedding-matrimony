@@ -1,7 +1,16 @@
 
-24-NOV-24
+26-NOV-24
+    WEB
+        
+    API
+        --
+
+---------------------------------------------
+
+25-NOV-24
     WEB
         Wedding CRUD
+        Wedding Gallery(running)
     API
         --
 

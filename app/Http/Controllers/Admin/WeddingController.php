@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Wedding;
+use App\Models\WeddingGallery;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -198,6 +199,16 @@ class WeddingController extends Controller {
         Toastr::success('Wedding deleted successfully!', 'Success');
 
         return redirect()->route('admin.wedding.manage');
+    }
+
+    public function gallery($id){
+        $show_data = WeddingGallery::where('wedding_id', $id)->latest()->get();
+
+        return view('backend.wedding.gallery', compact('show_data'));
+    }
+
+    public function gallerydelete($id){
+        return $id;
     }
 
 }

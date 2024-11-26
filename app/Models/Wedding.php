@@ -12,10 +12,10 @@ class Wedding extends Model
     protected $guarded = [];
 
     public function stories(){
-        return $this->hasMany(WeddingStory::class);
+        return $this->hasMany(WeddingStory::class)->whereStatus(true);
     }
 
     public function galleries(){
-        return $this->hasMany(WeddingGallery::class);
+        return $this->hasMany(WeddingGallery::class)->whereStatus(true);
     }
 }

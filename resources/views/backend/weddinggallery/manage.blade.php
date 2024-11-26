@@ -4,14 +4,15 @@
         <div class="row main-head">
             <div class="col-md-6">
                 <div class="tit">
-                    <h1>Weddings</h1>
+                    <h1>Wedding Gallery</h1>
                 </div>
             </div>
             <div class="col-md-6">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Weddings</li>
+                        <li class="breadcrumb-item active" aria-current="page">Wedding</li>
+                        <li class="breadcrumb-item active" aria-current="page">Gallery</li>
                     </ol>
                 </nav>
             </div>
@@ -20,13 +21,14 @@
             <div class="col-md-12">
                 <div class="box-com box-qui box-lig box-tab">
                     <div class="tit">
-                        <h3>Weddings</h3>
+                        <h3>Wedding Gallery</h3>
                         <div class="dropdown">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.wedding.add') }}">Add new wedding post</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#addweddinggallery">Add new weddinggallery</a></li>
                             </ul>
                         </div>
                     </div>
@@ -35,9 +37,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Image</th>
-                                <th>Title</th>
-                                <td>Status</td>
                                 <th>Posted on</th>
+                                <td>Status</td>
                                 <th>Edit</th>
                             </tr>
                         </thead>
@@ -47,19 +48,18 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <div class="pro">
-                                            <img src="{{ asset($value->couple_image) }}" alt="">
+                                            <img src="{{ asset($value->image) }}" alt="">
                                         </div>
                                     </td>
-                                    <td><span class="hig-blu">{{ $value->couple_name }}</span></td>
+                                    <td>{{ $value->created_at->format('d, M Y') }}</td>
                                     <td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input toggle-front" type="checkbox"
+                                            <input class="form-check-input toggle-status" type="checkbox"
                                                 id="mySwitch{{ $value->id }}" data-id="{{ $value->id }}"
                                                 name="darkmode" @if ($value->status) checked @endif
                                                 value="yes">
                                         </div>
                                     </td>
-                                    <td>{{ $value->created_at->format('d, M Y') }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-outline-secondary"
@@ -67,14 +67,8 @@
                                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item"
-                                                    href="/wedding-details/{{ $value->id }}" target="_blank">View</a></li>
-                                                    <li><a class="dropdown-item"
-                                                        href="{{ route('admin.weddinggallery.manage', $value->id) }}">Galleries</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('admin.wedding.edit', $value->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.wedding.delete', $value->id) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this wedding?');"
+                                                <form action="{{ route('admin.weddinggallery.delete', $value->id) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this weddinggallery?');"
                                                     style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -93,18 +87,62 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addweddinggallery">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create new weddinggallery</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-inp">
+                        <form action="{{ route('admin.weddinggallery.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <!--PROFILE BIO-->
+                            <input type="hidden" name="wedding_id" value="{{ request()->id }}">
+                            <div class="edit-pro-parti">
+                                <div class="form-group">
+                                    <label class="lb">Banner:</label>
+                                    <div class="fil-img-uplo">
+                                        <span class="dumfil">Upload image</span>
+                                        <input type="file" name="image" accept="image/*,.jpg,.jpeg,.png"
+                                            id="fileInput">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="lb"></label>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="cta-full cta-colr">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     @push('script')
         <script>
-            $(document).on('change', '.toggle-front', function() {
-                const weddingId = $(this).data('id');
+            $(document).on('change', '.toggle-status', function() {
+                const weddinggalleryId = $(this).data('id');
                 const isChecked = $(this).is(':checked');
 
                 $.ajax({
-                    url: "{{ route('admin.wedding.togglefront') }}", // Add this route in your Laravel backend
+                    url: "{{ route('admin.weddinggallery.togglestatus') }}", // Add this route in your Laravel backend
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        wedding_id: weddingId,
+                        weddinggallery_id: weddinggalleryId,
                         status: isChecked ? 1 : 0
                     },
                     success: function(response) {

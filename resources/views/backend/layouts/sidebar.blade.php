@@ -60,7 +60,8 @@
             </li>
 
             <li class="ic-medi">
-                <a href="javascript:void(0);" class="{{ request()->routeIs('admin.wedding.*') ? 'mact' : '' }}">Weddings</a>
+                <a href="javascript:void(0);"
+                    class="{{ request()->routeIs('admin.wedding.*') ? 'mact' : '' }}">Weddings & Galleries</a>
                 <div>
                     <ol>
                         <li>
