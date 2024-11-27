@@ -271,7 +271,7 @@ class UserService {
 
         $matchingProfiles = $query->pluck('user_id');
 
-        $matchingUsers = User::whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
+        $matchingUsers = User::with('profile')->whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
 
         return $matchingUsers;
     }

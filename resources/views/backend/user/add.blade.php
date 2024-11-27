@@ -115,8 +115,24 @@
                                         @enderror
                                     </div>
 
-                                </div>
-                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="lb">Language:</label>
+                                        <select class="form-select chosen-select"
+                                            data-placeholder="Select your Language" name="language">
+                                            <option value="">Select</option>
+                                            @foreach (\App\Enums\Language::all() as $value => $label)
+                                                <option value="{{ $label }}"
+                                                    {{ isset($user->profile->language) && $user->profile->language == $label ? 'selected' : (old('language') == $label ? 'selected' : '') }}>
+                                                    {{ $label }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('language')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    
                                     <div class="col-md-6 form-group">
                                         <label class="lb">Date of birth:</label>
                                         <input type="date" class="form-control" id="birth_date" name="birth_date"
@@ -130,6 +146,15 @@
                                         <input type="number" class="form-control" id="age" name="age"
                                             value="{{ old('age') }}" readonly>
                                         @error('age')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label class="lb">Profile for:</label>
+                                        <input type="text" class="form-control" name="profile_for"
+                                            value="{{ old('profile_for') }}">
+                                        @error('profile_for')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

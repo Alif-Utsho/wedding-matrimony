@@ -140,6 +140,15 @@
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label class="lb">Profile For:</label>
+                                        <input type="text" class="form-control" id="profile_for" name="profile_for"
+                                            value="{{ $user->profile_for ?? old('profile_for') }}">
+                                        @error('profile_for')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 form-group">
