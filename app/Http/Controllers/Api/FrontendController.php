@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Division;
 use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
@@ -108,6 +111,45 @@ class FrontendController extends Controller {
             'plans'  => $plans,
         ], Response::HTTP_OK);
 
+    }
+
+    public function get_countries(){
+        $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'countries'  => $countries,
+        ], Response::HTTP_OK);
+    }
+
+    public function get_divisions(Request $request){
+        $divisionQuery = Division::whereStatus(true)->orderBy('name', 'ASC');
+
+        if($request->country_id){
+            $divisionQuery->where('country_id', $request->country_id);
+        }
+
+        $divisions = $divisionQuery->get();
+
+        return response()->json([
+            'status' => 'success',
+            'divisions'  => $divisions,
+        ], Response::HTTP_OK);
+    }
+
+    public function get_cities(Request $request){
+        $cityQuery = City::whereStatus(true)->orderBy('name', 'ASC');
+
+        if($request->division_id){
+            $cityQuery->where('division_id', $request->division_id);
+        }
+
+        $cities = $cityQuery->get();
+
+        return response()->json([
+            'status' => 'success',
+            'cities'  => $cities,
+        ], Response::HTTP_OK);
     }
 
 }
