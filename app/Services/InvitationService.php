@@ -8,11 +8,11 @@ use Exception;
 class InvitationService {
 
     public function getAllReceived($userId) {
-        return Invitation::where('sent_to', $userId)->latest()->get();
+        return Invitation::with('from_user')->where('sent_to', $userId)->latest()->get();
     }
 
     public function getAllSent($userId) {
-        return Invitation::where('sent_from', $userId)->latest()->get();
+        return Invitation::with('to_user')->where('sent_from', $userId)->latest()->get();
     }
 
     public function send($from, $to) {
