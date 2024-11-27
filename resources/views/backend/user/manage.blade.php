@@ -52,7 +52,7 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="admin-add-new-user.html">Add new user</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.user.add') }}">Add new user</a></li>
                                 <li><a class="dropdown-item" href="admin-settings.html#new-user-request">User setting</a>
                                 </li>
                                 <li><a class="dropdown-item" href="admin-settings.html#new-user-request">Approval
@@ -101,7 +101,14 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                <form action="{{ route('admin.user.delete', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this user?');"
+                                                    style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="submit" class="dropdown-item" value="Delete">
+                                                </form>
                                                 <li><a class="dropdown-item" href="#">Billing info</a></li>
                                                 <li><a class="dropdown-item" href="#">View more details</a></li>
                                                 <li><a class="dropdown-item" href="#">View profile</a></li>

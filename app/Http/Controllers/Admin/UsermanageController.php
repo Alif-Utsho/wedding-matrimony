@@ -154,4 +154,24 @@ class UsermanageController extends Controller {
         return redirect()->back();
     }
 
+    public function delete($id) {
+        $user = User::findOrFail($id);
+
+        $user->profile()->delete();
+        $user->profileViews()->delete();
+        $user->profileLikes()->delete();
+        $user->profileClicks()->delete();
+        $user->invitations()->delete();
+
+        if ($user->profile) {
+            $user->profile->images()->delete();
+        }
+
+        $user->delete();
+
+        Toastr::success('User Deleted Successfully');
+
+        return redirect()->back();
+    }
+
 }

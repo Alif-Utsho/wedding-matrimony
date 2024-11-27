@@ -89,6 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('user/store', [UsermanageController::class, 'store'])->name('user.store');
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
+        Route::delete('user/{id}', [UsermanageController::class, 'delete'])->name('user.delete');
 
         Route::get('package/manage', [PackageController::class, 'manage'])->name('package.manage');
         Route::get('package/add', [PackageController::class, 'add'])->name('package.add');
