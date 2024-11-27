@@ -1,4 +1,14 @@
 
+27-NOV-24
+    WEB
+        Country table created
+        Division table created
+        City table modified        
+    API
+        
+
+---------------------------------------------
+
 26-NOV-24
     WEB
         Wedding Gallery complete

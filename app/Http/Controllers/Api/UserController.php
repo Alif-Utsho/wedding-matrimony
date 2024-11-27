@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\GenderEnum;
 use App\Enums\JobType;
+use App\Enums\Language;
 use App\Enums\Religion;
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Hobby;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -25,13 +27,15 @@ class UserController extends Controller {
     }
 
     public function profileEdit(Request $request) {
+        $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();
         $cities    = City::whereStatus(true)->orderBy('name', 'ASC')->get();
         $hobbies   = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
         $genders   = GenderEnum::options();
         $religions = Religion::all();
         $jobtypes  = JobType::getValues();
+        $languages = Language::all();
 
-        return response()->json(compact('cities', 'hobbies', 'genders', 'religions', 'jobtypes'));
+        return response()->json(compact('countries', 'cities', 'hobbies', 'genders', 'religions', 'jobtypes', 'languages'));
     }
 
     public function profileUpdate(Request $request) {
