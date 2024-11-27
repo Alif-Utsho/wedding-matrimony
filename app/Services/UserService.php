@@ -76,6 +76,7 @@ class UserService {
                 'gender'       => $data['gender'],
                 'city_id'      => $data['city_id'],
                 'religion'     => $data['religion'],
+                'language'     => $data['language'],
                 'birth_date'   => $data['birth_date'],
                 'height'       => $data['height'],
                 'weight'       => $data['weight'],

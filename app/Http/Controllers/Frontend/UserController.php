@@ -84,6 +84,7 @@ class UserController extends Controller {
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
             'religion'     => 'required|string',
+            'language'     => 'required|string',
             'birth_date'   => 'required|date',
             'height'       => 'required|numeric|min:30|max:300',
             'weight'       => 'required|numeric|min:10|max:300',

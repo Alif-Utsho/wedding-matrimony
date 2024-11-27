@@ -94,8 +94,23 @@
                                                 @enderror
                                             </div>
 
-                                        </div>
-                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label class="lb">Language:</label>
+                                                <select class="form-select chosen-select"
+                                                    data-placeholder="Select your Language" name="language">
+                                                    <option value="">Select</option>
+                                                    @foreach (\App\Enums\Language::all() as $value => $label)
+                                                        <option value="{{ $label }}"
+                                                            {{ isset($user->profile->language) && $user->profile->language == $label ? 'selected' : (old('language') == $label ? 'selected' : '') }}>
+                                                            {{ $label }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('language')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Date of birth:</label>
                                                 <input type="date" class="form-control" id="birth_date" name="birth_date"
@@ -105,7 +120,7 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-12 form-group">
                                                 <label class="lb">Age:</label>
                                                 <input type="number" class="form-control" id="age" name="age"
                                                     value="{{ $user->profile->age ?? old('age') }}" readonly>
@@ -150,7 +165,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-12 form-group">
+                                        <div class="col-md-6 form-group">
                                             <label class="lb">City:</label>
                                             <select class="form-select chosen-select" data-placeholder="Select your City"
                                                 name="city_id" value="{{ $user->profile->city_id ?? old('city_id') }}">
