@@ -5,12 +5,14 @@
         Division table created
         City table modified
         Language added in profile
+        User deletetion add Admin
     API
         Country & Language list 
         Divisions By Country Id
         Cities by Division Id
         Language added in profile
         Matching profile modified
+        Invitations response modified
 
 ---------------------------------------------
 
