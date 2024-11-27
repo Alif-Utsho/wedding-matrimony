@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_name');
-            $table->string('code', 3);
+            $table->string('code', 3);            
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
