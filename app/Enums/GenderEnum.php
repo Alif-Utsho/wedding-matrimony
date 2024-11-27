@@ -2,16 +2,14 @@
 
 namespace App\Enums;
 
-class GenderEnum
-{
-    const MALE = 'Male';
+class GenderEnum {
+    const MALE   = 'Male';
     const FEMALE = 'Female';
 
     // Method to get all gender options
-    public static function options()
-    {
+    public static function options() {
         return [
-            self::MALE => 'Male',
+            self::MALE   => 'Male',
             self::FEMALE => 'Female',
         ];
     }

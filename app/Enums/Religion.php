@@ -2,21 +2,19 @@
 
 namespace App\Enums;
 
-class Religion
-{
-    public const MUSLIM = 'Muslim';
-    public const HINDU = 'Hindu';
-    public const JAIN  = 'Jain';
-    public const CHRISTIAN = 'Christian';
-    public const BUDDHIST = 'Buddhist';
-    public const SIKH = 'Sikh';
-    public const JUDAISM = 'Judaism';
+class Religion {
+    public const MUSLIM      = 'Muslim';
+    public const HINDU       = 'Hindu';
+    public const JAIN        = 'Jain';
+    public const CHRISTIAN   = 'Christian';
+    public const BUDDHIST    = 'Buddhist';
+    public const SIKH        = 'Sikh';
+    public const JUDAISM     = 'Judaism';
     public const ZOROASTRIAN = 'Zoroastrian';
-    public const BAHAI = 'Bahai';
-    public const SHINTO = 'Shinto';
+    public const BAHAI       = 'Bahai';
+    public const SHINTO      = 'Shinto';
 
-    public static function all(): array
-    {
+    public static function all(): array {
         return [
             self::MUSLIM,
             self::HINDU,
