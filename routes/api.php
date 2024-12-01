@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\InvitationController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\ProfileviewController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,5 +53,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
 
         Route::get('current-package', [SubscriptionController::class, 'currentPackage']);
         Route::post('subscribe', [SubscriptionController::class, 'subscribe']);
+
+        Route::get('recent-views', [ProfileviewController::class, 'recentView']);
+        Route::get('recent-visitors', [ProfileviewController::class, 'recentVisitor']);
     });
 });
