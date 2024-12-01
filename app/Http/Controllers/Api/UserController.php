@@ -227,4 +227,23 @@ class UserController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function nearestMatches(Request $request) {
+        $userId        = Auth::guard('api')->id();
+        $authUser      = User::with('profile')->find($userId);
+        $matchingUsers = $this->userService->getMatchingUsers($userId);
+        $city_id = $authUser->profile->city_id;
+        if($request->city_id){
+            $city_id = $request->city_id;
+        }
+
+        $matchingUsers = $matchingUsers->filter(function ($user) use ($city_id) {
+            return $city_id == $user->profile->city_id;
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $matchingUsers,
+        ], Response::HTTP_OK);
+    }
+
 }
