@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Division;
@@ -29,10 +30,11 @@ class FrontendController extends Controller {
 
     public function index() {
         $services      = Service::whereStatus(true)->latest()->get();
+        $banners      = Banner::whereStatus(true)->get();
         $testimonials  = Testimonial::whereStatus(true)->latest()->get();
         $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
 
-        return response()->json(compact('services', 'testimonials', 'wedding_steps'));
+        return response()->json(compact('services', 'testimonials', 'wedding_steps', 'banners'));
     }
 
     public function allProfile() {

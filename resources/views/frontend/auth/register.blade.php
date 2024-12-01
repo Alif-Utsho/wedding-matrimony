@@ -75,6 +75,8 @@
                                             @enderror
                                         </div>
 
+                                        <input type="hidden" name="profile_for" value="">
+
                                         <button type="submit" class="btn btn-primary">Create Account</button>
                                     </form>
 
