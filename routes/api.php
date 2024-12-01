@@ -35,6 +35,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
 
         Route::get('matching-profiles', [UserController::class, 'matchingProfiles']);
         Route::get('premium-matches', [UserController::class, 'premiumMatches']);
+        Route::get('newprofile-matches', [UserController::class, 'newProfileMatches']);
 
         Route::get('invitations', [InvitationController::class, 'invitations']);
         Route::post('send-invitation', [InvitationController::class, 'sendInvitation']);

@@ -214,4 +214,17 @@ class UserController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function newProfileMatches() {
+        $userId        = Auth::guard('api')->id();
+        $matchingUsers = $this->userService->getMatchingUsers($userId);
+        $matchingUsers = $matchingUsers->filter(function ($user) {
+            return $user->created_at->greaterThanOrEqualTo(now()->subDays(7));
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $matchingUsers,
+        ], Response::HTTP_OK);
+    }
+
 }
