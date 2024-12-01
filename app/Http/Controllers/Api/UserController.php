@@ -206,7 +206,7 @@ class UserController extends Controller {
         $matchingUsers = $this->userService->getMatchingUsers($userId);
         $matchingUsers = $matchingUsers->filter(function ($user) {
             return $user->currentPackage()->price > 0;
-        });
+        })->values();
 
         return response()->json([
             'status' => 'success',
@@ -219,7 +219,7 @@ class UserController extends Controller {
         $matchingUsers = $this->userService->getMatchingUsers($userId);
         $matchingUsers = $matchingUsers->filter(function ($user) {
             return $user->created_at->greaterThanOrEqualTo(now()->subDays(7));
-        });
+        })->values();
 
         return response()->json([
             'status' => 'success',
@@ -231,14 +231,15 @@ class UserController extends Controller {
         $userId        = Auth::guard('api')->id();
         $authUser      = User::with('profile')->find($userId);
         $matchingUsers = $this->userService->getMatchingUsers($userId);
-        $city_id = $authUser->profile->city_id;
-        if($request->city_id){
+        $city_id       = $authUser->profile->city_id;
+
+        if ($request->city_id) {
             $city_id = $request->city_id;
         }
 
         $matchingUsers = $matchingUsers->filter(function ($user) use ($city_id) {
             return $city_id == $user->profile->city_id;
-        });
+        })->values();
 
         return response()->json([
             'status' => 'success',
