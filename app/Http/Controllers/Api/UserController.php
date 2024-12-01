@@ -203,7 +203,10 @@ class UserController extends Controller {
 
     public function premiumMatches() {
         $userId        = Auth::guard('api')->id();
-        $matchingUsers = $this->userService->getPremiumMatches($userId);
+        $matchingUsers = $this->userService->getMatchingUsers($userId);
+        $matchingUsers = $matchingUsers->filter(function ($user) {
+            return $user->currentPackage()->price > 0;
+        });
 
         return response()->json([
             'status' => 'success',
