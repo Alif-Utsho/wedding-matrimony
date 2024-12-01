@@ -61,7 +61,8 @@ class FrontendController extends Controller {
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = User::where('slug', $slug)
+        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia')
+            ->where('slug', $slug)
             ->where('profile_visibility', '<>', 'no-visible')
             ->first();
 

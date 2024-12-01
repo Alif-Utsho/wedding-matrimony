@@ -9,6 +9,10 @@
         Matching profile modified
         Increase JWT lifetime
         Premium User Matchings
+        New User Matchings
+        Recent View History
+        Profile visitor list
+        Profile visitor(authorized)
 
 ---------------------------------------------
 
