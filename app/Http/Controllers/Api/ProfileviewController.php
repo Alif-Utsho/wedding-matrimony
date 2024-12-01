@@ -17,7 +17,7 @@ class ProfileviewController extends Controller {
         $userId     = Auth::guard('api')->id();
         $profileIds = ProfileView::where('viewer_id', $userId)->where('user_id', '<>', $userId)->latest()->pluck('user_id');
 
-        $recent_views = User::with('profile')->whereIn('id', $profileIds)->limit(50)->get();
+        $recent_views = User::with('profile', 'profile.career')->whereIn('id', $profileIds)->limit(50)->get();
 
         return response()->json(compact('recent_views'));
     }
@@ -26,10 +26,10 @@ class ProfileviewController extends Controller {
         $userId = Auth::guard('api')->id();
 
         $todays_profileIds = ProfileView::where('user_id', $userId)->where('viewer_id', '<>', $userId)->whereDate('created_at', Carbon::today())->latest()->pluck('viewer_id');
-        $todays_visitors   = User::with('profile')->whereIn('id', $todays_profileIds)->get();
+        $todays_visitors   = User::with('profile', 'profile.career')->whereIn('id', $todays_profileIds)->get();
 
         $todays_profileIds = ProfileView::where('user_id', $userId)->where('viewer_id', '<>', $userId)->whereDate('created_at', '<>', Carbon::today())->latest()->pluck('viewer_id');
-        $previous_visitors = User::with('profile')->whereIn('id', $todays_profileIds)->get();
+        $previous_visitors = User::with('profile', 'profile.career')->whereIn('id', $todays_profileIds)->get();
 
         return response()->json(compact('todays_visitors', 'previous_visitors'));
     }
