@@ -276,6 +276,44 @@ class UserService {
         return $matchingUsers;
     }
 
+    public function getPremiumMatches($userId) {
+        $userProfile = UserProfile::where('user_id', $userId)->first();
+
+        $oppositeGender = $userProfile->gender === 'Male' ? 'Female' : 'Male';
+
+        $cityId = $userProfile->city_id;
+
+        if ($userProfile->gender === 'Male') {
+            $ageMax    = $userProfile->age;
+            $heightMax = $userProfile->height;
+        } else {
+            $ageMin    = $userProfile->age;
+            $heightMin = $userProfile->height;
+        }
+
+        $query = UserProfile::where('user_id', '!=', $userId)
+        // ->where('city_id', $cityId)
+            ->where('gender', $oppositeGender)
+            ->where('religion', $userProfile->religion);
+
+        if ($userProfile->gender === 'Male') {
+            $query->where('age', '<', $ageMax)
+                ->where('height', '<', $heightMax);
+        } else {
+            $query->where('age', '>', $ageMin)
+                ->where('height', '>', $heightMin);
+        }
+
+        $matchingProfiles = $query->pluck('user_id');
+
+        $matchingUsers = User::with('profile', 'profile.career')->whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
+        $matchingUsers = $matchingUsers->filter(function ($user) {
+            return $user->currentPackage()->price > 0;
+        });
+
+        return $matchingUsers;
+    }
+
     public function getMatchingProfiles_pro($userId) {
         $userProfile     = UserProfile::where('user_id', $userId)->first();
         $userPreferences = $userProfile->preferences;

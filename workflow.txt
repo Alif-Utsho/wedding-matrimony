@@ -1,4 +1,17 @@
 
+01-DEC-24
+    WEB
+        Registration error fix
+        Phone number issue fix
+
+    API
+        Banners added
+        Matching profile modified
+        Increase JWT lifetime
+        Premium User Matchings
+
+---------------------------------------------
+
 27-NOV-24
     WEB
         Country table created

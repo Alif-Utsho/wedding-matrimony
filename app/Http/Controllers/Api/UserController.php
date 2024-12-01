@@ -201,4 +201,14 @@ class UserController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function premiumMatches() {
+        $userId        = Auth::guard('api')->id();
+        $matchingUsers = $this->userService->getPremiumMatches($userId);
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $matchingUsers,
+        ], Response::HTTP_OK);
+    }
+
 }
