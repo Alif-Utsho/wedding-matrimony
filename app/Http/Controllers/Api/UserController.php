@@ -251,4 +251,17 @@ class UserController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function dailyMatches() {
+        $userId        = Auth::guard('api')->id();
+        $matchingUsers = $this->userService->getMatchingUsers($userId);
+        $matchingUsers = $matchingUsers->filter(function ($user) {
+            return $user->created_at->isSameDay(now());
+        })->values();
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $matchingUsers,
+        ], Response::HTTP_OK);
+    }
+
 }

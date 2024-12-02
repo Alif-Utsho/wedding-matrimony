@@ -19,7 +19,6 @@ Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/user/register', [AuthController::class, 'register']);
 Route::get('/user/profile-edit', [UserController::class, 'profileEdit']);
 
-
 Route::get('/get-countries', [FrontendController::class, 'get_countries']);
 Route::get('/get-divisions', [FrontendController::class, 'get_divisions']);
 Route::get('/get-cities', [FrontendController::class, 'get_cities']);
@@ -38,6 +37,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('premium-matches', [UserController::class, 'premiumMatches']);
         Route::get('newprofile-matches', [UserController::class, 'newProfileMatches']);
         Route::get('nearest-matches', [UserController::class, 'nearestMatches']);
+        Route::get('daily-matches', [UserController::class, 'dailyMatches']);
 
         Route::get('invitations', [InvitationController::class, 'invitations']);
         Route::post('send-invitation', [InvitationController::class, 'sendInvitation']);
