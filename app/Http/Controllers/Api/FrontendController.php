@@ -30,7 +30,7 @@ class FrontendController extends Controller {
 
     public function index() {
         $services      = Service::whereStatus(true)->latest()->get();
-        $banners      = Banner::whereStatus(true)->get();
+        $banners       = Banner::whereStatus(true)->get();
         $testimonials  = Testimonial::whereStatus(true)->latest()->get();
         $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
 
@@ -66,6 +66,26 @@ class FrontendController extends Controller {
             ->where('profile_visibility', '<>', 'no-visible')
             ->first();
 
+        $authId          = Auth::guard('api')->id();
+        $authUser        = User::find($authId);
+        $common_with_you = [
+            'common_city'           => $authUser->profile->city_id === $user->profile->city_id
+            ? $authUser->profile->city->name
+            : null,
+            'common_hobbies'        => $authUser->profile->hobbies->pluck('hobby.name')
+                ->intersect($user->profile->hobbies->pluck('hobby.name'))
+                ->values(),
+            'common_marital_status' => $authUser->profile->marital_status === $user->profile->marital_status
+            ? $authUser->profile->marital_status
+            : null,
+            'common_religion'       => $authUser->profile->religion === $user->profile->religion
+            ? $authUser->profile->religion
+            : null,
+            'common_language'       => $authUser->profile->language === $user->profile->language
+            ? $authUser->profile->language
+            : null,
+        ];
+
         if (!$user) {
             return response()->json([
                 'status'  => 'error',
@@ -100,8 +120,9 @@ class FrontendController extends Controller {
         return response()->json([
             'status' => 'success',
             'data'   => [
-                'user'          => $user,
-                'related_users' => $related_users,
+                'user'            => $user,
+                'common_with_you' => $common_with_you,
+                'related_users'   => $related_users,
             ],
         ], Response::HTTP_OK);
     }
@@ -116,34 +137,34 @@ class FrontendController extends Controller {
 
     }
 
-    public function get_countries(){
+    public function get_countries() {
         $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();
 
         return response()->json([
-            'status' => 'success',
-            'countries'  => $countries,
+            'status'    => 'success',
+            'countries' => $countries,
         ], Response::HTTP_OK);
     }
 
-    public function get_divisions(Request $request){
+    public function get_divisions(Request $request) {
         $divisionQuery = Division::whereStatus(true)->orderBy('name', 'ASC');
 
-        if($request->country_id){
+        if ($request->country_id) {
             $divisionQuery->where('country_id', $request->country_id);
         }
 
         $divisions = $divisionQuery->get();
 
         return response()->json([
-            'status' => 'success',
-            'divisions'  => $divisions,
+            'status'    => 'success',
+            'divisions' => $divisions,
         ], Response::HTTP_OK);
     }
 
-    public function get_cities(Request $request){
+    public function get_cities(Request $request) {
         $cityQuery = City::whereStatus(true)->orderBy('name', 'ASC');
 
-        if($request->division_id){
+        if ($request->division_id) {
             $cityQuery->where('division_id', $request->division_id);
         }
 
@@ -151,7 +172,7 @@ class FrontendController extends Controller {
 
         return response()->json([
             'status' => 'success',
-            'cities'  => $cities,
+            'cities' => $cities,
         ], Response::HTTP_OK);
     }
 
