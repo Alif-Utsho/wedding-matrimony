@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\City;
+use App\Models\Contactinfo;
 use App\Models\Country;
 use App\Models\Division;
 use App\Models\Package;
@@ -173,6 +174,14 @@ class FrontendController extends Controller {
         return response()->json([
             'status' => 'success',
             'cities' => $cities,
+        ], Response::HTTP_OK);
+    }
+
+    public function contactInfo(){
+        $contactInfo = Contactinfo::whereStatus(true)->first();
+
+        return response()->json([
+            'contactInfo' => $contactInfo
         ], Response::HTTP_OK);
     }
 

@@ -22,6 +22,7 @@ Route::get('/user/profile-edit', [UserController::class, 'profileEdit']);
 Route::get('/get-countries', [FrontendController::class, 'get_countries']);
 Route::get('/get-divisions', [FrontendController::class, 'get_divisions']);
 Route::get('/get-cities', [FrontendController::class, 'get_cities']);
+Route::get('/contact-infos', [FrontendController::class, 'contactInfo']);
 
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
