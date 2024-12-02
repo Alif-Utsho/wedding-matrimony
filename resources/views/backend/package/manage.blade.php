@@ -36,6 +36,7 @@
                                 <th>No</th>
                                 <th>Title</th>
                                 <th>Price</th>
+                                <th>Old Price</th>
                                 <th>Duration</th>
                                 <td>Status</td>
                                 <th>Edit</th>
@@ -47,6 +48,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="hig-blu">{{ $value->name }}</span></td>
                                     <td>{{ $value->price }}</td>
+                                    <td>{{ $value->old_price }}</td>
                                     <td>
                                         @if ($value->price > 0)
                                             <small>

@@ -54,6 +54,16 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <label class="lb">Old Price:</label>
+                            <input type="number" class="form-control" placeholder="Enter package old_price"
+                                name="old_price" value="{{ $package->old_price }}">
+                            @error('old_price')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
                         <div class="form-group">
                             <label class="lb">Duration:</label>
                             <input type="number" class="form-control" placeholder="Enter days"
