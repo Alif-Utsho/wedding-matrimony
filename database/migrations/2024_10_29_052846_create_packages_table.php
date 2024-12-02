@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->integer('price');
+            $table->integer('old_price')->nullable();
             $table->integer('duration');
             $table->text('details')->nullable();
             $table->boolean('popular')->default(false);

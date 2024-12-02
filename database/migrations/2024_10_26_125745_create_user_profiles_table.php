@@ -13,19 +13,22 @@ return new class extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id'); // Foreign key reference to users table
-            $table->string('image', 200)->nullable(); // Image file name with varchar(200), allowing NULL
-            $table->string('gender', 10); // Gender field
+            $table->integer('user_id');
+            $table->string('image', 200)->nullable();
+            $table->string('bio')->nullable();
+            $table->string('marital_status', 20);
+            $table->string('gender', 10);
             $table->string('religion', 20)->nullable();
-            $table->integer('city_id'); // Foreign key reference to cities table
-            $table->date('birth_date'); // Birth date
-            $table->integer('age'); // Age
-            $table->string('height', 50)->nullable(); // Height field, allowing NULL
-            $table->string('weight', 50)->nullable(); // Weight field, allowing NULL
-            $table->string('fathers_name', 100)->nullable(); // Father's name, allowing NULL
-            $table->string('mothers_name', 100)->nullable(); // Mother's name, allowing NULL
-            $table->string('address', 200)->nullable(); // Address field, allowing NULL
-            $table->tinyInteger('status')->default(1); // Status field with default value of 1
+            $table->string('language', 20)->nullable();
+            $table->integer('city_id');
+            $table->date('birth_date');
+            $table->integer('age');
+            $table->string('height', 50)->nullable();
+            $table->string('weight', 50)->nullable();
+            $table->string('fathers_name', 100)->nullable();
+            $table->string('mothers_name', 100)->nullable();
+            $table->string('address', 200)->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
