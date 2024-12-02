@@ -60,6 +60,14 @@
                                             <h1>Advanced bio</h1>
                                         </div>
                                         <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label class="lb">Bio:</label>
+                                                <textarea type="text" class="form-control" name="bio">{{ $user->profile->bio ?? old('bio') }}</textarea>
+                                                @error('bio')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+
                                             <div class="col-md-6 form-group">
                                                 <label class="lb">Gender:</label>
                                                 <select class="form-select chosen-select"
@@ -112,6 +120,23 @@
                                             </div>
 
                                             <div class="col-md-6 form-group">
+                                                <label class="lb">Marital Status:</label>
+                                                <select class="form-select chosen-select"
+                                                    data-placeholder="Select your MaritalStatus" name="marital_status">
+                                                    <option value="">Select</option>
+                                                    @foreach (\App\Enums\MaritalStatus::all() as $value => $label)
+                                                        <option value="{{ $label }}"
+                                                            {{ isset($user->profile->marital_status) && $user->profile->marital_status == $label ? 'selected' : (old('marital_status') == $label ? 'selected' : '') }}>
+                                                            {{ $label }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('marital_status')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-6 form-group">
                                                 <label class="lb">Date of birth:</label>
                                                 <input type="date" class="form-control" id="birth_date" name="birth_date"
                                                     value="{{ $user->profile->birth_date ?? old('birth_date') }}"
@@ -120,7 +145,7 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-12 form-group">
+                                            <div class="col-md-6 form-group">
                                                 <label class="lb">Age:</label>
                                                 <input type="number" class="form-control" id="age" name="age"
                                                     value="{{ $user->profile->age ?? old('age') }}" readonly>

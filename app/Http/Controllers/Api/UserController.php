@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\GenderEnum;
 use App\Enums\JobType;
 use App\Enums\Language;
+use App\Enums\MaritalStatus;
 use App\Enums\Religion;
 use App\Http\Controllers\Controller;
 use App\Models\City;
@@ -27,15 +28,16 @@ class UserController extends Controller {
     }
 
     public function profileEdit(Request $request) {
-        $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $cities    = City::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $hobbies   = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
-        $genders   = GenderEnum::options();
-        $religions = Religion::all();
-        $jobtypes  = JobType::getValues();
-        $languages = Language::all();
+        $countries     = Country::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $cities        = City::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $hobbies       = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $genders       = GenderEnum::options();
+        $religions     = Religion::all();
+        $jobtypes      = JobType::getValues();
+        $languages     = Language::all();
+        $maritalStatus = MaritalStatus::all();
 
-        return response()->json(compact('countries', 'cities', 'hobbies', 'genders', 'religions', 'jobtypes', 'languages'));
+        return response()->json(compact('countries', 'cities', 'hobbies', 'genders', 'religions', 'jobtypes', 'languages', 'maritalStatus'));
     }
 
     public function profileUpdate(Request $request) {
@@ -43,33 +45,35 @@ class UserController extends Controller {
         $user   = User::find($userId);
 
         $validator = Validator::make($request->all(), [
-            'name'         => 'required|string|max:200',
-            'gender'       => 'required|string',
-            'city_id'      => 'required|string',
-            'religion'     => 'required|string',
-            'language'     => 'required|string',
-            'birth_date'   => 'required|date',
-            'age'          => 'required',
-            'height'       => 'required|numeric|min:30|max:300',
-            'weight'       => 'required|numeric|min:10|max:300',
-            'fathers_name' => 'required|string|max:200',
-            'mothers_name' => 'required|string|max:200',
-            'address'      => 'required|string|max:255',
-            'type'         => 'required|string',
-            'company_name' => 'nullable|string|max:200',
-            'salary'       => 'nullable|string|max:20',
-            'experience'   => 'nullable|string|max:20',
-            'degree'       => 'nullable|string|max:200',
-            'college'      => 'nullable|string|max:200',
-            'school'       => 'nullable|string|max:200',
-            'whatsApp'     => 'nullable|string|max:200',
-            'facebook'     => 'nullable|string|max:200',
-            'instagram'    => 'nullable|string|max:200',
-            'x'            => 'nullable|string|max:200',
-            'youtube'      => 'nullable|string|max:200',
-            'linkedin'     => 'nullable|string|max:200',
-            'hobbies'      => 'nullable|array',
-            'image'        => [
+            'name'           => 'required|string|max:200',
+            'gender'         => 'required|string',
+            'city_id'        => 'required|string',
+            'religion'       => 'required|string',
+            'language'       => 'required|string',
+            'birth_date'     => 'required|date',
+            'age'            => 'required',
+            'height'         => 'required|numeric|min:30|max:300',
+            'weight'         => 'required|numeric|min:10|max:300',
+            'fathers_name'   => 'required|string|max:200',
+            'mothers_name'   => 'required|string|max:200',
+            'address'        => 'required|string|max:255',
+            'type'           => 'required|string',
+            'marital_status' => 'required|string|max:20',
+            'bio'            => 'nullable|string',
+            'company_name'   => 'nullable|string|max:200',
+            'salary'         => 'nullable|string|max:20',
+            'experience'     => 'nullable|string|max:20',
+            'degree'         => 'nullable|string|max:200',
+            'college'        => 'nullable|string|max:200',
+            'school'         => 'nullable|string|max:200',
+            'whatsApp'       => 'nullable|string|max:200',
+            'facebook'       => 'nullable|string|max:200',
+            'instagram'      => 'nullable|string|max:200',
+            'x'              => 'nullable|string|max:200',
+            'youtube'        => 'nullable|string|max:200',
+            'linkedin'       => 'nullable|string|max:200',
+            'hobbies'        => 'nullable|array',
+            'image'          => [
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',

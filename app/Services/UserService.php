@@ -73,18 +73,20 @@ class UserService {
         $userProfile = UserProfile::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'gender'       => $data['gender'],
-                'city_id'      => $data['city_id'],
-                'religion'     => $data['religion'],
-                'language'     => $data['language'],
-                'birth_date'   => $data['birth_date'],
-                'height'       => $data['height'],
-                'weight'       => $data['weight'],
-                'fathers_name' => $data['fathers_name'],
-                'mothers_name' => $data['mothers_name'],
-                'address'      => $data['address'],
-                'age'          => $data['age'] ?? null,
-                'image'        => $imagePath ?? $editProfile->image ?? null,
+                'bio'            => $data['bio'],
+                'marital_status' => $data['marital_status'],
+                'gender'         => $data['gender'],
+                'city_id'        => $data['city_id'],
+                'religion'       => $data['religion'],
+                'language'       => $data['language'],
+                'birth_date'     => $data['birth_date'],
+                'height'         => $data['height'],
+                'weight'         => $data['weight'],
+                'fathers_name'   => $data['fathers_name'],
+                'mothers_name'   => $data['mothers_name'],
+                'address'        => $data['address'],
+                'age'            => $data['age'] ?? null,
+                'image'          => $imagePath ?? $editProfile->image ?? null,
             ]
         );
 
