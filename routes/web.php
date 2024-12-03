@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
+use App\Http\Controllers\Admin\UserverificationController;
 use App\Http\Controllers\Admin\WeddingController;
 use App\Http\Controllers\Admin\WeddingGalleryController;
 use App\Http\Controllers\Admin\WeddingStepController;
@@ -93,6 +94,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
         Route::delete('user/{id}', [UsermanageController::class, 'delete'])->name('user.delete');
+        
+        Route::get('user/verifications', [UserverificationController::class, 'manage'])->name('user.verification');
+        Route::post('user/verified', [UserverificationController::class, 'verify'])->name('user-verification.verify');
+        Route::delete('user/verification/{id}', [UserverificationController::class, 'delete'])->name('user-verification.delete');
 
         Route::get('package/manage', [PackageController::class, 'manage'])->name('package.manage');
         Route::get('package/add', [PackageController::class, 'add'])->name('package.add');

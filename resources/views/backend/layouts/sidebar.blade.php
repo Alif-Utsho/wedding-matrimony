@@ -27,6 +27,11 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('admin.user.verification') }}"
+                                class="{{ request()->routeIs('admin.user.verification') ? 's-act' : '' }}">Verifications</a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('admin.user.add') }}"
                                 class="{{ request()->routeIs('admin.user.add') ? 's-act' : '' }}">Add new User</a>
                         </li>
