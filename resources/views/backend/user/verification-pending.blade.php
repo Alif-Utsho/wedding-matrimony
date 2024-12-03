@@ -134,11 +134,6 @@
                                                                     alt="">
                                                             </div>
                                                         </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="cta-full cta-colr">Submit</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

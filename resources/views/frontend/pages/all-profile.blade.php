@@ -231,7 +231,8 @@
 
                                             <!--PROFILE NAME-->
                                             <div class="pro-detail">
-                                                <h4><a href="/profile/{{ $user->slug }}">{{ $user->name }}</a></h4>
+                                                <h4><a href="/profile/{{ $user->slug }}">{{ $user->name }}</a> @if ($user->verified)<i class="fa fa-check-circle text-success"></i>
+                                                @endif</h4>
                                                 <div class="pro-bio">
                                                     <span>{{ $user->profile->career->degree }}</span>
                                                     <span>{{ $user->profile->career->type }}</span>

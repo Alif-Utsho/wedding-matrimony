@@ -82,7 +82,12 @@
                                                 <img src="{{ asset($user->profile->image) }}" alt="">
                                             </div>
                                             <div class="pro-info">
-                                                <h5>{{ $user->name }}</h5>
+                                                <h5>
+                                                    {{ $user->name }}
+                                                    @if ($user->verified)
+                                                        <span><i class="fa fa-check-circle text-success"></i></span>
+                                                    @endif
+                                                </h5>
                                                 <p>{{ $user->email }}</p>
                                             </div>
                                         </div>
@@ -101,8 +106,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.user.delete', $user->id) }}"
-                                                    method="POST"
+                                                <form action="{{ route('admin.user.delete', $user->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this user?');"
                                                     style="display: inline;">
                                                     @csrf
