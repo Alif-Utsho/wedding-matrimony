@@ -11,6 +11,7 @@ use App\Models\PackagePayment;
 use App\Models\User;
 use App\Models\UserPackage;
 use App\Models\UserProfile;
+use App\Models\UserVerification;
 use App\Services\MessageService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -215,6 +216,34 @@ class UserController extends Controller {
         $result = $this->userService->toggleLike($userId, $likerId);
 
         return response()->json($result);
+    }
+
+    public function verificationEdit() {
+        return view('frontend.user.verification-edit');
+    }
+
+    public function verificationEditSubmit(Request $request) {
+        $request->validate([
+            'image'      => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $userId = Auth::guard('user')->id();
+        $exist = UserVerification::where('user_id', $userId)->latest()->first();
+        if($exist){
+            Toastr::error('Already Submitted! Contact with Administrator');
+            return redirect('/user/setting');
+        }
+
+        $response = $this->userService->verifySubmit($userId, $request->all());
+
+        if ($response) {
+            Toastr::success('Verification submitted successfully');
+            return redirect('/user/setting');
+        }
+
+        Toastr::error('Something went wrong');
+        return redirect()->back();
     }
 
 }

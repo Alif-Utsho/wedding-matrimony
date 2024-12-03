@@ -1,9 +1,22 @@
 
+02-DEC-24
+    WEB
+        Bio & Marital Status added
+        Discount package price added
+    API
+        Profile details update
+        Bio & Marital Status added
+        Daily Matches API
+        Common of both of you
+        Discount package price added
+        Contact info API
+
+---------------------------------------------
+
 01-DEC-24
     WEB
         Registration error fix
         Phone number issue fix
-
     API
         Banners added
         Matching profile modified

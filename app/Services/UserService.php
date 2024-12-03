@@ -10,6 +10,7 @@ use App\Models\UserHobby;
 use App\Models\UserImage;
 use App\Models\UserProfile;
 use App\Models\UserSocialmedia;
+use App\Models\UserVerification;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -396,6 +397,26 @@ class UserService {
             ->get();
 
         return $likedProfiles;
+    }
+
+    public function verifySubmit($userId, $data){
+        try{
+            $imagePath = ImageService::uploadImage($data["image"], "", "verification");
+            $imageBackPath = ImageService::uploadImage($data["image_back"], "", "verification");
+            UserVerification::create([
+                'user_id' => $userId,
+                'name' => 'NID',
+                'image' => $imagePath,
+                'image_back' => $imageBackPath
+            ]);
+
+            User::find($userId)->update(['verified'=> 0]);
+
+            return true;
+        } catch(Exception $ex){
+            return false;
+        }
+
     }
 
 }

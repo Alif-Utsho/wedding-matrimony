@@ -79,6 +79,25 @@
                         </div>
                     </div>
                     <!--END-->
+                    <div class="ms-write-post fol-sett-sec sett-rhs-acc">
+                        <div class="foll-set-tit fol-pro-abo-ico">
+                            <h4>Verification</h4><a href="{{ route('user.verificationEdit') }}"
+                                class="sett-edit-btn sett-acc-edit-eve"><i class="fa fa-edit" aria-hidden="true"></i>
+                                Edit</a>
+                        </div>
+                        <div class="fol-sett-box sett-acc-view sett-two-tab">
+                            <ul>
+                                <li>
+                                    <div>Front Side</div>
+                                    <div>{{ Auth::guard('user')->user()->name }}</div>
+                                </li>
+                                <li>
+                                    <div>Back Side</div>
+                                    <div>{{ Auth::guard('user')->user()->phone }}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <!--START-->
                     <div class="ms-write-post fol-sett-sec sett-rhs-acc">
                         <div class="foll-set-tit fol-pro-abo-ico">

@@ -57,6 +57,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['user.auth', 'ensure.profile.
     Route::get('setting', [UserController::class, 'setting'])->name('user.setting');
     Route::post('update-setting', [UserController::class, 'updateSetting'])->name('user.updateSetting');
 
+    Route::get('verification-edit', [UserController::class, 'verificationEdit'])->name('user.verificationEdit');
+    Route::post('verification-edit-submit', [UserController::class, 'verificationEditSubmit'])->name('user.verificationEdit.submit');
+
     Route::get('invitations', [InvitationController::class, 'invitations'])->name('user.invitations');
     Route::post('send-invitation', [InvitationController::class, 'sendInvitation'])->name('send.invitation');
     Route::post('cancel-invitation', [InvitationController::class, 'cancelInvitation'])->name('cancel.invitation');
