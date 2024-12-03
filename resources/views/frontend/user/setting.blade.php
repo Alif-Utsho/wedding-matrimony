@@ -81,22 +81,42 @@
                     <!--END-->
                     <div class="ms-write-post fol-sett-sec sett-rhs-acc">
                         <div class="foll-set-tit fol-pro-abo-ico">
-                            <h4>Verification</h4><a href="{{ route('user.verificationEdit') }}"
-                                class="sett-edit-btn sett-acc-edit-eve"><i class="fa fa-edit" aria-hidden="true"></i>
-                                Edit</a>
+                            <h4>Verification</h4>
+
+                            @if (Auth::guard('user')->user()->verified === 1)
+                                <a class="sett-edit-btn sett-acc-edit-eve"><i class="fa fa-check-square-o text-success"
+                                        aria-hidden="true"></i>
+                                    Verified</a>
+                            @elseif(Auth::guard('user')->user()->verified === 0)
+                                <a class="sett-edit-btn sett-acc-edit-eve"><i class="fa fa-hourglass-half"
+                                        aria-hidden="true"></i>
+                                    Pending</a>
+                            @else
+                                <a href="{{ route('user.verificationEdit') }}" class="sett-edit-btn sett-acc-edit-eve"><i
+                                        class="fa fa-edit" aria-hidden="true"></i>
+                                    Verify</a>
+                            @endif
                         </div>
+                        @if(Auth::guard('user')->user()->verified !== NULL)
                         <div class="fol-sett-box sett-acc-view sett-two-tab">
                             <ul>
                                 <li>
                                     <div>Front Side</div>
-                                    <div>{{ Auth::guard('user')->user()->name }}</div>
+                                    <div>
+                                        <img src="{{ asset(Auth::guard('user')->user()->verification->image) }}" width="150" alt="">
+                                    </div>
                                 </li>
                                 <li>
                                     <div>Back Side</div>
-                                    <div>{{ Auth::guard('user')->user()->phone }}</div>
+                                    <div>
+                                        <img src="{{ asset(Auth::guard('user')->user()->verification->image_back) }}" width="150" alt="">
+                                    </div>
                                 </li>
                             </ul>
                         </div>
+                        @else
+                        <p class="text-center">Not Verified Yet</p>
+                        @endif
                     </div>
                     <!--START-->
                     <div class="ms-write-post fol-sett-sec sett-rhs-acc">

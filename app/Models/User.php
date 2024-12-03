@@ -70,6 +70,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(UserProfile::class);
     }
 
+    public function verification(){
+        return $this->hasOne(UserVerification::class);
+    }
+
     public function currentPackage()
     {
         $userPackage = $this->hasOne(UserPackage::class)
