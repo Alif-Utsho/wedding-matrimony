@@ -428,15 +428,25 @@ class UserService {
         $hobbies     = UserHobby::where('user_id', $userId)->with('hobby')->get();
         $socialmedia = UserSocialmedia::where('user_id', $userId)->first();
 
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf.profile', [
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadView('pdf.profile', [
+        //     'user'        => $user,
+        //     'profile'     => $profile,
+        //     'career'      => $career,
+        //     'hobbies'     => $hobbies,
+        //     'socialmedia' => $socialmedia,
+        // ]);
+        // return $pdf->stream();
+
+        $pdf = Pdf::loadView('pdf.profile', [
             'user'        => $user,
             'profile'     => $profile,
             'career'      => $career,
             'hobbies'     => $hobbies,
             'socialmedia' => $socialmedia,
         ]);
-        return $pdf->stream();
+
+        return $pdf->download($user->name . '.pdf');
     }
 
 }

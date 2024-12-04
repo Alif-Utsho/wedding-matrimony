@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('profile_visibility')->default('all');
             $table->string('interest_request_access')->default('all');
             $table->string('password', 250);
+            $table->timestamp('last_active')->nullable();
+            $table->boolean('active_status')->default(true);
             $table->string('remember_token', 200)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
