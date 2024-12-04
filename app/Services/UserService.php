@@ -435,7 +435,7 @@ class UserService {
             'socialmedia' => $socialmedia,
         ]);
 
-        return $pdf->download('user_profile.pdf');
+        return $pdf->download($user->name . '.pdf');
     }
 
 }
