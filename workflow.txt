@@ -1,4 +1,14 @@
 
+04-DEC-24
+    WEB
+        Profile download as pdf (error in production)
+        User active status track (Running)
+    API
+        Profile verificaion
+        Profile download as pdf
+
+---------------------------------------------
+
 03-DEC-24
     WEB
         Nid|Passport submission

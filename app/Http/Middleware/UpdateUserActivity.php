@@ -17,19 +17,25 @@ class UpdateUserActivity {
      */
     public function handle(Request $request, Closure $next): Response {
 
-        if (!Auth::guard('user')->check() || !Auth::guard('api')->check()) {
-            return $next($request);
+        if (Auth::guard('user')->check() || Auth::guard('api')->check()) {
+            $userId = Auth::guard('user')->id() ?? Auth::guard('api')->id();
+
+            $user = User::find($userId);
+
+            if ($user) {
+                $user->last_active   = Carbon::now();
+                $user->active_status = true;
+                $user->save();
+            }
+
         }
 
-        $userId = Auth::guard('user')->id() ?? Auth::guard('api')->id();
+        User::where(function ($query) {
+            $query->where('last_active', '<', Carbon::now()->subMinute(2))
+                  ->orWhereNull('last_active');
+        })->update(['active_status' => false]);
 
-        $user = User::find($userId);
-
-        if ($user) {
-            $user->last_active   = Carbon::now();
-            $user->active_status = true;
-            $user->save();
-        }
+        return $next($request);
 
     }
 
