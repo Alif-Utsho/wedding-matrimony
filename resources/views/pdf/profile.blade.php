@@ -70,7 +70,8 @@
                 </tr>
                 <tr>
                     <td style="padding: 5px 0; vertical-align: top;">Date of Birth:</td>
-                    <td style="padding: 5px 0;">{{ \Carbon\Carbon::parse($profile->birth_date)->format('d M, Y') }}</td>
+                    <td style="padding: 5px 0;">{{ \Carbon\Carbon::parse($profile->birth_date)->format('d M, Y') }}
+                    </td>
                 </tr>
                 <tr>
                     <td style="padding: 5px 0; vertical-align: top;">Age:</td>

@@ -229,9 +229,11 @@ class UserController extends Controller {
         ]);
 
         $userId = Auth::guard('user')->id();
-        $exist = UserVerification::where('user_id', $userId)->latest()->first();
-        if($exist){
+        $exist  = UserVerification::where('user_id', $userId)->latest()->first();
+
+        if ($exist) {
             Toastr::error('Already Submitted! Contact with Administrator');
+
             return redirect('/user/setting');
         }
 
@@ -239,15 +241,18 @@ class UserController extends Controller {
 
         if ($response) {
             Toastr::success('Verification submitted successfully');
+
             return redirect('/user/setting');
         }
 
         Toastr::error('Something went wrong');
+
         return redirect()->back();
     }
 
     public function downloadProfileDownload() {
         $userId = Auth::guard('user')->id();
+
         return $this->userService->downloadProfilePdf($userId);
     }
 
