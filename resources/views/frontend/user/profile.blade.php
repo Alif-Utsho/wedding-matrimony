@@ -5,7 +5,7 @@
             <div class="col-md-12 col-lg-6 col-xl-8 db-sec-com">
                 <h2 class="db-tit">
                     Profiles status
-                    <span class="float-end"><a href="/user/profile-download"><i class="fa fa-download"></i></a>
+                    <span class="float-end" style="font-size: 15px;"><a href="{{ route('user.profile.download') }}" class=" border rounded px-2 py-1"><i class="fa fa-download"></i> Biodata </a>
                 </h2>
                 
                 <div class="db-profile">

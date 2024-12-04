@@ -306,12 +306,17 @@ class UserController extends Controller {
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
             Log::error('Verification submission failed: ' . $e->getMessage());
-    
+            
             return response()->json([
                 'status'  => 'error',
                 'message' => 'An unexpected error occurred. Please try again later.',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function downloadProfileDownload() {
+        $userId = Auth::guard('api')->id();
+        return $this->userService->downloadProfilePdf($userId);
     }
     
 

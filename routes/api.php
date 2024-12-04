@@ -59,5 +59,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('recent-visitors', [ProfileviewController::class, 'recentVisitor']);
 
         Route::post('verification-submit', [UserController::class, 'verificationEditSubmit']);
+        
+        Route::get('/profile-download', [UserController::class, 'downloadProfileDownload']);
     });
 });
