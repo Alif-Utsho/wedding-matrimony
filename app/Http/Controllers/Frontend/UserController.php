@@ -246,4 +246,9 @@ class UserController extends Controller {
         return redirect()->back();
     }
 
+    public function downloadProfileDownload() {
+        $userId = Auth::guard('user')->id();
+        return $this->userService->downloadProfilePdf($userId);
+    }
+
 }

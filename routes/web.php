@@ -75,6 +75,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['user.auth', 'ensure.profile.
 
     Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('user.subscribe');
 
+    Route::get('/profile-download', [UserController::class, 'downloadProfileDownload'])->name('user.profile.download');
+
     Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');
 });
 

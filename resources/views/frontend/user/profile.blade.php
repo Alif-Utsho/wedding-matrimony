@@ -3,7 +3,11 @@
     <div class="col-md-8 col-lg-9">
         <div class="row">
             <div class="col-md-12 col-lg-6 col-xl-8 db-sec-com">
-                <h2 class="db-tit">Profiles status</h2>
+                <h2 class="db-tit">
+                    Profiles status
+                    <span class="float-end"><a href="/user/profile-download"><i class="fa fa-download"></i></a>
+                </h2>
+                
                 <div class="db-profile">
                     <div class="img">
                         <img src="{{ asset($user->profile->image) }}" loading="lazy" alt="">

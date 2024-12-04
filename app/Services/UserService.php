@@ -11,6 +11,7 @@ use App\Models\UserImage;
 use App\Models\UserProfile;
 use App\Models\UserSocialmedia;
 use App\Models\UserVerification;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -399,24 +400,42 @@ class UserService {
         return $likedProfiles;
     }
 
-    public function verifySubmit($userId, $data){
-        try{
-            $imagePath = ImageService::uploadImage($data["image"], "", "verification");
+    public function verifySubmit($userId, $data) {
+        try {
+            $imagePath     = ImageService::uploadImage($data["image"], "", "verification");
             $imageBackPath = ImageService::uploadImage($data["image_back"], "", "verification");
             UserVerification::create([
-                'user_id' => $userId,
-                'name' => 'NID',
-                'image' => $imagePath,
-                'image_back' => $imageBackPath
+                'user_id'    => $userId,
+                'name'       => 'NID',
+                'image'      => $imagePath,
+                'image_back' => $imageBackPath,
             ]);
 
-            User::find($userId)->update(['verified'=> 0]);
+            User::find($userId)->update(['verified' => 0]);
 
             return true;
-        } catch(Exception $ex){
+        } catch (Exception $ex) {
             return false;
         }
 
+    }
+
+    public function downloadProfilePdf($userId) {
+        $user        = User::findOrFail($userId);
+        $profile     = UserProfile::where('user_id', $userId)->first();
+        $career      = UserCareer::where('user_id', $userId)->first();
+        $hobbies     = UserHobby::where('user_id', $userId)->with('hobby')->get();
+        $socialmedia = UserSocialmedia::where('user_id', $userId)->first();
+
+        $pdf = Pdf::loadView('pdf.profile', [
+            'user'        => $user,
+            'profile'     => $profile,
+            'career'      => $career,
+            'hobbies'     => $hobbies,
+            'socialmedia' => $socialmedia,
+        ]);
+
+        return $pdf->download('user_profile.pdf');
     }
 
 }
