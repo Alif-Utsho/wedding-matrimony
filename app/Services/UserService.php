@@ -13,6 +13,7 @@ use App\Models\UserSocialmedia;
 use App\Models\UserVerification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -427,15 +428,15 @@ class UserService {
         $hobbies     = UserHobby::where('user_id', $userId)->with('hobby')->get();
         $socialmedia = UserSocialmedia::where('user_id', $userId)->first();
 
-        $pdf = Pdf::loadView('pdf.profile', [
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.profile', [
             'user'        => $user,
             'profile'     => $profile,
             'career'      => $career,
             'hobbies'     => $hobbies,
             'socialmedia' => $socialmedia,
         ]);
-
-        return $pdf->download($user->name . '.pdf');
+        return $pdf->stream();
     }
 
 }
