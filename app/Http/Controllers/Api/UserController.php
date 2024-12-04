@@ -13,9 +13,11 @@ use App\Models\Country;
 use App\Models\Hobby;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\UserVerification;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
@@ -263,5 +265,54 @@ class UserController extends Controller {
             'data'   => $matchingUsers,
         ], Response::HTTP_OK);
     }
+
+    public function verificationEditSubmit(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'image'      => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    
+        $userId = Auth::guard('api')->id();
+        $exist = UserVerification::where('user_id', $userId)->latest()->first();
+    
+        if ($exist) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Already submitted! Contact with Administrator',
+            ], Response::HTTP_FORBIDDEN);
+        }
+    
+        try {
+            $response = $this->userService->verifySubmit($userId, $request->all());
+    
+            if ($response) {
+                return response()->json([
+                    'status'  => 'success',
+                    'message' => 'Verification submitted successfully',
+                ], Response::HTTP_OK);
+            }
+    
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Something went wrong. Please try again later.',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Exception $e) {
+            Log::error('Verification submission failed: ' . $e->getMessage());
+    
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'An unexpected error occurred. Please try again later.',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 
 }

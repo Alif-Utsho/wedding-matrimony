@@ -57,5 +57,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
 
         Route::get('recent-views', [ProfileviewController::class, 'recentView']);
         Route::get('recent-visitors', [ProfileviewController::class, 'recentVisitor']);
+
+        Route::post('verification-submit', [UserController::class, 'verificationEditSubmit']);
     });
 });

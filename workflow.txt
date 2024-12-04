@@ -1,4 +1,13 @@
 
+03-DEC-24
+    WEB
+        Nid|Passport submission
+        Admin verificaion approve & delete
+        Profile verified badge show
+    API
+
+---------------------------------------------
+
 02-DEC-24
     WEB
         Bio & Marital Status added
