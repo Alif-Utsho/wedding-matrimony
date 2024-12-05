@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="row">
                     <h1>Lakhs of Happy Marriages</h1>
-                    <a href="sign-up.html">Join now for Free <i class="fa fa-handshake-o" aria-hidden="true"></i></a>
+                    <a href="{{ route('user.register') }}">Join now for Free <i class="fa fa-handshake-o" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
@@ -174,7 +174,7 @@
                             <div class="send-query">
                                 <h5>What are you looking for?</h5>
                                 <p>We will help you to arrage the best match to you.</p>
-                                <a href="#!" data-toggle="modal" data-target="#expfrm">Send your queries</a>
+                                <a href="/enquiry">Send your queries</a>
                             </div>
                         </div>
                         <!-- END -->
