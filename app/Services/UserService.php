@@ -307,7 +307,8 @@ class UserService {
             } else {
                 $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
             }
-
+        } else {
+            $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
         }
 
         return $users;
