@@ -34,6 +34,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::post('image-delete', [UserController::class, 'deleteImage']);
         Route::post('update-setting', [UserController::class, 'updateSetting']);
 
+        Route::post('update-preferences', [UserController::class, 'updatePreference']);
+
         Route::get('matching-profiles', [UserController::class, 'matchingProfiles']);
         Route::get('premium-matches', [UserController::class, 'premiumMatches']);
         Route::get('newprofile-matches', [UserController::class, 'newProfileMatches']);

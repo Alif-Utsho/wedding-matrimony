@@ -321,4 +321,37 @@ class UserController extends Controller {
         return $this->userService->downloadProfilePdf($userId);
     }
 
+    public function updatePreference(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'min_age'        => 'nullable|integer',
+            'max_age'        => 'nullable|integer',
+            'min_height'     => 'nullable|integer',
+            'max_height'     => 'nullable|integer',
+            'marital_status' => 'nullable|string',
+            'religion'       => 'nullable|string',
+            'language'       => 'nullable|string',
+            'city_id'        => 'nullable|string',
+            'jobtype'        => 'nullable|string',
+            'min_salary'     => 'nullable|integer',
+            'max_salary'     => 'nullable|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $userId     = Auth::guard('api')->id();
+        $preference = $this->userService->updatePreference($request->all(), $userId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Preferences saved successfully!',
+            'data'    => $preference,
+        ]);
+    }
+
 }
