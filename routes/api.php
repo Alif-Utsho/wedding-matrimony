@@ -10,19 +10,19 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index']);
-Route::get('/plans', [FrontendController::class, 'plans']);
-Route::get('/all-profile', [FrontendController::class, 'allProfile']);
-Route::get('/search-profile', [FrontendController::class, 'searchProfile']);
-Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
+Route::get('plans', [FrontendController::class, 'plans']);
+Route::get('all-profile', [FrontendController::class, 'allProfile']);
+Route::get('search-profile', [FrontendController::class, 'searchProfile']);
+Route::get('profile/{slug}', [FrontendController::class, 'profileDetails']);
 
-Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/user/register', [AuthController::class, 'register']);
-Route::get('/user/profile-edit', [UserController::class, 'profileEdit']);
+Route::post('user/login', [AuthController::class, 'login']);
+Route::post('user/register', [AuthController::class, 'register']);
+Route::get('user/profile-edit', [UserController::class, 'profileEdit']);
 
-Route::get('/get-countries', [FrontendController::class, 'get_countries']);
-Route::get('/get-divisions', [FrontendController::class, 'get_divisions']);
-Route::get('/get-cities', [FrontendController::class, 'get_cities']);
-Route::get('/contact-infos', [FrontendController::class, 'contactInfo']);
+Route::get('get-countries', [FrontendController::class, 'get_countries']);
+Route::get('get-divisions', [FrontendController::class, 'get_divisions']);
+Route::get('get-cities', [FrontendController::class, 'get_cities']);
+Route::get('contact-infos', [FrontendController::class, 'contactInfo']);
 
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
@@ -62,6 +62,6 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
 
         Route::post('verification-submit', [UserController::class, 'verificationEditSubmit']);
         
-        Route::get('/profile-download', [UserController::class, 'downloadProfileDownload']);
+        Route::get('profile-download', [UserController::class, 'downloadProfileDownload']);
     });
 });
