@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\City;
 use App\Models\ProfileLike;
+use App\Models\ProfileView;
 use App\Models\User;
 use App\Models\UserCareer;
 use App\Models\UserHobby;
@@ -207,6 +208,13 @@ class UserService {
             });
         }
 
+        if (!empty($data['marital_status'])) {
+            $marital_status = $data['marital_status'];
+            $userQuery->whereHas('profile', function ($query) use ($marital_status) {
+                $query->where('marital_status', $marital_status);
+            });
+        }
+
         if (!empty($data['age_range'])) {
             $ageRange = explode('-to-', $data['age_range']);
 
@@ -232,7 +240,77 @@ class UserService {
 
         }
 
-        return $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
+        if (!empty($data['height_range'])) {
+            $heightRange = explode('-to-', $data['height_range']);
+
+            if (count($heightRange) == 2) {
+                $minHeight = $heightRange[0];
+                $maxHeight = $heightRange[1];
+
+                $userQuery->whereHas('profile', function ($query) use ($minHeight, $maxHeight) {
+                    $query->whereBetween('height', [$minHeight, $maxHeight]);
+                });
+            }
+
+        }
+
+        if (!empty($data['jobtype'])) {
+            $jobtype = $data['jobtype'];
+            $userQuery->whereHas('profile.career', function ($query) use ($jobtype) {
+                $query->where('type', $jobtype);
+            });
+        }
+
+        if (!empty($data['filtered_me']) && $data['filtered_me']) {
+            $userId = Auth::guard('api')->check() ? Auth::guard('api')->id() : Auth::guard('user')->id();
+
+            if ($userId) {
+                $viewerIds = ProfileView::where('user_id', $userId)->pluck('viewer_id');
+
+                $userQuery->whereIn('id', $viewerIds);
+            }
+
+        }
+
+        if (!empty($data['already_viewed']) && $data['already_viewed']) {
+            $viewerId = Auth::guard('api')->check() ? Auth::guard('api')->id() : Auth::guard('user')->id();
+
+            if ($viewerId) {
+                $userIds = ProfileView::where('viewer_id', $viewerId)->pluck('user_id');
+
+                $userQuery->whereIn('id', $userIds);
+            }
+
+        }
+
+        if (!empty($data['availability'])) {
+            $availability = $data['availability'];
+
+            if ($availability === 'online') {
+                $userQuery->where('active_status', true);
+            } elseif ($availability === 'offline') {
+                $userQuery->where('active_status', false);
+            }
+        }
+
+        if (!empty($data['profiletype'])) {
+            $profiletype = $data['profiletype'];
+
+            if ($profiletype === 'premium') {
+                $users = $userQuery->get()->filter(function ($user) {
+                    return $user->isPremium();
+                });
+            } elseif ($profiletype === 'free') {
+                $users = $userQuery->get()->filter(function ($user) {
+                    return !$user->isPremium();
+                });
+            } else {
+                $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
+            }
+
+        }
+
+        return $users;
     }
 
     public function updateSetting($settingKey, $settingValue, $userId) {
@@ -444,7 +522,7 @@ class UserService {
         $user = User::findOrFail($userId);
 
         $preferences = UserPreference::updateOrCreate(
-            ['user_id'=> $userId],
+            ['user_id' => $userId],
             $data
         );
 

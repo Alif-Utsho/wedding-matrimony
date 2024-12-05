@@ -111,22 +111,23 @@
                                 <ul>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="availability" class="rating_check"
-                                                id="exav1" checked>
+                                            <input type="radio" value="all" name="availability" class="rating_check"
+                                                {{ request()->availability == 'all' ? 'checked' : '' }} id="exav1"
+                                                checked>
                                             <label for="exav1">All</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="availability" class="rating_check"
-                                                id="exav2">
+                                            <input type="radio" value="online" name="availability" class="rating_check"
+                                                {{ request()->availability == 'online' ? 'checked' : '' }} id="exav2">
                                             <label for="exav2">Available</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="availability" class="rating_check"
-                                                id="exav3">
+                                            <input type="radio" value="offline" name="availability" class="rating_check"
+                                                {{ request()->availability == 'offline' ? 'checked' : '' }} id="exav3">
                                             <label for="exav3">Offline</label>
                                         </div>
                                     </li>
@@ -140,22 +141,23 @@
                                 <ul>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="type" class="rating_check"
-                                                id="exver1" checked>
+                                            <input type="radio" value="all" name="profiletype" class="rating_check"
+                                                {{ request()->profiletype == 'all' ? 'checked' : '' }} id="exver1"
+                                                checked>
                                             <label for="exver1">All</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="type" class="rating_check"
-                                                id="exver2">
+                                            <input type="radio" value="premium" name="profiletype" class="rating_check"
+                                                {{ request()->profiletype == 'premium' ? 'checked' : '' }} id="exver2">
                                             <label for="exver2">Premium</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="rbbox">
-                                            <input type="radio" value="" name="type" class="rating_check"
-                                                id="exver3">
+                                            <input type="radio" value="free" name="profiletype" class="rating_check"
+                                                {{ request()->profiletype == 'free' ? 'checked' : '' }} id="exver3">
                                             <label for="exver3">Free</label>
                                         </div>
                                     </li>
