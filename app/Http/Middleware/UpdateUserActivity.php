@@ -33,7 +33,7 @@ class UpdateUserActivity {
         User::where(function ($query) {
             $query->where('last_active', '<', Carbon::now()->subMinute(2))
                   ->orWhereNull('last_active');
-        })->update(['active_status' => false]);
+        })->where('active_status', true)->update(['active_status' => false]);
 
         return $next($request);
 

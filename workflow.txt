@@ -1,4 +1,12 @@
 
+05-DEC-24
+    WEB
+        
+    API
+        
+
+---------------------------------------------
+
 04-DEC-24
     WEB
         Profile download as pdf (error in production)

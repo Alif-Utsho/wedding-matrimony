@@ -5,8 +5,12 @@
     <div class="inn">
         <div class="s1">
             <img src="{{ asset($user->profile->image) }}" class="intephoto2" alt="">
-            <h4><b class="intename2">{{ $user->name }}</b>,</h4>
-            <span class="avlsta avilyes">Available online</span>
+            <h4><b class="intename2">{{ $user->name }}</b></h4>
+            @if ($user->active_status)
+                <span class="avlsta avilyes">Available online</span>
+            @else
+                <span class="avlsta avilno">{{ \Carbon\Carbon::parse($user->last_active)->diffForHumans() }}</span>
+            @endif
         </div>
         <div class="s2 chat-box-messages h-100">
 

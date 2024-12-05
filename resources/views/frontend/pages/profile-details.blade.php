@@ -47,7 +47,9 @@
                                         <h1>{{ $user->name }}</h1>
                                         <div class="pro-info-status">
                                             <span class="stat-1"><b>{{ $user->profileViews()->count() }}</b> viewers</span>
+                                            @if($user->active_status)
                                             <span class="stat-2"><b>Available</b> online</span>
+                                            @endif
                                         </div>
                                         <ul>
                                             <li>
