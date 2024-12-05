@@ -102,7 +102,7 @@ class UserController extends Controller {
     }
 
     public function profile() {
-        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia', 'preference', 'preference.city')->find(Auth::guard('api')->id());
+        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia', 'verification', 'preference', 'preference.city')->find(Auth::guard('api')->id());
 
         return response()->json(compact('user'));
     }
