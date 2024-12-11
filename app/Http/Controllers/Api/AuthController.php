@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class AuthController extends Controller {
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'email'    => 'required|email',
+            'email'    => 'required',
             'password' => 'required|string|min:6',
         ]);
 
@@ -23,9 +23,17 @@ class AuthController extends Controller {
             ], 422);
         }
 
-        $credentials = $request->only('email', 'password');
+        $phoneOrEmail = $request->input('email');
+        $password = $request->input('password');
+
+        $isEmail = filter_var($phoneOrEmail, FILTER_VALIDATE_EMAIL);
 
         try {
+            if ($isEmail) {
+                $credentials = ['email' => $phoneOrEmail, 'password' => $password];
+            } else {
+                $credentials = ['phone' => $phoneOrEmail, 'password' => $password];
+            }
 
             if (!$token = Auth::guard('api')->attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
