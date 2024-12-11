@@ -15,6 +15,7 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
+use App\Services\PushNotificationService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -22,11 +23,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller {
-    protected $userService;
+    protected $userService, $notificationService;
 
-    function __construct(UserService $userService) {
+    function __construct(UserService $userService, PushNotificationService $notificationService) {
         $this->middleware('check.access:profile-view')->only('profileDetails');
         $this->userService = $userService;
+        $this->notificationService = $notificationService;
     }
 
     public function index() {
@@ -183,6 +185,10 @@ class FrontendController extends Controller {
         return response()->json([
             'contactInfo' => $contactInfo
         ], Response::HTTP_OK);
+    }
+
+    public function sendNotification(){
+        return $this->notificationService->send();
     }
 
 }

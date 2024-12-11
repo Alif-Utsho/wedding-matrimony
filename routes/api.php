@@ -24,6 +24,8 @@ Route::get('get-divisions', [FrontendController::class, 'get_divisions']);
 Route::get('get-cities', [FrontendController::class, 'get_cities']);
 Route::get('contact-infos', [FrontendController::class, 'contactInfo']);
 
+Route::get('send-notification', [FrontendController::class, 'sendNotification']);
+
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
     Route::post('logout', [AuthController::class, 'logout']);
