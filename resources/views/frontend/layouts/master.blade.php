@@ -23,16 +23,6 @@
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-                appId: "b2f6e117-f9e9-44a2-9764-c0a20514de0e",
-            });
-        });
-    </script>
-
     @stack('css')
 
 </head>
@@ -182,6 +172,16 @@
         });
     </script>
 
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            await OneSignal.init({
+                appId: "b2f6e117-f9e9-44a2-9764-c0a20514de0e",
+            });
+            alert("Okay");
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
