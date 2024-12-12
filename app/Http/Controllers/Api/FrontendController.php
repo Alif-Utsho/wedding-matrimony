@@ -11,6 +11,7 @@ use App\Models\Division;
 use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
+use App\Models\PushSubscription;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\User;
@@ -223,6 +224,35 @@ class FrontendController extends Controller {
 
     public function sendNotification() {
         return $this->notificationService->send();
+    }
+
+    public function saveSubscription(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'subscription_id' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $userId = Auth::guard('api')->id() ?? Auth::guard('user')->id();
+
+        $subscription = PushSubscription::where('subscription_id', $request->subscription_id)->first();
+
+        if ($subscription) {
+            $subscription->update(['user_id' => $userId]);
+        } else {
+            PushSubscription::create([
+                'user_id'         => $userId,
+                'subscription_id' => $request->subscription_id,
+            ]);
+        }
+
+        return response()->json(['message' => 'Subscription ID saved successfully']);
+
     }
 
 }

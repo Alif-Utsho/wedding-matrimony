@@ -27,6 +27,8 @@ Route::get('contact-infos', [FrontendController::class, 'contactInfo']);
 
 Route::get('send-notification', [FrontendController::class, 'sendNotification']);
 
+Route::post('save-subscription-id', [FrontendController::class, 'saveSubscription']);
+
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
     Route::post('logout', [AuthController::class, 'logout']);

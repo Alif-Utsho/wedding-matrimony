@@ -179,6 +179,22 @@
             await OneSignal.init({
                 appId: "b2f6e117-f9e9-44a2-9764-c0a20514de0e",
             });
+
+            const pushSubscription = OneSignal.User.PushSubscription.id;
+
+            console.log(pushSubscription);
+            if (pushSubscription) {
+                fetch('/api/save-subscription-id', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ subscription_id: pushSubscription }),
+                })
+                .then(response => response.json())
+                .then(data => console.log('Subscription ID saved successfully:', data))
+                .catch(error => console.error('Error saving subscription ID:', error));
+            }
         });
     </script>
 
