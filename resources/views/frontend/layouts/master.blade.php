@@ -179,7 +179,6 @@
             await OneSignal.init({
                 appId: "b2f6e117-f9e9-44a2-9764-c0a20514de0e",
             });
-            alert("Okay");
         });
     </script>
 

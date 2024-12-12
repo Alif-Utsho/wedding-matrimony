@@ -27,7 +27,8 @@ class FrontendController extends Controller {
 
     function __construct(UserService $userService, PushNotificationService $notificationService) {
         $this->middleware('check.access:profile-view')->only('profileDetails');
-        $this->userService = $userService;
+        $this->middleware('check.access:all-images')->only('profileImages');
+        $this->userService         = $userService;
         $this->notificationService = $notificationService;
     }
 
@@ -130,6 +131,39 @@ class FrontendController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function profileImages($slug) {
+        $validator = Validator::make(['slug' => $slug], [
+            'slug' => 'required|string|exists:users,slug',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $validator->errors()->first(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $user = User::with('profile.images')
+            ->where('slug', $slug)
+            ->where('profile_visibility', '<>', 'no-visible')
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'User not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => [
+                'images' => $user->profile->images,
+            ],
+        ], Response::HTTP_OK);
+
+    }
+
     public function plans() {
         $plans = Package::whereStatus(true)->get();
 
@@ -179,15 +213,15 @@ class FrontendController extends Controller {
         ], Response::HTTP_OK);
     }
 
-    public function contactInfo(){
+    public function contactInfo() {
         $contactInfo = Contactinfo::whereStatus(true)->first();
 
         return response()->json([
-            'contactInfo' => $contactInfo
+            'contactInfo' => $contactInfo,
         ], Response::HTTP_OK);
     }
 
-    public function sendNotification(){
+    public function sendNotification() {
         return $this->notificationService->send();
     }
 

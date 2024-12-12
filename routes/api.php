@@ -14,6 +14,7 @@ Route::get('plans', [FrontendController::class, 'plans']);
 Route::get('all-profile', [FrontendController::class, 'allProfile']);
 Route::get('search-profile', [FrontendController::class, 'searchProfile']);
 Route::get('profile/{slug}', [FrontendController::class, 'profileDetails']);
+Route::get('profile/{slug}/all-images', [FrontendController::class, 'profileImages']);
 
 Route::post('user/login', [AuthController::class, 'login']);
 Route::post('user/register', [AuthController::class, 'register']);
