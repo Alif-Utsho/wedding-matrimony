@@ -223,7 +223,13 @@ class FrontendController extends Controller {
     }
 
     public function sendNotification() {
-        return $this->notificationService->send();
+        $data = [
+            "title"  => "Notification Title",
+            "body"   => "Test notification body",
+            "userId" => 1,
+        ];
+
+        return $this->notificationService->send($data);
     }
 
     public function saveSubscription(Request $request) {
@@ -243,7 +249,7 @@ class FrontendController extends Controller {
         $subscription = PushSubscription::where('subscription_id', $request->subscription_id)->first();
 
         if ($subscription) {
-            $subscription->update(['user_id' => $userId]);
+            $subscription->where('user_id', null)->update(['user_id' => $userId]);
         } else {
             PushSubscription::create([
                 'user_id'         => $userId,

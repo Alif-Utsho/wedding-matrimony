@@ -2,52 +2,44 @@
 
 namespace App\Services;
 
+use App\Models\PushSubscription;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
 use Illuminate\Support\Facades\Http;
 
 class PushNotificationService {
 
-    public function send() {
+    public static function send($data) {
 
-        $fcmurl = "https://fcm.googleapis.com/v1/projects/onssnew/messages:send";
+        $osurl     = "https://onesignal.com/api/v1/notifications";
+        $api_token = "os_v2_app_wl3ocf7z5fckff3eycrakfg6b3miyr7ccrvupc4q2f7km6isity6i72rfpguue7yqmjmj5smwjidxr5aygue6pdatupu7u6iufxk6ti";
+
+        $userId             = $data["userId"];
+        $subscribed_devices = PushSubscription::where('user_id', $userId)->pluck('subscription_id');
 
         $notification = [
-            "to"           => "news",
-            "notification" => [
-                "title" => "Test tile",
-                "body"  => "Notification test body",
+            "app_id"             => "b2f6e117-f9e9-44a2-9764-c0a20514de0e",
+            "target_channel"     => "push",
+            "headings"           => [
+                "en" => $data["title"],
             ],
-            "data"         => [
-                "story_id" => "story_12345",
+            "contents"           => [
+                "en" => $data["body"],
             ],
-            "token"        => "caWhJG5gRvqtRMQrTJaH25:APA91bHKEPs1I6scpF1JTk-aAR9sAK9V4oXwqLRClYhV5Ku7ul8alIJyvgslHE10_0Q0yEmxsGyzbINMHPEpE4gAi82Ij6RC0B-8p_-WHrHrcaqkSZrcE1w",
+            "include_player_ids" => $subscribed_devices,
         ];
 
         try {
             $response = Http::withHeaders([
-                'Authentication' => 'Bearer ' . $this->getAccessToken(),
-                'content-Type'   => 'application/json',
-            ])->post($fcmurl, ['message' => $notification]);
+                'Authorization' => 'Bearer ' . $api_token,
+                'content-Type'  => 'application/json',
+            ])->post($osurl, $notification);
+
             return $response->json();
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
 
-    }
-
-    public function getAccessToken() {
-        $keyPath = config('services.firebase.key_path');
-
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $keyPath);
-
-        $scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
-
-        $credentials = ApplicationDefaultCredentials::getCredentials($scopes);
-
-        $token = $credentials->fetchAuthToken();
-
-        return $token['access_token'] ?? null;
     }
 
 }

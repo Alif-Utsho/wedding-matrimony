@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Invitation;
+use App\Models\User;
 use Exception;
 
 class InvitationService {
@@ -27,6 +28,15 @@ class InvitationService {
                 'sent_from' => $from,
                 'sent_to'   => $to,
             ]);
+
+            $fromUser = User::find($from);
+            $notification = [
+                "title"  => "New Invitation",
+                "body"   => "$fromUser->name sent you an invitation",
+                "userId" => $to,
+            ];
+            PushNotificationService::send($notification);
+
         } catch (Exception $e) {
             return false;
         }
@@ -58,6 +68,14 @@ class InvitationService {
 
         $invitation->status = true;
         $invitation->save();
+
+        $toUser = User::find($invitation->sent_to);
+        $notification = [
+            "title"  => "Invitation accepted",
+            "body"   => "$toUser->name accepted your invitation",
+            "userId" => $invitation->sent_from,
+        ];
+        PushNotificationService::send($notification);
 
         return [
             'status'  => 'success',

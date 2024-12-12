@@ -7,11 +7,20 @@ use App\Models\User;
 
 class MessageService {
     public function send($senderId, $receiverId, $message) {
-        return Message::create([
+        $response = Message::create([
             'sender_id'   => $senderId,
             'receiver_id' => $receiverId,
             'message'     => $message,
         ]);
+        
+        $notification = [
+            "title"  => "New Message",
+            "body"   => $message,
+            "userId" => $receiverId,
+        ];
+        PushNotificationService::send($notification);
+
+        return $response;
     }
 
     public function fetch($senderId, $receiverId) {
