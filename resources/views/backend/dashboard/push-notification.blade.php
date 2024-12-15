@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="lb">Send To:</label>
                         <select class="form-select chosen-select" data-placeholder="Select Category" name="send_to">
-                            <option value="">All</option>
+                            <option value="all">All</option>
                             @foreach($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach

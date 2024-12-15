@@ -20,7 +20,6 @@ class DashboardController extends Controller {
 
     public function pushNotificationSend(Request $request){
         $validated = $request->validate([
-            'send_to' => 'required|exists:users,id',
             'title'   => 'required|string|max:255',
             'body'    => 'required|string',
         ]);
@@ -28,7 +27,7 @@ class DashboardController extends Controller {
         $notification = [
             'title'  => $validated['title'],
             'body'   => $validated['body'],
-            'userId' => $validated['send_to'],
+            'userId' => $request->send_to,
         ];
 
         try {
