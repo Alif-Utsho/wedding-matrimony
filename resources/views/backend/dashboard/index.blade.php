@@ -23,10 +23,10 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="box-com box-qui box-drk grn-box">
+                <div class="box-com box-qui box-drk grn-box ali-cen">
                     <h4>New Users</h4>
                     <h2>User requests</h2>
-                    <span class="bnum">69</span>
+                    <span class="bnum">{{ $today_registered }}</span>
                     <p>This count for today how many users can register.</p>
                     <a href="admin-new-user-requests.html" class="fclick"></a>
                 </div>
@@ -34,24 +34,15 @@
                     <h3>
                         <span>All</span> Members
                     </h3>
-                    <span class="bnum">6900</span>
+                    <span class="bnum">{{ $users }}</span>
                     <canvas id="Chart_users"></canvas>
                     <!-- <a href="admin-new-user-requests.php" class="fclick"></a> -->
                 </div>
-                <div class="box-com box-qui live-box">
-                    <h4>Live visitos</h4>
-                    <h2>Currently Active Users</h2>
-                    <span class="bnum">3600</span>
-                    <p>Currently <span>3600</span> visitos survey in your website </p>
-                    <div class="live">
-                        <span class="move"></span>
-                    </div>
-                </div>
             </div>
             <div class="col-md-3">
-                <div class="box-com box-qui box-lig box-new-user">
+                <div class="box-com box-qui box-lig box-new-user ali-cen">
                     <h2>New Registrants</h2>
-                    <span class="bnum">38</span>
+                    <span class="bnum">{{ $weeklyRegistered }}</span>
                     <div class="users-cir-thum-hori">
                         <span>
                             <img src="{{ asset('backend/images/profiles/1.jpg') }}" data-bs-toggle="tooltip"
@@ -77,14 +68,6 @@
                             <img src="{{ asset('backend/images/profiles/14.jpg') }}" data-bs-toggle="tooltip"
                                 title="Hooray!">
                         </span>
-                        <span>
-                            <img src="{{ asset('backend/images/profiles/15.jpg') }}" data-bs-toggle="tooltip"
-                                title="Hooray!">
-                        </span>
-                        <span>
-                            <img src="{{ asset('backend/images/profiles/16.jpg') }}" data-bs-toggle="tooltip"
-                                title="Hooray!">
-                        </span>
                     </div>
                 </div>
                 <div class="box-com box-qui box-lig ali-cen">
@@ -92,46 +75,20 @@
                         <span>Total</span> Earnings
                     </h3>
                     <span class="bnum">
-                        <sub>$</sub>10,069 </span>
+                        &#2547; {{ $totalEarnings }} </span>
                     <canvas id="Chart_earni"></canvas>
                 </div>
-                <div class="box-com box-qui box-drk box-lead-thum">
-                    <h2>Leads & Enquiry</h2>
-                    <span class="bnum">28</span>
-                    <div class="lead-cir-thum-hori">
-                        <span data-bs-toggle="tooltip" title="Anna">A</span>
-                        <span data-bs-toggle="tooltip" title="John">j</span>
-                        <span data-bs-toggle="tooltip" title="Bailey">b</span>
-                        <span data-bs-toggle="tooltip" title="Erick">e</span>
-                        <span data-bs-toggle="tooltip" title="Boby">b</span>
-                        <span data-bs-toggle="tooltip" title="Uma">u</span>
-                        <span data-bs-toggle="tooltip" title="Maria">m</span>
-                    </div>
-                    <a href="admin-enquiry.html" class="fclick"></a>
-                </div>
+
             </div>
+
             <div class="col-md-6">
                 <div class="box-com box-qui box-lig ali-cen">
                     <h3>
                         <span>Monthly</span> Earnings
                     </h3>
                     <span class="bnum">
-                        <sub>$</sub>10,069 </span>
+                        &#2547; {{ number_format(array_sum($monthlyEarnings), 2) }} </span>
                     <canvas id="Chart_earni_rece"></canvas>
-                </div>
-                <div class="box-com box-qui box-drk box-them-info">
-                    <h4>Template update status</h4>
-                    <ul>
-                        <li>Current version you installed: <strong>3.6</strong>
-                        </li>
-                        <li>Latest version: <strong>4.2</strong>
-                        </li>
-                        <li>Template Activation: <strong>Yes</strong>
-                        </li>
-                    </ul>
-                    <a href="#" class="btn-com btn-red">Update</a>
-                    <a href="#" class="btn-com btn-gre">Licance key</a>
-                    <a href="#" class="btn-com btn-line btn-whi">More details</a>
                 </div>
             </div>
         </div>
@@ -183,8 +140,7 @@
                                 </td>
                                 <td>
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu">
@@ -218,148 +174,7 @@
                                 </td>
                                 <td>
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/11.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Angelina Jolie</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>22, Feb 2024</td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/6.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Olivia mia</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>22, Feb 2024</td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/7.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Jennifer</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>22, Feb 2024</td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/15.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Emmy jack</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>22, Feb 2024</td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                             <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu">
@@ -478,154 +293,6 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/men1.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Angelina Jolie</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>
-                                    <span class="hig-red">22, Feb 2024</span>
-                                </td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/men2.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Olivia mia</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>
-                                    <span class="hig-red">22, Feb 2024</span>
-                                </td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/6.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Jennifer</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>
-                                    <span class="hig-red">22, Feb 2024</span>
-                                </td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>
-                                    <div class="prof-table-thum">
-                                        <div class="pro">
-                                            <img src="{{ asset('backend/images/profiles/7.jpg') }}" alt="">
-                                        </div>
-                                        <div class="pro-info">
-                                            <h5>Emmy jack</h5>
-                                            <p>ashleyipsum@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>01 321-998-91</td>
-                                <td>
-                                    <span class="hig-red">22, Feb 2024</span>
-                                </td>
-                                <td>
-                                    <span class="hig-grn">Premium</span>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            data-bs-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">More details</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">View profile</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -633,3 +300,66 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Get the data from the Blade template
+        var monthlyEarnings = @json($monthlyEarnings);
+
+        // Prepare data for the chart
+        var labels = [];
+        var data = [];
+        for (var month = 1; month <= 12; month++) {
+            labels.push(month);
+            data.push(monthlyEarnings[month] || 0);
+        }
+
+        // Create the chart using Chart.js
+        var ctx = document.getElementById('Chart_earni_rece').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Earnings',
+                    data: data,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return 'Tk ' + tooltipItem.raw.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Month'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Earnings (Tk)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

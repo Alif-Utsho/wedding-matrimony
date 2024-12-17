@@ -6,6 +6,7 @@ use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Access;
 use App\Models\Package;
+use App\Models\PackagePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -145,6 +146,12 @@ class PackageController extends Controller {
         Toastr::success('Package deleted successfully!', 'Success');
 
         return redirect()->route('admin.package.manage');
+    }
+
+    public function PackagePaymentList() {
+        $payment_list = PackagePayment::with('user')->get();
+
+        return view('backend.package.payment', compact('payment_list'));
     }
 
 }

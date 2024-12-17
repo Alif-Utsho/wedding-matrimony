@@ -14,11 +14,11 @@
                                 class="{{ request()->routeIs('admin.user.manage') && is_null(request()->plan) ? 's-act' : '' }}">Manage</a>
                         </li>
                         @foreach ($plans as $plan)
-                        <li>
-                            <a href="{{ route('admin.user.manage', ['plan' => strtolower($plan->name)]) }}"
-                                class="{{ request()->routeIs('admin.user.manage') && request()->plan == strtolower($plan->name) ? 's-act' : '' }}">{{ $plan->name }}
-                                Users</a>
-                        </li>
+                            <li>
+                                <a href="{{ route('admin.user.manage', ['plan' => strtolower($plan->name)]) }}"
+                                    class="{{ request()->routeIs('admin.user.manage') && request()->plan == strtolower($plan->name) ? 's-act' : '' }}">{{ $plan->name }}
+                                    Users</a>
+                            </li>
                         @endforeach
                         <li>
                             <a href="{{ route('admin.user.incomplete') }}"
@@ -52,10 +52,10 @@
                     class="{{ request()->routeIs('admin.package.manage') && is_null(request()->plan) ? 's-act' : '' }}">Packages</a>
             </li>
             <li class="ic-pay">
-                <a href="admin-all-payments.html">All Payments</a>
-            </li>
-            <li class="ic-pay">
-                <a href="admin-payment-credentials.html">Payment gateway</a>
+                <a href="{{ route('admin.package.payment') }}"
+                    class="{{ request()->routeIs('admin.package.payment') && is_null(request()->plan) ? 's-act' : '' }}">All
+                    Payments</a>
+
             </li>
 
             <li>

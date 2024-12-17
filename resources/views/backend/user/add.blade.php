@@ -27,7 +27,7 @@
                             <div class="edit-pro-parti">
                                 <div class="form-tit">
                                     <h4>Basic info</h4>
-                                    <h1>Edit my profile</h1>
+                                    <h1>Add new users</h1>
                                 </div>
                                 <div class="form-group">
                                     <label class="lb">Name:</label>

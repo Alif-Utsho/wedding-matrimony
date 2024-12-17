@@ -6,6 +6,7 @@ use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Hobby;
 use App\Models\Package;
+use App\Models\PackagePayment;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -176,6 +177,23 @@ class UsermanageController extends Controller {
         Toastr::success('User Deleted Successfully');
 
         return redirect()->back();
+    }
+
+    public function bill($id) {
+        $billingInfo = PackagePayment::with('user')
+            ->where('user_id', $id)->get();
+
+        // dd($billingInfo);
+
+        return view('backend.user.bill', compact('billingInfo'));
+    }
+
+    public function show($id) {
+        $data['user']    = User::with('profile')->find($id);
+        $data['hobbies'] = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
+        // dd($data);
+
+        return view('backend.user.show', $data);
     }
 
 }

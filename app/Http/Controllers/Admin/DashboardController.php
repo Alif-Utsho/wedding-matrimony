@@ -4,24 +4,57 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
+use App\Models\PackagePayment;
 use App\Models\User;
 use App\Services\PushNotificationService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller {
     public function dashboard() {
-        return view('backend.dashboard.index');
+
+        $data             = [];
+        $today_registered = User::whereStatus(true)->whereDate('created_at', Carbon::today())
+            ->count();
+            
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek   = Carbon::now()->endOfWeek();
+
+        $weeklyRegistered = User::whereStatus(true)
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->count();
+
+        $users         = User::whereStatus(true)->count();
+        $totalEarnings = PackagePayment::sum('amount');
+
+        $monthlyEarnings = [];
+        $currentYear     = Carbon::now()->year;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyEarnings[$month] = PackagePayment::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $month)
+                ->sum('amount');
+        }
+
+        $data['users']            = $users;
+        $data['today_registered'] = $today_registered;
+        $data['totalEarnings']    = $totalEarnings;
+        $data['monthlyEarnings']  = $monthlyEarnings;
+        $data['weeklyRegistered'] = $weeklyRegistered;
+
+        return view('backend.dashboard.index', $data);
     }
 
-    public function pushNotification (){
+    public function pushNotification() {
         $users = User::whereStatus(true)->get();
+
         return view('backend.dashboard.push-notification', compact('users'));
     }
 
-    public function pushNotificationSend(Request $request){
+    public function pushNotificationSend(Request $request) {
         $validated = $request->validate([
-            'title'   => 'required|string|max:255',
-            'body'    => 'required|string',
+            'title' => 'required|string|max:255',
+            'body'  => 'required|string',
         ]);
 
         $notification = [
@@ -34,10 +67,14 @@ class DashboardController extends Controller {
             PushNotificationService::send($notification);
 
             Toastr::success('Notification sent successfully.');
+
             return redirect()->back();
         } catch (\Exception $e) {
             Toastr::error('Failed to send notification: ' . $e->getMessage());
+
             return redirect()->back();
         }
+
     }
+
 }

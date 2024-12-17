@@ -97,6 +97,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
         Route::delete('user/{id}', [UsermanageController::class, 'delete'])->name('user.delete');
 
+        Route::get('user/bill/{id}', [UsermanageController::class, 'bill'])->name('user.bill');
+        Route::get('user/show/{id}', [UsermanageController::class, 'show'])->name('user.show');
+
         Route::get('push-notification', [DashboardController::class, 'pushNotification'])->name('push-notification');
         Route::post('push-notification-send', [DashboardController::class, 'pushNotificationSend'])->name('push-notification.send');
         
@@ -111,6 +114,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('package/update', [PackageController::class, 'update'])->name('package.update');
         Route::post('package/toggle-status', [PackageController::class, 'togglestatus'])->name('package.togglestatus');
         Route::delete('package/{id}', [PackageController::class, 'delete'])->name('package.delete');
+        Route::get('package/payment', [PackageController::class, 'PackagePaymentList'])->name('package.payment');
 
         Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
         Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');

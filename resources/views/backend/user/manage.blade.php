@@ -113,9 +113,8 @@
                                                     @method('DELETE')
                                                     <input type="submit" class="dropdown-item" value="Delete">
                                                 </form>
-                                                <li><a class="dropdown-item" href="#">Billing info</a></li>
-                                                <li><a class="dropdown-item" href="#">View more details</a></li>
-                                                <li><a class="dropdown-item" href="#">View profile</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.user.bill', $user->id) }}">Billing info</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.user.show', $user->id) }}">View profile</a></li>
                                             </ul>
                                         </div>
                                     </td>
