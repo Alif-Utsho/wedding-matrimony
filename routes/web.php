@@ -96,6 +96,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user/edit/{id}', [UsermanageController::class, 'edit'])->name('user.edit');
         Route::post('user/update', [UsermanageController::class, 'update'])->name('user.update');
         Route::delete('user/{id}', [UsermanageController::class, 'delete'])->name('user.delete');
+
+        Route::get('push-notification', [DashboardController::class, 'pushNotification'])->name('push-notification');
+        Route::post('push-notification-send', [DashboardController::class, 'pushNotificationSend'])->name('push-notification.send');
         
         Route::get('user/verifications', [UserverificationController::class, 'manage'])->name('user.verification');
         Route::post('user/verified', [UserverificationController::class, 'verify'])->name('user-verification.verify');

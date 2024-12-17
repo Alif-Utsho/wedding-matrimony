@@ -14,11 +14,11 @@
                                 class="{{ request()->routeIs('admin.user.manage') && is_null(request()->plan) ? 's-act' : '' }}">Manage</a>
                         </li>
                         @foreach ($plans as $plan)
-                            <li>
-                                <a href="{{ route('admin.user.manage', ['plan' => strtolower($plan->name)]) }}"
-                                    class="{{ request()->routeIs('admin.user.manage') && request()->plan == strtolower($plan->name) ? 's-act' : '' }}">{{ $plan->name }}
-                                    Users</a>
-                            </li>
+                        <li>
+                            <a href="{{ route('admin.user.manage', ['plan' => strtolower($plan->name)]) }}"
+                                class="{{ request()->routeIs('admin.user.manage') && request()->plan == strtolower($plan->name) ? 's-act' : '' }}">{{ $plan->name }}
+                                Users</a>
+                        </li>
                         @endforeach
                         <li>
                             <a href="{{ route('admin.user.incomplete') }}"
@@ -37,6 +37,11 @@
                         </li>
                     </ol>
                 </div>
+            </li>
+
+            <li class="ic-noti">
+                <a href="{{ route('admin.push-notification') }}"
+                    class="{{ request()->routeIs('admin.push-notification') ? 's-act' : '' }}">Push Notifications</a>
             </li>
 
             <li>
