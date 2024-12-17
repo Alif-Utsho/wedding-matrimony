@@ -57,7 +57,7 @@
                                 <div class="form-group">
                                     <label class="lb">Phone:</label>
                                     <input type="number" class="form-control" id="phone" name="phone"
-                                        value="{{ old('phone') }}" placeholder="Enter phone number">
+                                        value="{{ old('phone') }}" placeholder="Enter phone number" required>
                                     @error('phone')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -117,8 +117,8 @@
 
                                     <div class="col-md-6 form-group">
                                         <label class="lb">Language:</label>
-                                        <select class="form-select chosen-select"
-                                            data-placeholder="Select your Language" name="language">
+                                        <select class="form-select chosen-select" data-placeholder="Select your Language"
+                                            name="language">
                                             <option value="">Select</option>
                                             @foreach (\App\Enums\Language::all() as $value => $label)
                                                 <option value="{{ $label }}"
@@ -132,7 +132,7 @@
                                         @enderror
                                     </div>
 
-                                    
+
                                     <div class="col-md-6 form-group">
                                         <label class="lb">Date of birth:</label>
                                         <input type="date" class="form-control" id="birth_date" name="birth_date"

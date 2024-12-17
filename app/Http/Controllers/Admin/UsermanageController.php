@@ -54,9 +54,11 @@ class UsermanageController extends Controller {
     }
 
     public function store(Request $request) {
+        // dd($request->all());
         $request->validate([
             'name'         => 'required|string|max:200',
             'email'        => 'required|email|string',
+            'phone'        => 'required|string|min:11|max:16|unique:users',
             'password'     => 'required|string',
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
@@ -69,7 +71,6 @@ class UsermanageController extends Controller {
             'mothers_name' => 'required|string|max:200',
             'address'      => 'required|string|max:255',
             'type'         => 'required|string',
-            'phone'        => 'nullable|string|min:10|max:20',
             'profile_for'  => 'nullable|string|max:50',
             'company_name' => 'nullable|string|max:200',
             'salary'       => 'nullable|string|max:20',
@@ -90,6 +91,7 @@ class UsermanageController extends Controller {
                 'mimes:png,jpg,jpeg',
             ],
         ]);
+
         $user = $this->userService->createUser($request->all());
 
         $this->userService->updateUserProfile($request->all(), $user);
@@ -107,40 +109,40 @@ class UsermanageController extends Controller {
     }
 
     public function update(Request $request) {
+        // dd($request->all());
         $userId = $request->user_id;
         $user   = User::find($userId);
 
         $request->validate([
-            'name'           => 'required|string|max:200',
-            'email'          => 'required|email|string',
-            'profile_for'    => 'nullable|string|max:50',
-            'gender'         => 'required|string',
-            'city_id'        => 'required|string',
-            'religion'       => 'required|string',
-            'language'       => 'required|string',
-            'birth_date'     => 'required|date',
-            'height'         => 'required|numeric|min:30|max:300',
-            'weight'         => 'required|numeric|min:10|max:300',
-            'fathers_name'   => 'required|string|max:200',
-            'mothers_name'   => 'required|string|max:200',
-            'address'        => 'required|string|max:255',
-            'type'           => 'required|string',
-            'marital_status' => 'required|string|max:20',
-            'bio'            => 'nullable|string',
-            'company_name'   => 'nullable|string|max:200',
-            'salary'         => 'nullable|string|max:20',
-            'experience'     => 'nullable|string|max:20',
-            'degree'         => 'nullable|string|max:200',
-            'college'        => 'nullable|string|max:200',
-            'school'         => 'nullable|string|max:200',
-            'whatsApp'       => 'nullable|string|max:200',
-            'facebook'       => 'nullable|string|max:200',
-            'instagram'      => 'nullable|string|max:200',
-            'x'              => 'nullable|string|max:200',
-            'youtube'        => 'nullable|string|max:200',
-            'linkedin'       => 'nullable|string|max:200',
-            'hobbies'        => 'nullable|array',
-            'image'          => [
+            'name'         => 'required|string|max:200',
+            'email'        => 'required|email|string',
+            'profile_for'  => 'nullable|string|max:50',
+            'gender'       => 'required|string',
+            'city_id'      => 'required|string',
+            'religion'     => 'required|string',
+            'language'     => 'required|string',
+            'birth_date'   => 'required|date',
+            'height'       => 'required|numeric|min:30|max:300',
+            'weight'       => 'required|numeric|min:10|max:300',
+            'fathers_name' => 'required|string|max:200',
+            'mothers_name' => 'required|string|max:200',
+            'address'      => 'required|string|max:255',
+            'type'         => 'required|string',
+            'bio'          => 'nullable|string',
+            'company_name' => 'nullable|string|max:200',
+            'salary'       => 'nullable|string|max:20',
+            'experience'   => 'nullable|string|max:20',
+            'degree'       => 'nullable|string|max:200',
+            'college'      => 'nullable|string|max:200',
+            'school'       => 'nullable|string|max:200',
+            'whatsApp'     => 'nullable|string|max:200',
+            'facebook'     => 'nullable|string|max:200',
+            'instagram'    => 'nullable|string|max:200',
+            'x'            => 'nullable|string|max:200',
+            'youtube'      => 'nullable|string|max:200',
+            'linkedin'     => 'nullable|string|max:200',
+            'hobbies'      => 'nullable|array',
+            'image'        => [
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',

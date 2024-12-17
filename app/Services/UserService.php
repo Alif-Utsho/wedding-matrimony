@@ -78,20 +78,19 @@ class UserService {
         $userProfile = UserProfile::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'bio'            => $data['bio'],
-                'marital_status' => $data['marital_status'],
-                'gender'         => $data['gender'],
-                'city_id'        => $data['city_id'],
-                'religion'       => $data['religion'],
-                'language'       => $data['language'],
-                'birth_date'     => $data['birth_date'],
-                'height'         => $data['height'],
-                'weight'         => $data['weight'],
-                'fathers_name'   => $data['fathers_name'],
-                'mothers_name'   => $data['mothers_name'],
-                'address'        => $data['address'],
-                'age'            => $data['age'] ?? null,
-                'image'          => $imagePath ?? $editProfile->image ?? null,
+
+                'gender'       => $data['gender'],
+                'city_id'      => $data['city_id'],
+                'religion'     => $data['religion'],
+                'language'     => $data['language'],
+                'birth_date'   => $data['birth_date'],
+                'height'       => $data['height'],
+                'weight'       => $data['weight'],
+                'fathers_name' => $data['fathers_name'],
+                'mothers_name' => $data['mothers_name'],
+                'address'      => $data['address'],
+                'age'          => $data['age'] ?? null,
+                'image'        => $imagePath ?? $editProfile->image ?? null,
             ]
         );
 
@@ -291,6 +290,7 @@ class UserService {
             } elseif ($availability === 'offline') {
                 $userQuery->where('active_status', false);
             }
+
         }
 
         if (!empty($data['profiletype'])) {
@@ -307,6 +307,7 @@ class UserService {
             } else {
                 $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
             }
+
         } else {
             $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
         }
