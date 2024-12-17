@@ -24,11 +24,12 @@ class AuthController extends Controller {
         }
 
         $phoneOrEmail = $request->input('email');
-        $password = $request->input('password');
+        $password     = $request->input('password');
 
         $isEmail = filter_var($phoneOrEmail, FILTER_VALIDATE_EMAIL);
 
         try {
+
             if ($isEmail) {
                 $credentials = ['email' => $phoneOrEmail, 'password' => $password];
             } else {
@@ -51,6 +52,7 @@ class AuthController extends Controller {
     }
 
     public function register(Request $request) {
+
         $validator = Validator::make($request->all(), [
             'name'        => 'required|string|max:255',
             'email'       => 'required|email|unique:users,email|max:255',
@@ -69,9 +71,21 @@ class AuthController extends Controller {
         $userService = new UserService();
         $user        = $userService->createUser($request->all());
 
+        $phoneOrEmail = $request->input('email');
+        $password     = $request->input('password');
+
+        if ($user) {
+            $credentials = ['email' => $phoneOrEmail, 'password' => $password];
+        } else {
+            $credentials = ['phone' => $phoneOrEmail, 'password' => $password];
+        }
+
+        $token = Auth::guard('api')->attempt($credentials);
+
         return response()->json([
             'status' => 'success',
             'user'   => $user,
+            'token'  => $token,
         ], 201);
     }
 
