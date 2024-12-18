@@ -69,5 +69,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::post('verification-submit', [UserController::class, 'verificationEditSubmit']);
 
         Route::get('profile-download', [UserController::class, 'downloadProfileDownload']);
+
+        Route::get('/notification-history', [UserController::class, 'notificationHistory'])->name('user.notification.history');
+
     });
 });

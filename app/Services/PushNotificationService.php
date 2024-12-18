@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\NotificationHistory;
 use App\Models\PushSubscription;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -31,7 +32,16 @@ class PushNotificationService
         if ($userId == 'all') {
             $notification["included_segments"] = ["All Users"];
         } else {
-            $subscribed_devices = PushSubscription::where('user_id', $userId)->pluck('subscription_id');
+
+            NotificationHistory::create([
+                'user_id' => $userId,
+                'title'   => $data['title'],
+                'body'    => $data['body'],
+                'link'    => $data['link'] ?? null,
+                'isRead'  => false,
+            ]);
+
+            $subscribed_devices = PushSubscription::where('user_id', $userId)->pluck('subscription_id')->toArray();
             $notification["include_player_ids"] = $subscribed_devices;
         }
 

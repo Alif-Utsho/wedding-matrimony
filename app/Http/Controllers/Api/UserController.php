@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Hobby;
+use App\Models\NotificationHistory;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserVerification;
@@ -353,5 +354,12 @@ class UserController extends Controller {
             'data'    => $preference,
         ]);
     }
+
+    public function notificationHistory()
+    {
+        $histories = NotificationHistory::where('user_id', Auth::guard('api')->id())->latest()->paginate(100);
+        return response()->json(compact('histories'));
+    }
+
 
 }
