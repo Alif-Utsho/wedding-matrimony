@@ -34,14 +34,26 @@
                             </div>
                             <hr>
                             <div class="contact-info">
-                                <p><strong>Email:</strong>{{ $user->email }}</p>
-                                <p><strong>Phone:</strong>{{ $user->phone }}</p>
+                                <p><strong>Email: </strong>{{ $user->email }}</p>
+                                <p><strong>Phone: </strong>{{ $user->phone }}</p>
                             </div>
                             <hr>
                             <div class="personal-info">
-                                <p><strong>Gender:</strong>{{ $user->profile['gender'] }}</p>
-                                <p><strong>Religion:</strong>{{ $user->profile['religion'] }}</p>
+                                <p><strong>Gender:
+                                    </strong>{{ isset($user->profile['gender']) ? $user->profile['gender'] : '' }}
+                                </p>
+                                <p><strong>Religion:
+                                    </strong>{{ isset($user->profile['religion']) ? $user->profile['religion'] : '' }}
+                                </p>
                             </div>
+                            <hr>
+                            <div class="hobis-info">
+                                <h3>My Hobis</h3>
+                                @foreach ($hobbies as $hoby)
+                                    <span class="badge bg-secondary">{{ isset($hoby->name) ? $hoby->name : '' }}</span>
+                                @endforeach
+                            </div>
+                            <hr>
                             <div class="social-links">
                                 <a href="#" class="social-link">LinkedIn</a>
                                 <a href="#" class="social-link">GitHub</a>

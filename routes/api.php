@@ -17,6 +17,7 @@ Route::get('profile/{slug}', [FrontendController::class, 'profileDetails']);
 Route::get('profile/{slug}/all-images', [FrontendController::class, 'profileImages']);
 
 Route::post('user/login', [AuthController::class, 'login']);
+Route::post('user/login-with-phone', [AuthController::class, 'loginWithPhone']);
 Route::post('user/register', [AuthController::class, 'register']);
 Route::get('user/profile-edit', [UserController::class, 'profileEdit']);
 
@@ -66,7 +67,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::get('recent-visitors', [ProfileviewController::class, 'recentVisitor']);
 
         Route::post('verification-submit', [UserController::class, 'verificationEditSubmit']);
-        
+
         Route::get('profile-download', [UserController::class, 'downloadProfileDownload']);
     });
 });

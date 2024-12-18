@@ -16,7 +16,7 @@ class DashboardController extends Controller {
         $data             = [];
         $today_registered = User::whereStatus(true)->whereDate('created_at', Carbon::today())
             ->count();
-            
+
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek   = Carbon::now()->endOfWeek();
 
@@ -24,8 +24,11 @@ class DashboardController extends Controller {
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->count();
 
-        $users         = User::whereStatus(true)->count();
-        $totalEarnings = PackagePayment::sum('amount');
+        $users = User::whereStatus(true)->count();
+
+        $platinumEarnings = PackagePayment::where('package_name', 'Platinum')->sum('amount');
+        $goldEarnings     = PackagePayment::where('package_name', 'Gold')->sum('amount');
+        $totalEarnings    = $platinumEarnings + $goldEarnings;
 
         $monthlyEarnings = [];
         $currentYear     = Carbon::now()->year;
@@ -36,11 +39,27 @@ class DashboardController extends Controller {
                 ->sum('amount');
         }
 
+        $userList = User::whereStatus(true)
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+
+        $sevenDaysAgo = Carbon::today()->subDays(7);
+        $today        = Carbon::today();
+
+        $subscriptions = PackagePayment::with('user')
+            ->whereBetween('expired_at', [$sevenDaysAgo, $today])
+            ->where('status', 'Paid')
+            ->get();
+
+
         $data['users']            = $users;
         $data['today_registered'] = $today_registered;
         $data['totalEarnings']    = $totalEarnings;
         $data['monthlyEarnings']  = $monthlyEarnings;
         $data['weeklyRegistered'] = $weeklyRegistered;
+        $data['platinumEarnings'] = $platinumEarnings;
+        $data['goldEarnings']     = $goldEarnings;
+        $data['userList']         = $userList;
+        $data['subscriptions']    = $subscriptions;
 
         return view('backend.dashboard.index', $data);
     }

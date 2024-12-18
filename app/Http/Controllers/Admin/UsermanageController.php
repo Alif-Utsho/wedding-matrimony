@@ -8,6 +8,7 @@ use App\Models\Hobby;
 use App\Models\Package;
 use App\Models\PackagePayment;
 use App\Models\User;
+use App\Models\UserSocialmedia;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -189,8 +190,9 @@ class UsermanageController extends Controller {
     }
 
     public function show($id) {
-        $data['user']    = User::with('profile')->find($id);
-        $data['hobbies'] = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $data['user']        = User::with('profile')->find($id);
+        $data['hobbies']     = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
+        $data['socialLinks'] = UserSocialmedia::whereStatus(true)->where('user_id', $id)->get();
         // dd($data);
 
         return view('backend.user.show', $data);

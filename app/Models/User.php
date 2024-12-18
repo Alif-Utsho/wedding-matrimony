@@ -75,6 +75,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(UserPreference::class);
     }
 
+    public function packagePayment()
+    {
+        return $this->hasOne(PackagePayment::class);
+    }
+
     public function verification(){
         return $this->hasOne(UserVerification::class);
     }

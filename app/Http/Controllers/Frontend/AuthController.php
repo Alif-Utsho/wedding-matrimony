@@ -14,13 +14,19 @@ class AuthController extends Controller {
     }
 
     public function login_submit(Request $request) {
+
         $request->validate([
-            'email'    => 'required|email',
+            // 'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-        $remember    = $request->has('remember');
+        if (isset($request->email) && isset($request->password) && !empty($request->email) && !empty($request->password)) {
+            $credentials = $request->only('email', 'password');
+        } elseif (isset($request->phone) && isset($request->password) && !empty($request->phone) && !empty($request->password)) {
+            $credentials = $request->only('phone', 'password');
+        }
+
+        $remember = $request->has('remember');
 
         if (Auth::guard('user')->attempt($credentials, $remember)) {
 

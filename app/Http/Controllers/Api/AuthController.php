@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller {
+
     public function login(Request $request) {
+
         $validator = Validator::make($request->all(), [
             'email'    => 'required',
             'password' => 'required|string|min:6',
@@ -37,6 +39,45 @@ class AuthController extends Controller {
             }
 
             if (!$token = Auth::guard('api')->attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
+
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
+
+        return response()->json([
+            'success'    => true,
+            'token_type' => 'bearer',
+            'token'      => $token,
+        ]);
+    }
+
+    public function loginWithPhone(Request $request) {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'phone'    => 'required',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $phoneOrEmail = $request->input('phone');
+        $password     = $request->input('password');
+
+        try {
+
+            if ($phoneOrEmail) {
+                $credentials = ['phone' => $phoneOrEmail, 'password' => $password];
+            }
+
+            if (!$token = Auth::guard('api')->attempt($credentials)) {
+
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
 

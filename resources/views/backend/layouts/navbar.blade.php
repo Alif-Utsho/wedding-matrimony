@@ -3,7 +3,8 @@
         <div class="row header">
             <div class="col-md-3">
                 <div class="logo">
-                    <img src="{{ asset('backend/images/logo.png') }}" alt="">
+                    <img class="logo-brand ic-logo" src="{{ asset($generalsetting->logo) }}" alt="" loading="lazy"
+                        style="width: 50px">
                 </div>
             </div>
             <div class="col-md-6">
