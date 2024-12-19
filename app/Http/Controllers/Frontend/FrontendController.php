@@ -40,9 +40,10 @@ class FrontendController extends Controller {
         $blogs         = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
         $weddings      = Wedding::whereStatus(true)->get();
         $banners       = Banner::whereStatus(true)->get();
+        $users         = User::whereStatus(true)->count();
         $galleries     = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
 
-        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries'));
+        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries', 'users'));
     }
 
     public function weddingDetails($id) {

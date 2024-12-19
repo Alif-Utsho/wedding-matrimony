@@ -61,7 +61,7 @@
             <li><a href="#!"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ $contactinfo->address }}</a>
             </li>
         </ul>
-        <div class="menu-pop-help">
+        {{-- <div class="menu-pop-help">
             <h4>Support Team</h4>
             <div class="user-pro">
                 <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
@@ -71,7 +71,7 @@
                 <span>{{ $advisor->designation }}</span>
                 <a href="/enquiry" class="btn btn-primary btn-sm">Ask your doubts</a>
             </div>
-        </div>
+        </div> --}}
         {{-- <div class="menu-pop-soci">
             <ul>
                 <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
@@ -224,7 +224,7 @@
                             style="top: 0;left: 0;right: 0;bottom: 0;z-index: 5;"></a>
                     </div>
                 @else
-                    @if ($advisor)
+                    {{-- @if ($advisor)
                         <div class="al position-relative">
                             <div class="head-pro head-pro-popup">
                                 <img src="{{ asset($advisor->image) }}" alt="" loading="lazy">
@@ -233,7 +233,15 @@
                                 <span class="fclick"></span>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
+
+
+                    <div class="al position-relative">
+                        <div class="head-pro">
+                            <a style="background: #ec1a61;" class="btn btn-default text-white"
+                                href="{{ route('user.login') }}">Login</a>
+                        </div>
+                    </div>
                 @endif
 
                 <!--MOBILE MENU-->
