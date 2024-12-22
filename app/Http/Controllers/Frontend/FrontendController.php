@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Enquiry;
+use App\Models\GeneralSetting;
 use App\Models\Invitation;
 use App\Models\Ourteam;
 use App\Models\ProfileClick;
@@ -16,6 +17,7 @@ use App\Models\ProfileView;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Models\Wedding;
 use App\Models\WeddingGallery;
 use App\Models\WeddingStep;
@@ -33,17 +35,20 @@ class FrontendController extends Controller {
     }
 
     public function index() {
-        $services      = Service::whereStatus(true)->latest()->get();
-        $testimonials  = Testimonial::whereStatus(true)->latest()->get();
-        $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
-        $ourteams      = Ourteam::whereStatus(true)->get();
-        $blogs         = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
-        $weddings      = Wedding::whereStatus(true)->get();
-        $banners       = Banner::whereStatus(true)->get();
-        $users         = User::whereStatus(true)->count();
-        $galleries     = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
+        $services        = Service::whereStatus(true)->latest()->get();
+        $testimonials    = Testimonial::whereStatus(true)->latest()->get();
+        $wedding_steps   = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
+        $ourteams        = Ourteam::whereStatus(true)->get();
+        $blogs           = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
+        $weddings        = Wedding::whereStatus(true)->get();
+        $banners         = Banner::whereStatus(true)->get();
+        $generalSettings = GeneralSetting::first();
+        $users           = User::whereStatus(true)->count();
+        $maleUser        = UserProfile::where('gender', 'Male')->count();
+        $femaleUser      = UserProfile::where('gender', 'Female')->count();
+        $galleries       = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
 
-        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries', 'users'));
+        return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries', 'users', 'maleUser', 'femaleUser', 'generalSettings'));
     }
 
     public function weddingDetails($id) {
@@ -196,6 +201,12 @@ class FrontendController extends Controller {
 
     public function plans() {
         return view('frontend.pages.plans');
+    }
+
+    public function photoGallery() {
+        $galleries = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
+
+        return view('frontend.pages.wedding-gallery', compact('galleries'));
     }
 
     public function contact() {

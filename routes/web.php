@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ContactinfoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquirymanageController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GeneralsettingController;
 use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
@@ -34,6 +35,7 @@ Route::get('/profile/{slug}', [FrontendController::class, 'profileDetails']);
 Route::get('/blogs', [FrontendController::class, 'blogs']);
 Route::get('/blog-details/{id}', [FrontendController::class, 'blogDetails']);
 Route::get('/plans', [FrontendController::class, 'plans']);
+Route::get('/photo-gallery', [FrontendController::class, 'photoGallery']);
 Route::get('/contact', [FrontendController::class, 'contact']);
 Route::get('/enquiry', [FrontendController::class, 'enquiry']);
 Route::post('/enquiry-submit', [FrontendController::class, 'enquirySubmit']);
@@ -102,7 +104,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('push-notification', [DashboardController::class, 'pushNotification'])->name('push-notification');
         Route::post('push-notification-send', [DashboardController::class, 'pushNotificationSend'])->name('push-notification.send');
-        
+
         Route::get('user/verifications', [UserverificationController::class, 'manage'])->name('user.verification');
         Route::post('user/verified', [UserverificationController::class, 'verify'])->name('user-verification.verify');
         Route::delete('user/verification/{id}', [UserverificationController::class, 'delete'])->name('user-verification.delete');
@@ -168,6 +170,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/tag/store', [BlogController::class, 'tagstore'])->name('blog.tag.store');
         Route::post('blog/tag/update', [BlogController::class, 'tagupdate'])->name('blog.tag.update');
         Route::get('blog/tag/delete/{id}', [BlogController::class, 'tagdelete'])->name('blog.tag.delete');
+
+        //FAQ Routes
+        Route::get('faq/manage', [FaqController::class, 'manage'])->name('faq.manage');
+        Route::get('faq/add', [FaqController::class, 'add'])->name('faq.add');
+        Route::post('faq/store', [FaqController::class, 'store'])->name('faq.store');
+        Route::get('faq/edit/{id}', [FaqController::class, 'edit'])->name('faq.edit');
+        Route::post('faq/update', [FaqController::class, 'update'])->name('faq.update');
+        Route::delete('faq/{id}', [FaqController::class, 'delete'])->name('faq.delete');
 
         Route::get('banner/manage', [BannerController::class, 'manage'])->name('banner.manage');
         Route::post('banner/store', [BannerController::class, 'store'])->name('banner.store');

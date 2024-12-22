@@ -128,6 +128,12 @@
                 <a href="{{ route('admin.ourteam.manage') }}"
                     class="{{ request()->routeIs('admin.ourteam.manage') ? 's-act' : '' }}">Our Teams</a>
             </li>
+
+            <li class="ic-upd">
+                <a href="{{ route('admin.faq.manage') }}"
+                    class="{{ request()->routeIs('admin.faq.manage') ? 's-act' : '' }}">FAQ</a>
+            </li>
+
             <li class="ic-febk">
                 <a href="{{ route('admin.testimonial.manage') }}"
                     class="{{ request()->routeIs('admin.testimonial.manage') ? 's-act' : '' }}">Testimonials</a>

@@ -1,0 +1,5 @@
+22-12-24
+==============
+ALTER TABLE `general_settings` ADD `email` VARCHAR(255) NULL DEFAULT NULL AFTER `name`, ADD `phone` VARCHAR(50) NULL DEFAULT NULL AFTER `email`, ADD `address` TEXT NULL DEFAULT NULL AFTER `phone`;
+
+ALTER TABLE `general_settings` ADD `fb_link` VARCHAR(255) NULL DEFAULT NULL AFTER `favicon`, ADD `linkedin_link` VARCHAR(255) NULL DEFAULT NULL AFTER `fb_link`, ADD `x_link` VARCHAR(255) NULL DEFAULT NULL AFTER `linkedin_link`, ADD `youtube_link` VARCHAR(255) NULL DEFAULT NULL AFTER `x_link`;

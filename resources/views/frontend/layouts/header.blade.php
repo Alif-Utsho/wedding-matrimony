@@ -32,8 +32,7 @@
                 <ul>
                     <li><a href="tel:01678337722"><i class="fa fa-phone"`aria-hidden="true"></i>&nbsp;01678337722</a>
                     </li>
-                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o"
-                                aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
+                    <li><a href="mailto: messageappsis@gmail.com "><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp; messageappsis@gmail.com </a></li>
                     <li><a href="#!"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     <li><a href="#!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
@@ -149,7 +148,7 @@
         <div class="row">
             <div class="hom-nav">
                 <!-- LOGO -->
-                <div class="logo">
+                <div class="logo d-flex align-items-center justify-content-center">
                     <span class="menu desk-menu">
                         <i></i><i></i><i></i>
                     </span>

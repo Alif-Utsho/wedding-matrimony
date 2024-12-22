@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Contactinfo;
 use App\Models\Country;
 use App\Models\Division;
+use App\Models\FAQ;
 use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
@@ -258,6 +259,16 @@ class FrontendController extends Controller {
         }
 
         return response()->json(['message' => 'Subscription ID saved successfully']);
+
+    }
+
+    public function faqs() {
+        $faqs = FAQ::whereStatus(true)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'faqs'   => $faqs,
+        ], Response::HTTP_OK);
 
     }
 

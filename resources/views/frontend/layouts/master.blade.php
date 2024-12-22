@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-
-
 <head>
     <title>Wedding Matrimony</title>
     <!--== META TAGS ==-->
@@ -99,7 +97,7 @@
                     <h4>HELP &amp; SUPPORT</h4>
                     <ul>
                         <li><a href="about-us.html">About company</a></li>
-                        <li><a href="#!">Contact us</a></li>
+                        <li><a href="{{ url('/contact') }}">Contact us</a></li>
                         <li><a href="#!">Feedback</a></li>
                         <li><a href="about-us.html#faq">FAQs</a></li>
                         <li><a href="about-us.html#testimonials">Testimonials</a></li>
@@ -108,20 +106,20 @@
                 <div class="col-md-4 fot-soc">
                     <h4>SOCIAL MEDIA</h4>
                     <ul>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/1.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/2.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/3.png') }}"
-                                    alt=""></a></li>
-                        <li><a href="#!"><img src="{{ asset('frontend/images/social/5.png') }}"
-                                    alt=""></a></li>
+                        <li><a href="{{ $generalsetting->linkedin_link }}"><img
+                                    src="{{ asset('frontend/images/social/1.png') }}" alt=""></a></li>
+                        <li><a href="{{ $generalsetting->x_link }}"><img
+                                    src="{{ asset('frontend/images/social/2.png') }}" alt=""></a></li>
+                        <li><a href="{{ $generalsetting->fb_link }}"><img
+                                    src="{{ asset('frontend/images/social/3.png') }}" alt=""></a></li>
+                        <li><a href="{{ $generalsetting->youtube_link }}"><img
+                                    src="{{ asset('frontend/images/social/5.png') }}" alt=""></a></li>
                     </ul>
                 </div>
             </div>
             <div class="row foot-count">
                 <p>Sis Media - Trusted by over thousands of Boys & Girls for successfull marriage. <a
-                        href="sign-up.html" class="btn btn-primary btn-sm">Join us today !</a></p>
+                        href="{{ url('/user/register') }}" class="btn btn-primary btn-sm">Join us today !</a></p>
             </div>
         </div>
     </section>
@@ -133,7 +131,7 @@
         <div class="cr">
             <div class="container">
                 <div class="row">
-                    <p>Copyright © 2024 <a href="#!" target="_blank">sismedia.com</a> All
+                    <p>Copyright © 2024 <a href="{{ url('/') }}" target="_blank">sismedia.com</a> All
                         rights reserved.</p>
                 </div>
             </div>
@@ -185,15 +183,17 @@
             console.log(pushSubscription);
             if (pushSubscription) {
                 fetch('/api/save-subscription-id', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ subscription_id: pushSubscription }),
-                })
-                .then(response => response.json())
-                .then(data => console.log('Subscription ID saved successfully:', data))
-                .catch(error => console.error('Error saving subscription ID:', error));
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            subscription_id: pushSubscription
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log('Subscription ID saved successfully:', data))
+                    .catch(error => console.error('Error saving subscription ID:', error));
             }
         });
     </script>

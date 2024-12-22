@@ -29,8 +29,15 @@ class GeneralsettingController extends Controller {
             return redirect()->back();
         }
 
-        $generalsetting->name        = $request->name;
-        $generalsetting->description = $request->description;
+        $generalsetting->name          = $request->name;
+        $generalsetting->email         = $request->email;
+        $generalsetting->phone         = $request->phone;
+        $generalsetting->address       = $request->address;
+        $generalsetting->fb_link       = $request->fb_link;
+        $generalsetting->linkedin_link = $request->linkedin_link;
+        $generalsetting->x_link        = $request->x_link;
+        $generalsetting->youtube_link  = $request->youtube_link;
+        $generalsetting->description   = $request->description;
 
         $generalsetting->logo = ImageService::uploadImage(
             $request->file('logo'),

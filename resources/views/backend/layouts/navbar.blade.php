@@ -15,7 +15,7 @@
             <div class="col-md-3">
                 <div class="top-set">
                     <ul>
-                        <li>
+                        {{-- <li>
                             <div class="sett-out smenu-pare">
                                 <span class="smenu">
                                     <i class="fa fa-bell-o" aria-hidden="true"></i>
@@ -109,7 +109,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                         <li>
                             <div class="sett-out smenu-pare">
                                 <span class="smenu">

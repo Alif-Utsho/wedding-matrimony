@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('plans', [FrontendController::class, 'plans']);
+Route::get('faq', [FrontendController::class, 'faqs']);
 Route::get('all-profile', [FrontendController::class, 'allProfile']);
 Route::get('search-profile', [FrontendController::class, 'searchProfile']);
 Route::get('profile/{slug}', [FrontendController::class, 'profileDetails']);

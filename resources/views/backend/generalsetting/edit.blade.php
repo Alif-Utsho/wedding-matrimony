@@ -38,6 +38,56 @@
                                             placeholder="Branding name" value="{{ $generalsetting->name }}">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">Phone Number:</label>
+                                        <input type="text" class="form-control" name="phone"
+                                            placeholder="Branding phone" value="{{ $generalsetting->phone }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">Email Address:</label>
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="Branding email" value="{{ $generalsetting->email }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">Address:</label>
+                                        <input type="text" class="form-control" name="address"
+                                            placeholder="Branding address" value="{{ $generalsetting->address }}">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">Facebook Url:</label>
+                                        <input type="text" class="form-control" name="fb_link"
+                                            placeholder="Enter facebook link" value="{{ $generalsetting->fb_link }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">Linkedin Url:</label>
+                                        <input type="text" class="form-control" name="linkedin_link"
+                                            placeholder="Enter linkedin link" value="{{ $generalsetting->linkedin_link }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">X Url:</label>
+                                        <input type="text" class="form-control" name="x_link"
+                                            placeholder="Enter twitter link" value="{{ $generalsetting->x_link }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="lb">YouTube Url:</label>
+                                        <input type="text" class="form-control" name="youtube_link"
+                                            placeholder="Enter youtube link" value="{{ $generalsetting->youtube_link }}">
+                                    </div>
+                                </div>
                             </div>
 
                             <!--PROFILE BIO-->

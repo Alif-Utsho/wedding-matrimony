@@ -145,7 +145,7 @@
                 <div class="row">
                     <div class="home-tit">
                         <p>trusted brand</p>
-                        <h2><span>Trust by <b class="num">1500</b>+ Couples</span></h2>
+                        <h2><span>Trust by <b class="num">{{ $users }}</b>+ Couples</span></h2>
                         <span class="leaf1"></span>
                         <span class="tit-ani-"></span>
                     </div>
@@ -253,9 +253,8 @@
                         <div class="ab-wel-rhs">
                             <div class="ab-wel-tit">
                                 <h2>Welcome to <em>SIS MEDIA</em></h2>
-                                <p>Best wedding matrimony It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout. </p>
-                                <p> <a href="plans.html">Click here to</a> Start you matrimony service now.</p>
+                                <p>{{ $generalSettings->description }} </p>
+                                <p> <a href="{{ url('/plans') }}">Click here to</a> Start you matrimony service now.</p>
                             </div>
                             <div class="ab-wel-tit-1">
                                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have
@@ -267,13 +266,13 @@
                                     <li>
                                         <div>
                                             <i class="fa fa-phone" aria-hidden="true"></i>
-                                            <h4>Enquiry <em>01678337722</em></h4>
+                                            <h4>Enquiry <em>{{ $generalSettings->phone }}</em></h4>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
                                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                            <h4>Get Support <em>messageappsis@gmail.com </em></h4>
+                                            <h4>Get Support <em>{{ $generalSettings->email }} </em></h4>
                                         </div>
                                     </li>
                                 </ul>
@@ -305,7 +304,7 @@
                             <div class="ab-cont-po">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                                 <div>
-                                    <h4>4000+</h4>
+                                    <h4>{{ $users }}+</h4>
                                     <span>Registerents</span>
                                 </div>
                             </div>
@@ -314,7 +313,7 @@
                             <div class="ab-cont-po">
                                 <i class="fa fa-male" aria-hidden="true"></i>
                                 <div>
-                                    <h4>1600+</h4>
+                                    <h4>{{ $maleUser }}+</h4>
                                     <span>Mens</span>
                                 </div>
                             </div>
@@ -323,7 +322,7 @@
                             <div class="ab-cont-po">
                                 <i class="fa fa-female" aria-hidden="true"></i>
                                 <div>
-                                    <h4>2000+</h4>
+                                    <h4>{{ $femaleUser }}+</h4>
                                     <span>Womens</span>
                                 </div>
                             </div>
@@ -531,8 +530,8 @@
                             <h2>Find your perfect Match now</h2>
                             <p>lacinia viverra lectus. Fusce imperdiet ullamcorper metus eu fringilla.Lorem Ipsum is
                                 simply dummy text of the printing and typesetting industry.</p>
-                            <a href="sign-up.html" class="cta-3">Register Now</a>
-                            <a href="sign-up.html" class="cta-4">Help & Support</a>
+                            <a href="{{ url('/user/register') }}" class="cta-3">Register Now</a>
+                            <a href="{{ url('/contact') }}" class="cta-4">Help & Support</a>
                         </div>
                     </div>
                 </div>
