@@ -103,7 +103,7 @@ class UserController extends Controller {
     }
 
     public function profile() {
-        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies', 'profile.images', 'profile.socialmedia', 'verification', 'preference', 'preference.city')->find(Auth::guard('api')->id());
+        $user = User::with('profile', 'profile.city', 'profile.career', 'profile.hobbies.hobby', 'profile.images', 'profile.socialmedia', 'verification', 'preference', 'preference.city')->find(Auth::guard('api')->id());
 
         return response()->json(compact('user'));
     }
@@ -355,11 +355,10 @@ class UserController extends Controller {
         ]);
     }
 
-    public function notificationHistory()
-    {
+    public function notificationHistory() {
         $histories = NotificationHistory::where('user_id', Auth::guard('api')->id())->latest()->paginate(100);
+
         return response()->json(compact('histories'));
     }
-
 
 }
