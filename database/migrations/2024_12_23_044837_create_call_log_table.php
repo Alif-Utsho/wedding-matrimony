@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('sender_id');
             $table->integer('receiver_id');
             $table->string('start_time');
-            $table->string('end_time');
+            $table->string('end_time')->nullable();;
             $table->string('duration')->nullable();
             $table->string('call_type')->nullable();
             $table->tinyInteger('status')->default(1);

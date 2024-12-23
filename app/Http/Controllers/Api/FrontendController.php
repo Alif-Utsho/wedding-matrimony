@@ -269,7 +269,6 @@ class FrontendController extends Controller {
             'sender_id'   => 'required',
             'receiver_id' => 'required',
             'start_time'  => 'required',
-            'end_time'    => 'required',
         ]);
 
         if ($validator->fails()) {
