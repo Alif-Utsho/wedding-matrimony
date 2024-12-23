@@ -44,6 +44,7 @@ class UserController extends Controller {
     }
 
     public function profileUpdate(Request $request) {
+        
         $userId = Auth::guard('api')->id();
         $user   = User::find($userId);
 

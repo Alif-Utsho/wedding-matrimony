@@ -114,16 +114,15 @@ class UserService {
         UserHobby::where('user_profile_id', $userProfile->id)->delete();
 
         if (isset($hobbies)) {
-
             foreach ($hobbies as $hobbyId) {
                 UserHobby::create([
                     'user_id'         => $user->id,
                     'user_profile_id' => $userProfile->id,
-                    'hobby_id'        => $hobbyId,
+                    'hobby_id'        => (int) $hobbyId,
                 ]);
             }
-
         }
+        
 
         // Update social media links
         UserSocialmedia::updateOrCreate(

@@ -32,6 +32,7 @@ Route::get('send-notification', [FrontendController::class, 'sendNotification'])
 Route::post('save-subscription-id', [FrontendController::class, 'saveSubscription']);
 
 Route::post('save-call-log', [FrontendController::class, 'saveCallLog']);
+Route::post('update-call-log/{id}', [FrontendController::class, 'updateCallLog']);
 Route::get('call-log', [FrontendController::class, 'callLog']);
 
 Route::middleware(['auth:api'])->prefix('user')->group(function () {
