@@ -53,6 +53,7 @@ class UserService {
 
     public function updateUserProfile($data, $user) {
         // Process image if uploaded
+
         $imagePath   = null;
         $editProfile = UserProfile::where('user_id', $user->id)->first();
 
@@ -78,19 +79,19 @@ class UserService {
         $userProfile = UserProfile::updateOrCreate(
             ['user_id' => $user->id],
             [
-
-                'gender'       => $data['gender'],
-                'city_id'      => $data['city_id'],
-                'religion'     => $data['religion'],
-                'language'     => $data['language'],
-                'birth_date'   => $data['birth_date'],
-                'height'       => $data['height'],
-                'weight'       => $data['weight'],
-                'fathers_name' => $data['fathers_name'],
-                'mothers_name' => $data['mothers_name'],
-                'address'      => $data['address'],
-                'age'          => $data['age'] ?? null,
-                'image'        => $imagePath ?? $editProfile->image ?? null,
+                'gender'         => $data['gender'],
+                'city_id'        => $data['city_id'],
+                'religion'       => $data['religion'],
+                'language'       => $data['language'],
+                'birth_date'     => $data['birth_date'],
+                'height'         => $data['height'],
+                'weight'         => $data['weight'],
+                'fathers_name'   => $data['fathers_name'],
+                'mothers_name'   => $data['mothers_name'],
+                'address'        => $data['address'],
+                'marital_status' => $data['marital_status'] ?? null,
+                'age'            => $data['age'] ?? null,
+                'image'          => $imagePath ?? $editProfile->image ?? null,
             ]
         );
 
@@ -111,18 +112,30 @@ class UserService {
         // Update hobbies
 
         $hobbies = $data['hobbies'] ?? [];
-        UserHobby::where('user_profile_id', $userProfile->id)->delete();
 
-        if (isset($hobbies)) {
-            foreach ($hobbies as $hobbyId) {
-                UserHobby::create([
-                    'user_id'         => $user->id,
-                    'user_profile_id' => $userProfile->id,
-                    'hobby_id'        => (int) $hobbyId,
-                ]);
-            }
+        if (is_string($hobbies[0])) {
+            $hobbies = explode(',', $hobbies[0]);
         }
-        
+
+        if (!empty($hobbies)) {
+
+            UserHobby::where('user_profile_id', $userProfile->id)->delete();
+
+            foreach ($hobbies as $hobbyId) {
+
+                $hobbyId = (int) $hobbyId;
+
+                if ($hobbyId > 0) {
+                    UserHobby::create([
+                        'user_id'         => $user->id,
+                        'user_profile_id' => $userProfile->id,
+                        'hobby_id'        => $hobbyId,
+                    ]);
+                }
+
+            }
+
+        }
 
         // Update social media links
         UserSocialmedia::updateOrCreate(

@@ -263,8 +263,6 @@ class FrontendController extends Controller {
 
     }
 
-
-
     public function saveCallLog(Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -296,10 +294,7 @@ class FrontendController extends Controller {
     public function updateCallLog(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'sender_id'   => 'required',
-            'receiver_id' => 'required',
-            'start_time'  => 'required',
-            'end_time'  => 'required',
+            'end_time' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -311,11 +306,13 @@ class FrontendController extends Controller {
 
         $callLog = CallLog::find($request->id);
 
-        $result=$callLog->update([
-            'start_time' => $request->question,
-            'end_time'   => $request->answer,
-            'duration'    => $request->duration,
-            'call_type'   => $request->call_type,
+        $result = $callLog->update([
+            'sender_id'   => $callLog->sender_id,
+            'receiver_id' => $callLog->receiver_id,
+            'start_time'  => $callLog->start_time,
+            'end_time'    => $request->end_time,
+            'duration'    => $callLog->duration,
+            'call_type'   => $callLog->call_type,
         ]);
 
         return response()->json($result);
