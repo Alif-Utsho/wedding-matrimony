@@ -44,7 +44,7 @@ class UserController extends Controller {
     }
 
     public function profileUpdate(Request $request) {
-        
+
         $userId = Auth::guard('api')->id();
         $user   = User::find($userId);
 
@@ -209,6 +209,17 @@ class UserController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function activeList() {
+
+        $activeUsers = User::with('profile', 'profile.career')->where('active_status', '=', '1')->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $activeUsers,
+        ], Response::HTTP_OK);
+    }
+
+
     public function premiumMatches() {
         $userId        = Auth::guard('api')->id();
         $matchingUsers = $this->userService->getMatchingUsers($userId);
@@ -236,6 +247,7 @@ class UserController extends Controller {
     }
 
     public function nearestMatches(Request $request) {
+
         $userId        = Auth::guard('api')->id();
         $authUser      = User::with('profile')->find($userId);
         $matchingUsers = $this->userService->getMatchingUsers($userId);
