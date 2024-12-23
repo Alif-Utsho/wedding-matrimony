@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\CallLog;
 use App\Models\City;
 use App\Models\Contactinfo;
 use App\Models\Country;
@@ -259,6 +260,46 @@ class FrontendController extends Controller {
         }
 
         return response()->json(['message' => 'Subscription ID saved successfully']);
+
+    }
+
+    public function saveCallLog(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'sender_id'   => 'required',
+            'receiver_id' => 'required',
+            'start_time'  => 'required',
+            'end_time'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        CallLog::create([
+            'sender_id'   => $request->sender_id,
+            'receiver_id' => $request->receiver_id,
+            'start_time'  => $request->start_time,
+            'end_time'    => $request->end_time,
+            'duration'    => $request->duration,
+            'call_type'   => $request->call_type,
+        ]);
+
+        return response()->json(['message' => 'Call Log saved successfully']);
+
+    }
+
+    public function callLog() {
+
+        $callLog = CallLog::whereStatus(true)->get();
+
+        return response()->json([
+            'status'  => 'success',
+            'callLog' => $callLog,
+        ], Response::HTTP_OK);
 
     }
 
