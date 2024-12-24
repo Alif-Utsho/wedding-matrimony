@@ -113,7 +113,7 @@ class UserService {
 
         $hobbies = $data['hobbies'] ?? [];
 
-        if (is_string($hobbies[0])) {
+        if (isset($hobbies[0]) && is_string($hobbies[0])) {
             $hobbies = explode(',', $hobbies[0]);
         }
 
