@@ -273,25 +273,27 @@ class UserService {
             });
         }
 
-        if (!empty($data['school'])) {
-            $school = $data['school'];
-            $userQuery->whereHas('profile.career', function ($query) use ($school) {
-                $query->where('school', 'like', '%' . $school . '%');
+        if (!empty($data['college']) && $data['college'] > 0) {
+
+            $userQuery->whereHas('profile.career', function ($query) {
+
+                $query->where('college', '>', 0);
+
+            });
+
+        }
+
+        if (!empty($data['college']) && $data['college'] > 0) {
+
+            $users = $userQuery->get()->filter(function ($user) {
+                return $user->where('college', '>', 0);
             });
         }
 
-        if (!empty($data['college'])) {
-            $college = $data['college'];
-            $userQuery->whereHas('profile.career', function ($query) use ($college) {
-                $query->where('college', 'like', '%' . $college . '%');
-            });
-        }
-        
+        if (!empty($data['degree']) && $data['degree'] > 0) {
 
-        if (!empty($data['degree'])) {
-            $degree = $data['degree'];
-            $userQuery->whereHas('profile.career', function ($query) use ($degree) {
-                $query->where('degree', 'like', '%' . $degree . '%');
+            $users = $userQuery->get()->filter(function ($user) {
+                return $user->where('degree', '>', 0);
             });
         }
 
