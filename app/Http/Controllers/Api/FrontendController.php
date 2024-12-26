@@ -51,6 +51,7 @@ class FrontendController extends Controller {
     }
 
     public function searchProfile(Request $request) {
+
         $users = $this->userService->getUsers($request);
 
         return response()->json(compact('users'));

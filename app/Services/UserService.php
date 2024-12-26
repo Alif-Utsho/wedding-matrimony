@@ -197,6 +197,7 @@ class UserService {
     }
 
     public function getUsers($data) {
+
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
 
         if (Auth::guard('user')->check()) {
@@ -272,30 +273,25 @@ class UserService {
             });
         }
 
-        if (!empty($data['degree'])) {
-            $degree = $data['degree'];
-            $userQuery->whereHas('profile.career', function ($query) use ($degree) {
-                $query->where('type', $degree);
+        if (!empty($data['school'])) {
+            $school = $data['school'];
+            $userQuery->whereHas('profile.career', function ($query) use ($school) {
+                $query->where('school', $school);
             });
         }
 
-        if (!empty($data['education'])) {
-            $education = $data['education'];
+        if (!empty($data['college'])) {
+            $college = $data['college'];
+            $userQuery->whereHas('profile.career', function ($query) use ($college) {
+                $query->where('college', $college);
+            });
+        }
 
-            if ($education === 'degree') {
-                $userQuery->whereHas('profile.career', function ($query) use ($education) {
-                    $query->where('degree', $education);
-                });
-            } elseif ($education === 'college') {
-                $userQuery->whereHas('profile.career', function ($query) use ($education) {
-                    $query->where('college', $education);
-                });
-            } else {
-                $userQuery->whereHas('profile.career', function ($query) use ($education) {
-                    $query->where('school', $education);
-                });
-            }
-
+        if (!empty($data['degree'])) {
+            $degree = $data['degree'];
+            $userQuery->whereHas('profile.career', function ($query) use ($degree) {
+                $query->where('degree', $degree);
+            });
         }
 
         if (!empty($data['filtered_me']) && $data['filtered_me']) {
