@@ -276,21 +276,22 @@ class UserService {
         if (!empty($data['school'])) {
             $school = $data['school'];
             $userQuery->whereHas('profile.career', function ($query) use ($school) {
-                $query->where('school', $school);
+                $query->where('school', 'like', '%' . $school . '%');
             });
         }
 
         if (!empty($data['college'])) {
             $college = $data['college'];
             $userQuery->whereHas('profile.career', function ($query) use ($college) {
-                $query->where('college', $college);
+                $query->where('college', 'like', '%' . $college . '%');
             });
         }
+        
 
         if (!empty($data['degree'])) {
             $degree = $data['degree'];
             $userQuery->whereHas('profile.career', function ($query) use ($degree) {
-                $query->where('degree', $degree);
+                $query->where('degree', 'like', '%' . $degree . '%');
             });
         }
 
