@@ -272,6 +272,32 @@ class UserService {
             });
         }
 
+        if (!empty($data['degree'])) {
+            $degree = $data['degree'];
+            $userQuery->whereHas('profile.career', function ($query) use ($degree) {
+                $query->where('type', $degree);
+            });
+        }
+
+        if (!empty($data['education'])) {
+            $education = $data['education'];
+
+            if ($education === 'degree') {
+                $userQuery->whereHas('profile.career', function ($query) use ($education) {
+                    $query->where('degree', $education);
+                });
+            } elseif ($education === 'college') {
+                $userQuery->whereHas('profile.career', function ($query) use ($education) {
+                    $query->where('college', $education);
+                });
+            } else {
+                $userQuery->whereHas('profile.career', function ($query) use ($education) {
+                    $query->where('school', $education);
+                });
+            }
+
+        }
+
         if (!empty($data['filtered_me']) && $data['filtered_me']) {
             $userId = Auth::guard('api')->check() ? Auth::guard('api')->id() : Auth::guard('user')->id();
 
