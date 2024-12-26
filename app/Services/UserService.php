@@ -354,6 +354,8 @@ class UserService {
             $users = $userQuery->where('profile_visibility', '<>', 'no-visible')->limit(100)->get();
         }
 
+        $users = $userQuery->with(['profile', 'profile.career'])->get();
+
         return $users;
     }
 
