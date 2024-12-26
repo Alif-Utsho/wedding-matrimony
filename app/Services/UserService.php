@@ -273,19 +273,17 @@ class UserService {
             });
         }
 
-
         if (!empty($data['salary'])) {
             $salary = $data['salary'];
-            $users = $userQuery->whereHas('profile.career', function ($query) use ($salary) {
+            $users  = $userQuery->whereHas('profile.career', function ($query) use ($salary) {
                 $query->where('salary', '>=', $salary);
             });
         }
-        
 
-        if (!empty($data['college']) && $data['college'] > 0) {
+        if (!empty($data['school']) && $data['school'] > 0) {
 
             $users = $userQuery->whereHas('profile.career', function ($query) {
-                $query->where('college', '>', 0);
+                $query->where('school', '>', 0);
             });
 
         }
