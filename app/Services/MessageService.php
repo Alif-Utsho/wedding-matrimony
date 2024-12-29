@@ -35,7 +35,9 @@ class MessageService {
             ->latest()
             ->get();
 
-        Message::where('sender_id', $receiverId)->where('receiver_id', $senderId)->where('is_read', false)->update(['is_read' => true]);
+        // Message::where('sender_id', $receiverId)->where('receiver_id', $senderId)->where('is_read', false)->update(['is_read' => true]);
+
+        Message::where('receiver_id', $receiverId)->where('is_read', false)->update(['is_read' => true]);
 
         return $messages;
     }
@@ -73,11 +75,11 @@ class MessageService {
         return $unread_count;
     }
 
-    public function makeReadable($userId) {
+    // public function makeReadable($userId) {
 
-        $make_readable = Message::where('receiver_id', $userId)->where('is_read', false)->update(['is_read' => true]);
+    //     $make_readable = Message::where('receiver_id', $userId)->where('is_read', false)->update(['is_read' => true]);
 
-        return $make_readable;
-    }
+    //     return $make_readable;
+    // }
 
 }
