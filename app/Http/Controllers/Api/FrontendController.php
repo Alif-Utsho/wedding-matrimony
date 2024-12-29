@@ -10,6 +10,7 @@ use App\Models\Contactinfo;
 use App\Models\Country;
 use App\Models\Division;
 use App\Models\FAQ;
+use App\Models\Message;
 use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
@@ -286,6 +287,12 @@ class FrontendController extends Controller {
             'end_time'    => $request->end_time,
             'duration'    => $request->duration,
             'call_type'   => $request->call_type,
+        ]);
+
+        Message::create([
+            'sender_id'   => $request->sender_id,
+            'receiver_id' => $request->receiver_id,
+            'message'     => $request->call_type,
         ]);
 
         $insertedId = $logInfo->id;
