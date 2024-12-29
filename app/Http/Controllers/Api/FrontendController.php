@@ -279,7 +279,7 @@ class FrontendController extends Controller {
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        CallLog::create([
+        $logInfo = CallLog::create([
             'sender_id'   => $request->sender_id,
             'receiver_id' => $request->receiver_id,
             'start_time'  => $request->start_time,
@@ -288,7 +288,12 @@ class FrontendController extends Controller {
             'call_type'   => $request->call_type,
         ]);
 
-        return response()->json(['message' => 'Call Log saved successfully']);
+        $insertedId = $logInfo->id;
+
+        return response()->json([
+            'inserted_id' => $insertedId,
+            'message'     => 'Call Log saved successfully',
+        ]);
 
     }
 
@@ -321,13 +326,14 @@ class FrontendController extends Controller {
 
     public function callLog() {
 
-        $callLog = CallLog::whereStatus(true)->get();
+        $callLog = CallLog::where('status', true)->get();
+
+        $callLog->load(['receiver', 'sender']);
 
         return response()->json([
             'status'  => 'success',
             'callLog' => $callLog,
         ], Response::HTTP_OK);
-
     }
 
     public function faqs() {
