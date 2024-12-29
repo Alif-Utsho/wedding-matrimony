@@ -60,6 +60,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
         Route::post('accept-invitation', [InvitationController::class, 'acceptInvitation']);
 
         Route::get('message-list', [MessageController::class, 'chatList']);
+        Route::get('unread-message', [MessageController::class, 'unreadCount']);
+        Route::get('make-read-message', [MessageController::class, 'markAsReadable']);
         Route::get('fetch-messages', [MessageController::class, 'getMessages']);
         Route::post('send-message', [MessageController::class, 'sendMessage']);
 

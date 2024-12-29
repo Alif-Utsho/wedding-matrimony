@@ -76,4 +76,27 @@ class MessageController extends Controller {
         ], Response::HTTP_OK);
     }
 
+    public function unreadCount() {
+        $userId = Auth::guard('api')->id();
+
+        $unreadMsg = $this->messageService->unreadMessage($userId);
+
+        return response()->json([
+            'status'   => 'success',
+            'unreadMsg' => $unreadMsg,
+        ], Response::HTTP_OK);
+    }
+
+    public function markAsReadable()
+    {
+        $userId = Auth::guard('api')->id();
+        $makeReadable = $this->messageService->makeReadable($userId);
+        
+        return response()->json([
+            'status'   => 'success',
+            'makeRead' => $makeReadable,
+        ], Response::HTTP_OK);
+
+    }
+
 }

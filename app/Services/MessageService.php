@@ -12,7 +12,7 @@ class MessageService {
             'receiver_id' => $receiverId,
             'message'     => $message,
         ]);
-        
+
         $notification = [
             "title"  => "New Message",
             "body"   => $message,
@@ -32,7 +32,7 @@ class MessageService {
                 $query->where('sender_id', $receiverId)
                     ->where('receiver_id', $senderId);
             })
-            ->orderBy('created_at', 'asc')
+            ->latest()
             ->get();
 
         Message::where('sender_id', $receiverId)->where('receiver_id', $senderId)->where('is_read', false)->update(['is_read' => true]);
@@ -51,7 +51,7 @@ class MessageService {
             ->unique();
         $chatListUserIds = $receiverIds->merge($senderIds)->unique();
 
-        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
+        $chatListUsers = User::whereIn('id', $chatListUserIds)->latest()->get();
 
         foreach ($chatListUsers as $chatuser) {
             $message           = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
@@ -65,6 +65,19 @@ class MessageService {
         });
 
         return $chatListUsers;
+    }
+
+    public function unreadMessage($userId) {
+        $unread_count = Message::where('receiver_id', $userId)->where('is_read', false)->count();
+
+        return $unread_count;
+    }
+
+    public function makeReadable($userId) {
+
+        $make_readable = Message::where('receiver_id', $userId)->where('is_read', false)->update(['is_read' => true]);
+
+        return $make_readable;
     }
 
 }
