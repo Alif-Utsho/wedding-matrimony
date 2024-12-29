@@ -328,7 +328,7 @@ class FrontendController extends Controller {
 
         $callLog = CallLog::where('status', true)->get();
 
-        $callLog->load(['receiver', 'sender']);
+        $callLog->load(['receiver', 'receiver.profile']);
 
         return response()->json([
             'status'  => 'success',
