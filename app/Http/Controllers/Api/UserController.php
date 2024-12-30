@@ -211,14 +211,17 @@ class UserController extends Controller {
 
     public function activeList() {
 
-        $activeUsers = User::with('profile', 'profile.career')->where('active_status', '=', '1')->get();
+        $userId      = Auth::guard('api')->id();
+        $activeUsers = User::with('profile', 'profile.career')
+            ->where('active_status', '=', '1')
+            ->where('id', '!=', $userId)
+            ->get();
 
         return response()->json([
             'status' => 'success',
             'data'   => $activeUsers,
         ], Response::HTTP_OK);
     }
-
 
     public function premiumMatches() {
         $userId        = Auth::guard('api')->id();
