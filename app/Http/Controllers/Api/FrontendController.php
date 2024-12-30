@@ -11,11 +11,11 @@ use App\Models\Country;
 use App\Models\Division;
 use App\Models\FAQ;
 use App\Models\Message;
+use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
 use App\Models\PushSubscription;
 use App\Models\Service;
-use App\Models\SubPackage;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
@@ -170,7 +170,7 @@ class FrontendController extends Controller {
     }
 
     public function plans() {
-        $plans = SubPackage::with('package')->latest()->get();
+        $plans = Package::with('subpackage')->latest()->get();
 
         return response()->json([
             'status' => 'success',
