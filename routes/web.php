@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SubPackageController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
 use App\Http\Controllers\Admin\UserverificationController;
@@ -109,6 +110,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('user/verified', [UserverificationController::class, 'verify'])->name('user-verification.verify');
         Route::delete('user/verification/{id}', [UserverificationController::class, 'delete'])->name('user-verification.delete');
 
+        //Package Route
         Route::get('package/manage', [PackageController::class, 'manage'])->name('package.manage');
         Route::get('package/add', [PackageController::class, 'add'])->name('package.add');
         Route::post('package/store', [PackageController::class, 'store'])->name('package.store');
@@ -117,6 +119,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('package/toggle-status', [PackageController::class, 'togglestatus'])->name('package.togglestatus');
         Route::delete('package/{id}', [PackageController::class, 'delete'])->name('package.delete');
         Route::get('package/payment', [PackageController::class, 'PackagePaymentList'])->name('package.payment');
+
+        //Sub Package Route
+        Route::get('subpackage/manage', [SubPackageController::class, 'manage'])->name('subpackage.manage');
+        Route::get('subpackage/add', [SubPackageController::class, 'add'])->name('subpackage.add');
+        Route::post('subpackage/store', [SubPackageController::class, 'store'])->name('subpackage.store');
+        Route::get('subpackage/edit/{id}', [SubPackageController::class, 'edit'])->name('subpackage.edit');
+        Route::post('subpackage/update', [SubPackageController::class, 'update'])->name('subpackage.update');
+        Route::post('subpackage/toggle-status', [SubPackageController::class, 'togglestatus'])->name('subpackage.togglestatus');
+        Route::delete('subpackage/{id}', [SubPackageController::class, 'delete'])->name('subpackage.delete');
 
         Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
         Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');

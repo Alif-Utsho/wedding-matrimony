@@ -11,11 +11,11 @@ use App\Models\Country;
 use App\Models\Division;
 use App\Models\FAQ;
 use App\Models\Message;
-use App\Models\Package;
 use App\Models\ProfileClick;
 use App\Models\ProfileView;
 use App\Models\PushSubscription;
 use App\Models\Service;
+use App\Models\SubPackage;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
@@ -170,7 +170,7 @@ class FrontendController extends Controller {
     }
 
     public function plans() {
-        $plans = Package::whereStatus(true)->get();
+        $plans = SubPackage::with('package')->latest()->get();
 
         return response()->json([
             'status' => 'success',
@@ -178,6 +178,20 @@ class FrontendController extends Controller {
         ], Response::HTTP_OK);
 
     }
+
+// public function subPlan($id) {
+
+//     $plan = SubPackage::with('package')->where('sub_packages.id', $id)->first();
+
+//     return response()->json([
+
+//         'status' => 'success',
+
+//         'plan'   => $plan,
+
+//     ], Response::HTTP_OK);
+
+    // }
 
     public function get_countries() {
         $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();

@@ -15,4 +15,6 @@ class Package extends Model
     {
         return $this->belongsToMany(Access::class, 'package_accesses', 'package_id', 'access_id');
     }
+
+    
 }
