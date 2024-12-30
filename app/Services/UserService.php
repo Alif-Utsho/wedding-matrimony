@@ -89,6 +89,7 @@ class UserService {
                 'fathers_name'   => $data['fathers_name'],
                 'mothers_name'   => $data['mothers_name'],
                 'address'        => $data['address'],
+                'bio'            => $data['bio'],
                 'marital_status' => $data['marital_status'] ?? null,
                 'age'            => $data['age'] ?? null,
                 'image'          => $imagePath ?? $editProfile->image ?? null,
