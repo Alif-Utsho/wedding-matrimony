@@ -44,19 +44,19 @@ class MessageService {
 
     public function list($userId) {
         $receiverIds = Message::where('sender_id', $userId)
-            ->latest()
+            ->orderBy('created_at', 'asc')
             ->pluck('receiver_id')
             ->unique();
         $senderIds = Message::where('receiver_id', $userId)
-            ->latest()
+            ->orderBy('created_at', 'asc')
             ->pluck('sender_id')
             ->unique();
         $chatListUserIds = $receiverIds->merge($senderIds)->unique();
 
-        $chatListUsers = User::whereIn('id', $chatListUserIds)->latest()->get();
+        $chatListUsers = User::whereIn('id', $chatListUserIds)->get();
 
         foreach ($chatListUsers as $chatuser) {
-            $message           = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->latest()->first();
+            $message           = Message::where('sender_id', $chatuser->id)->orWhere('receiver_id', $chatuser->id)->orderBy('created_at', 'asc')->first();
             $unread_count      = Message::where('sender_id', $chatuser->id)->where('receiver_id', $userId)->where('is_read', false)->count();
             $chatuser->message = $message;
             $chatuser->unread  = $unread_count;
@@ -75,11 +75,11 @@ class MessageService {
         return $unread_count;
     }
 
-    // public function makeReadable($userId) {
+// public function makeReadable($userId) {
 
-    //     $make_readable = Message::where('receiver_id', $userId)->where('is_read', false)->update(['is_read' => true]);
+//     $make_readable = Message::where('receiver_id', $userId)->where('is_read', false)->update(['is_read' => true]);
 
-    //     return $make_readable;
+//     return $make_readable;
     // }
 
 }
