@@ -4,29 +4,31 @@
         <div class="row main-head">
             <div class="col-md-6">
                 <div class="tit">
-                    <h1>Special Packages</h1>
+                    <h1>Special Sub Packages</h1>
                 </div>
             </div>
             <div class="col-md-6">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Special Packages</li>
+                        <li class="breadcrumb-item active" aria-current="page">Special Sub Packages</li>
                     </ol>
                 </nav>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="box-com box-qui box-lig box-tab">
                     <div class="tit">
-                        <h3>Special Packages</h3>
+                        <h3>Special Sub Packages</h3>
                         <div class="dropdown">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.specialpkg.add') }}">Add New Special
+                                <li><a class="dropdown-item" href="{{ route('admin.specialcategory.add') }}">Add New Special
+                                        Sub
                                         Package</a></li>
                             </ul>
                         </div>
@@ -35,7 +37,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
+                                <th>Package</th>
+                                <th>Price</th>
+                                <th>Old Price</th>
+                                <td>Duration</td>
                                 <td>Status</td>
                                 <th>Edit</th>
                             </tr>
@@ -44,7 +49,22 @@
                             @foreach ($show_data as $value)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><span class="hig-blu">{{ $value->name }}</span></td>
+                                    <td><span class="hig-blu">{{ $value->specialpackage[0]->name }}</span></td>
+                                    <td>{{ $value->price }}</td>
+                                    <td>{{ $value->old_price }}</td>
+                                    <td>
+                                        @if ($value->price > 0)
+                                            <small>
+                                                @if ($value->duration >= 30)
+                                                    {{ round($value->duration / 30, 1) }}
+                                                    {{ Str::plural('Month', round($value->duration / 30, 1)) }}
+                                                @else
+                                                    {{ $value->duration }} {{ Str::plural('Day', $value->duration) }}
+                                                @endif
+                                            </small>
+                                        @endif
+                                    </td>
+
                                     <td>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input toggle-front" type="checkbox"
@@ -61,9 +81,9 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('admin.specialpkg.edit', $value->id) }}">Edit</a>
+                                                        href="{{ route('admin.specialcategory.edit', $value->id) }}">Edit</a>
                                                 </li>
-                                                <form action="{{ route('admin.specialpkg.delete', $value->id) }}"
+                                                <form action="{{ route('admin.specialcategory.delete', $value->id) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this package?');"
                                                     style="display: inline;">
@@ -90,7 +110,7 @@
                 const isChecked = $(this).is(':checked');
 
                 $.ajax({
-                    url: "{{ route('admin.specialpkg.togglestatus') }}",
+                    url: "{{ route('admin.specialcategory.togglestatus') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",

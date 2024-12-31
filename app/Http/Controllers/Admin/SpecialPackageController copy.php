@@ -6,30 +6,34 @@ use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Access;
 use App\Models\SpecialPackage;
+use App\Models\SpecialPackageCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class SpecialPackageController extends Controller {
-
+    
     public function manage() {
-        $show_data = SpecialPackage::latest()->get();
+        $show_data = SpecialPackage::with('specialcategory', 'accesses')->latest()->get();
 
         return view('backend.specialpackage.manage', compact('show_data'));
     }
 
     public function add() {
-        $accesses = Access::get();
+        $accesses   = Access::get();
+        $categories = SpecialPackageCategory::all();
 
-        return view('backend.specialpackage.add', compact('accesses'));
+        return view('backend.specialpackage.add', compact('accesses', 'categories'));
     }
 
     public function store(Request $request) {
-
         $validator = Validator::make($request->all(), [
-            'name'       => 'nullable',
+            'cat_id'     => 'required',
+            'price'      => 'required|integer|min:0',
+            'old_price'  => 'nullable|integer|min:0',
             'details'    => 'nullable|string',
             'accesses'   => 'nullable|array',
             'accesses.*' => 'exists:accesses,id',
+            'popular'    => 'nullable',
             'status'     => 'nullable',
         ]);
 
@@ -43,9 +47,12 @@ class SpecialPackageController extends Controller {
         }
 
         $specialPkg = SpecialPackage::create([
-            'name'    => $request->name,
-            'details' => $request->details,
-            'status'  => $request->boolean('status') ? 1 : 0,
+            'cat_id'    => $request->cat_id,
+            'price'     => $request->price,
+            'old_price' => $request->old_price,
+            'details'   => $request->details,
+            'popular'   => $request->boolean('popular') ? 1 : 0,
+            'status'    => $request->boolean('status') ? 1 : 0,
         ]);
 
         if ($request->has('accesses')) {
@@ -58,19 +65,22 @@ class SpecialPackageController extends Controller {
     }
 
     public function edit($id) {
-        $specialPackage = SpecialPackage::with('accesses')->find($id);
+        $specialPackage = SpecialPackage::with('specialcategory', 'accesses')->find($id);
+        $categories     = SpecialPackageCategory::all();
         $accesses       = Access::get();
 
-        return view('backend.specialpackage.edit', compact('specialPackage', 'accesses'));
+        return view('backend.specialpackage.edit', compact('specialPackage', 'categories', 'accesses'));
     }
 
     public function update(Request $request) {
-
         $validator = Validator::make($request->all(), [
-            'name'       => 'nullable',
+            'cat_id'     => 'required',
+            'price'      => 'required|integer|min:0',
+            'old_price'  => 'nullable|integer|min:0',
             'details'    => 'nullable|string',
             'accesses'   => 'nullable|array',
             'accesses.*' => 'exists:accesses,id',
+            'popular'    => 'nullable',
             'status'     => 'nullable',
         ]);
 
@@ -83,12 +93,15 @@ class SpecialPackageController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $specialPackage = SpecialPackage::with('accesses')->findOrFail($request->id);
+        $specialPackage = SpecialPackage::with('specialcategory', 'accesses')->findOrFail($request->id);
 
         $specialPackage->update([
-            'name'    => $request->name,
-            'details' => $request->details,
-            'status'  => $request->boolean('status') ? 1 : 0,
+            'cat_id'    => $request->cat_id,
+            'price'     => $request->price,
+            'old_price' => $request->old_price,
+            'details'   => $request->details,
+            'popular'   => $request->boolean('popular') ? 1 : 0,
+            'status'    => $request->boolean('status') ? 1 : 0,
         ]);
 
         if ($request->has('accesses')) {
@@ -115,7 +128,7 @@ class SpecialPackageController extends Controller {
             ], 422);
         }
 
-        $specialPackage = SpecialPackage::with('accesses')->find($request->id);
+        $specialPackage = SpecialPackage::with('specialcategory', 'accesses')->find($request->id);
         $specialPackage->update(['status' => $request->status]);
 
         return response()->json([
@@ -125,7 +138,7 @@ class SpecialPackageController extends Controller {
     }
 
     public function delete($id) {
-        $specialPackage = SpecialPackage::with('accesses')->findOrFail($id);
+        $specialPackage = SpecialPackage::with('specialcategory', 'accesses')->findOrFail($id);
         $specialPackage->accesses()->detach();
         $specialPackage->delete();
 

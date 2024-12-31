@@ -8,16 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class SpecialPackage extends Model {
     use HasFactory;
     protected $fillable = [
-        'cat_id',
-        'price',
-        'old_price',
+        'name',
         'details',
-        'popular',
         'status',
     ];
 
     public function specialcategory() {
-        return $this->belongsTo(SpecialPackageCategory::class, 'cat_id', 'id');
+        return $this->hasMany(SpecialPackageCategory::class, 'special_id', 'id');
     }
 
     public function accesses() {

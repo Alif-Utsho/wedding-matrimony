@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SpecialPackageController;
+use App\Http\Controllers\Admin\SpecialSubController;
 use App\Http\Controllers\Admin\SubPackageController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
@@ -138,6 +139,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('specialpkg/update', [SpecialPackageController::class, 'update'])->name('specialpkg.update');
         Route::post('specialpkg/toggle-status', [SpecialPackageController::class, 'togglestatus'])->name('specialpkg.togglestatus');
         Route::delete('specialpkg/{id}', [SpecialPackageController::class, 'delete'])->name('specialpkg.delete');
+
+        //Special Sub Package Route
+        Route::get('specialcategory/manage', [SpecialSubController::class, 'manage'])->name('specialcategory.manage');
+        Route::get('specialcategory/add', [SpecialSubController::class, 'add'])->name('specialcategory.add');
+        Route::post('specialcategory/store', [SpecialSubController::class, 'store'])->name('specialcategory.store');
+        Route::get('specialcategory/edit/{id}', [SpecialSubController::class, 'edit'])->name('specialcategory.edit');
+        Route::post('specialcategory/update', [SpecialSubController::class, 'update'])->name('specialcategory.update');
+        Route::post('specialcategory/toggle-status', [SpecialSubController::class, 'togglestatus'])->name('specialcategory.togglestatus');
+        Route::delete('specialcategory/{id}', [SpecialSubController::class, 'delete'])->name('specialcategory.delete');
 
         Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
         Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');

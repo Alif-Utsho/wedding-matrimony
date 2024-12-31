@@ -64,6 +64,13 @@
             </li>
 
             <li class="ic-pay">
+                <a href="{{ route('admin.specialcategory.manage') }}"
+                    class="{{ request()->routeIs('admin.specialcategory.manage') && is_null(request()->plan) ? 's-act' : '' }}">Special
+                    Sub
+                    Packages</a>
+            </li>
+
+            <li class="ic-pay">
                 <a href="{{ route('admin.package.payment') }}"
                     class="{{ request()->routeIs('admin.package.payment') && is_null(request()->plan) ? 's-act' : '' }}">All
                     Payments</a>
