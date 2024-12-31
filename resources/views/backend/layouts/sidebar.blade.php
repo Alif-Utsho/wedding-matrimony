@@ -56,6 +56,13 @@
                     class="{{ request()->routeIs('admin.subpackage.manage') && is_null(request()->plan) ? 's-act' : '' }}">Sub
                     Packages</a>
             </li>
+
+            <li class="ic-pay">
+                <a href="{{ route('admin.specialpkg.manage') }}"
+                    class="{{ request()->routeIs('admin.specialpkg.manage') && is_null(request()->plan) ? 's-act' : '' }}">Special
+                    Packages</a>
+            </li>
+
             <li class="ic-pay">
                 <a href="{{ route('admin.package.payment') }}"
                     class="{{ request()->routeIs('admin.package.payment') && is_null(request()->plan) ? 's-act' : '' }}">All

@@ -16,6 +16,7 @@ use App\Models\ProfileClick;
 use App\Models\ProfileView;
 use App\Models\PushSubscription;
 use App\Models\Service;
+use App\Models\SpecialPackage;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WeddingStep;
@@ -170,7 +171,7 @@ class FrontendController extends Controller {
     }
 
     public function plans() {
-        $plans = Package::with('subpackage')->latest()->get();
+        $plans = Package::with('subpackage', 'accesses')->latest()->get();
 
         return response()->json([
             'status' => 'success',
@@ -179,19 +180,15 @@ class FrontendController extends Controller {
 
     }
 
-// public function subPlan($id) {
+    public function specialPlan() {
+        $specialPlans = SpecialPackage::with('specialcategory', 'accesses')->latest()->get();
 
-//     $plan = SubPackage::with('package')->where('sub_packages.id', $id)->first();
+        return response()->json([
+            'status'       => 'success',
+            'specialPlans' => $specialPlans,
+        ], Response::HTTP_OK);
 
-//     return response()->json([
-
-//         'status' => 'success',
-
-//         'plan'   => $plan,
-
-//     ], Response::HTTP_OK);
-
-    // }
+    }
 
     public function get_countries() {
         $countries = Country::whereStatus(true)->orderBy('name', 'ASC')->get();

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('plans', [FrontendController::class, 'plans']);
+Route::get('special-plans', [FrontendController::class, 'specialPlan']);
 // Route::get('plans/{id}', [FrontendController::class, 'subPlan']);
 Route::get('faq', [FrontendController::class, 'faqs']);
 Route::get('all-profile', [FrontendController::class, 'allProfile']);

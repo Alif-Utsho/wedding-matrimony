@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HobbyController;
 use App\Http\Controllers\Admin\OurteamController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SpecialPackageController;
 use App\Http\Controllers\Admin\SubPackageController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UsermanageController;
@@ -128,6 +129,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('subpackage/update', [SubPackageController::class, 'update'])->name('subpackage.update');
         Route::post('subpackage/toggle-status', [SubPackageController::class, 'togglestatus'])->name('subpackage.togglestatus');
         Route::delete('subpackage/{id}', [SubPackageController::class, 'delete'])->name('subpackage.delete');
+
+        //Special Package Route
+        Route::get('specialpkg/manage', [SpecialPackageController::class, 'manage'])->name('specialpkg.manage');
+        Route::get('specialpkg/add', [SpecialPackageController::class, 'add'])->name('specialpkg.add');
+        Route::post('specialpkg/store', [SpecialPackageController::class, 'store'])->name('specialpkg.store');
+        Route::get('specialpkg/edit/{id}', [SpecialPackageController::class, 'edit'])->name('specialpkg.edit');
+        Route::post('specialpkg/update', [SpecialPackageController::class, 'update'])->name('specialpkg.update');
+        Route::post('specialpkg/toggle-status', [SpecialPackageController::class, 'togglestatus'])->name('specialpkg.togglestatus');
+        Route::delete('specialpkg/{id}', [SpecialPackageController::class, 'delete'])->name('specialpkg.delete');
 
         Route::get('enquiry/manage', [EnquirymanageController::class, 'manage'])->name('enquiry.manage');
         Route::post('enquiry/toggle-status', [EnquirymanageController::class, 'togglestatus'])->name('enquiry.togglestatus');

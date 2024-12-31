@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SubPackageController extends Controller {
     public function manage() {
-        $show_data = SubPackage::with('package')->latest()->get();
+        $show_data = SubPackage::with('package', 'package.accesses')->latest()->get();
 
         return view('backend.subpackage.manage', compact('show_data'));
     }
