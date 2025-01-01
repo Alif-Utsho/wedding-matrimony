@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hobby;
 use App\Models\Package;
 use App\Models\PackagePayment;
+use App\Models\SubPackage;
 use App\Models\User;
 use App\Models\UserPackage;
 use App\Models\UserProfile;
@@ -28,24 +29,40 @@ class UserController extends Controller {
     }
 
     public function index() {
-        $user        = User::find(Auth::guard('user')->id());
+
+        $user = User::find(Auth::guard('user')->id());
+
         $userPackage = UserPackage::where('user_id', $user->id)
             ->where('expired_at', '>', now())
             ->latest()
-            ->with('package')
+            ->with('subpackage', 'specialcategory')
             ->first();
 
         if ($userPackage) {
-            $package = Package::find($userPackage->package_id);
+
+            $package = SubPackage::with('package')->find($userPackage->sub_pkg_id);
+
         } else {
-            $package = Package::where('price', 0)->first();
+
+            $package = SubPackage::with('package')->where('price', 0)->first();
+
         }
 
-        $chatListUsers      = $this->messageService->list($user->id);
-        $matchingUsers      = $this->userService->getMatchingUsers($user->id);
+        $chatListUsers = $this->messageService->list($user->id);
+
+        $matchingUsers = $this->userService->getMatchingUsers($user->id);
+
         $profile_completion = $this->userService->getProfileCompletion($user->id);
 
-        return view('frontend.user.dashboard', compact('profile_completion', 'userPackage', 'package', 'chatListUsers', 'matchingUsers'));
+        $data['package']            = $package;
+        $data['chatListUsers']      = $chatListUsers;
+        $data['userPackage']        = $userPackage;
+        $data['matchingUsers']      = $matchingUsers;
+        $data['profile_completion'] = $profile_completion;
+
+        // dd($data);
+
+        return view('frontend.user.dashboard', $data);
     }
 
     public function profile() {

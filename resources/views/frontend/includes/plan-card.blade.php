@@ -7,7 +7,7 @@
         </div>
         <div class="db-plan-detil">
             <ul>
-                <li>Plan name: <strong>{{ $package->name }}</strong></li>
+                <li>Plan name: <strong>{{ $package->package->name }}</strong></li>
                 @if ($userPackage !== null)
                     <li>Validity:
                         <strong>
