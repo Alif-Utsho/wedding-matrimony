@@ -72,6 +72,13 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="lb">Bio:</label>
+                                    <textarea name="bio" class="form-control" id="bio" cols="30" rows="10" placeholder="Enter your bio"
+                                        required></textarea>
+
+                                </div>
+
                             </div>
                             <!--END PROFILE BIO-->
                             <!--PROFILE BIO-->

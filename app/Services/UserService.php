@@ -52,8 +52,9 @@ class UserService {
     }
 
     public function updateUserProfile($data, $user) {
-        // Process image if uploaded
 
+// Process image if uploaded
+        // dd($data);
         $imagePath   = null;
         $editProfile = UserProfile::where('user_id', $user->id)->first();
 
@@ -528,6 +529,7 @@ class UserService {
     }
 
     public function verifySubmit($userId, $data) {
+        // dd($data);
         try {
             $imagePath     = ImageService::uploadImage($data["image"], "", "verification");
             $imageBackPath = ImageService::uploadImage($data["image_back"], "", "verification");

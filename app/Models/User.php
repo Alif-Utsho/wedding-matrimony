@@ -5,12 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
-{
+class User extends Authenticatable implements JWTSubject {
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -44,8 +43,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
-    {
+    public function getJWTIdentifier() {
         return $this->getKey();
     }
 
@@ -54,63 +52,67 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
-    {
+    public function getJWTCustomClaims() {
         return [];
     }
 
-    const VISIBILITY_ALL = 'all';
+    const VISIBILITY_ALL     = 'all';
     const VISIBILITY_PREMIUM = 'premium';
 
-    const REQUEST_ALL = 'all';
+    const REQUEST_ALL     = 'all';
     const REQUEST_PREMIUM = 'premium';
 
-    public function profile()
-    {
+    public function profile() {
         return $this->hasOne(UserProfile::class);
     }
 
-    public function preference()
-    {
+    public function preference() {
         return $this->hasOne(UserPreference::class);
     }
 
-    public function packagePayment()
-    {
+    public function packagePayment() {
         return $this->hasOne(PackagePayment::class);
     }
 
-    public function verification(){
+    public function verification() {
         return $this->hasOne(UserVerification::class);
     }
 
-    public function currentPackage()
-    {
+    public function currentPackage() {
         $userPackage = $this->hasOne(UserPackage::class)
             ->where('expired_at', '>', now())
             ->latest()
-            ->with('package')
+            ->with('subpackage')
             ->first();
 
+// $userPackage = $this->hasOne(UserPackage::class)
+
+// ->where('expired_at', '>', now())
+
+// ->with('specialcategory', 'subpackage')
+
+// ->latest()
+
+// ->first();
+
         if (!$userPackage) {
-            $defaultPackage = Package::where('price', 0)->first();
+            $defaultPackage = SubPackage::where('price', 0)->first();
+
             return $defaultPackage;
         }
 
-        return $userPackage->package;
+        return $userPackage->subpackage;
     }
 
-    public function assignPackage($package)
-    {
+    public function assignPackage($package) {
         return $this->userPackages()->create([
             'package_id' => $package->id,
             'expired_at' => now()->addDays($package->duration),
         ]);
     }
 
-    public function hasAccessTo($feature)
-    {
-        $package = $this->currentPackage();
+    public function hasAccessTo($feature) {
+        $package  = $this->currentPackage();
         $accesses = $package ? $package->accesses->pluck('name')->toArray() : [];
 
         return in_array($feature, $accesses);
@@ -128,29 +130,25 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(ProfileClick::class, 'user_id');
     }
 
-    public function invitations()
-    {
+    public function invitations() {
         return Invitation::where(function ($query) {
             $query->where('sent_from', $this->id)
                 ->orWhere('sent_to', $this->id);
         });
     }
 
-
-    public function canReceiveInterestRequests()
-    {
+    public function canReceiveInterestRequests() {
         return $this->interest_request_access === self::REQUEST_ALL ||
-               ($this->interest_request_access === self::REQUEST_PREMIUM && $this->isPremium());
+            ($this->interest_request_access === self::REQUEST_PREMIUM && $this->isPremium());
     }
 
-    public function canViewProfile($viewer)
-    {
+    public function canViewProfile($viewer) {
         return $this->profile_visibility === self::VISIBILITY_ALL ||
-               ($this->profile_visibility === self::VISIBILITY_PREMIUM && $viewer->isPremium());
+            ($this->profile_visibility === self::VISIBILITY_PREMIUM && $viewer->isPremium());
     }
 
-    public function isPremium()
-    {
-        return $this->currentPackage() && $this->currentPackage()->price>0;
+    public function isPremium() {
+        return $this->currentPackage() && $this->currentPackage()->price > 0;
     }
+
 }

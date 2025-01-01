@@ -62,6 +62,7 @@ class UsermanageController extends Controller {
             'email'        => 'required|email|string',
             'phone'        => 'required|string|min:11|max:16|unique:users',
             'password'     => 'required|string',
+            'bio'          => 'required',
             'gender'       => 'required|string',
             'city_id'      => 'required|string',
             'religion'     => 'required|string',

@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class UserverificationController extends Controller {
+
     public function manage(Request $request) {
+
         $userQuery = User::whereHas('profile');
 
         if ($request->status == 'pending') {
@@ -24,34 +26,37 @@ class UserverificationController extends Controller {
         return view('backend.user.verification-pending', compact('users'));
     }
 
-    public function verify(Request $request){
+    public function verify(Request $request) {
+        
         $request->validate([
             'verification_id' => 'required|exists:user_verifications,id',
         ]);
-    
+
         $userVerification = UserVerification::find($request->verification_id);
-    
+
         if (!$userVerification) {
             return redirect()->back()->with('error', 'Verification record not found.');
         }
-    
+
         $userVerification->status = 1;
         $userVerification->save();
-    
+
         $user = User::find($userVerification->user_id);
+
         if ($user) {
             $user->verified = 1;
             $user->save();
         }
-    
+
         Toastr::success('Account verified successfully');
+
         return redirect()->back();
     }
 
     public function delete($id) {
         $userverificaion = UserVerification::findOrFail($id);
-        User::find($userverificaion->user_id)->update(['verified'=> null]);
-        
+        User::find($userverificaion->user_id)->update(['verified' => null]);
+
         if ($userverificaion->image && File::exists(public_path($userverificaion->image))) {
             File::delete(public_path($userverificaion->image));
         }
@@ -63,6 +68,7 @@ class UserverificationController extends Controller {
         $userverificaion->delete();
 
         Toastr::success('Verification deleted Successfully');
+
         return redirect()->back();
     }
 

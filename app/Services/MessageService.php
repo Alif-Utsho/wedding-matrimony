@@ -24,6 +24,7 @@ class MessageService {
     }
 
     public function fetch($senderId, $receiverId) {
+
         $messages = Message::where(function ($query) use ($senderId, $receiverId) {
             $query->where('sender_id', $senderId)
                 ->where('receiver_id', $receiverId);
@@ -32,8 +33,6 @@ class MessageService {
                 $query->where('sender_id', $receiverId)
                     ->where('receiver_id', $senderId);
             })->orderBy('created_at', 'asc')->get();
-
-        // Message::where('sender_id', $receiverId)->where('receiver_id', $senderId)->where('is_read', false)->update(['is_read' => true]);
 
         Message::where('receiver_id', $receiverId)->where('is_read', false)->update(['is_read' => true]);
 

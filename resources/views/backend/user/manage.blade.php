@@ -68,7 +68,7 @@
                                 <th>Profile</th>
                                 <th>Phone</th>
                                 <th>City</th>
-                                <th>Plan type</th>
+                                {{-- <th>Plan type</th> --}}
                                 <th>More</th>
                             </tr>
                         </thead>
@@ -94,9 +94,9 @@
                                     </td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->profile->city->name }}</td>
-                                    <td><span
+                                    {{-- <td><span
                                             class="@if ($user->isPremium()) hig-grn @else hig-red @endif">{{ $user->currentPackage()->name }}</span>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-outline-secondary"
@@ -113,8 +113,12 @@
                                                     @method('DELETE')
                                                     <input type="submit" class="dropdown-item" value="Delete">
                                                 </form>
-                                                <li><a class="dropdown-item" href="{{ route('admin.user.bill', $user->id) }}">Billing info</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('admin.user.show', $user->id) }}">View profile</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('admin.user.bill', $user->id) }}">Billing info</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('admin.user.show', $user->id) }}">View profile</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>

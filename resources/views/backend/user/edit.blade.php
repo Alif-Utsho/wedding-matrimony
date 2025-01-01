@@ -63,6 +63,13 @@
                                         value="{{ $user->phone }}" placeholder="Enter phone number">
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="lb">Bio:</label>
+                                    <textarea name="bio" class="form-control" id="bio" cols="30" rows="10" placeholder="Enter your bio"
+                                        required>{{ $user->bio }}</textarea>
+
+                                </div>
+
                             </div>
                             <!--END PROFILE BIO-->
                             <!--PROFILE BIO-->
@@ -108,8 +115,8 @@
 
                                     <div class="col-md-6 form-group">
                                         <label class="lb">Language:</label>
-                                        <select class="form-select chosen-select"
-                                            data-placeholder="Select your Language" name="language">
+                                        <select class="form-select chosen-select" data-placeholder="Select your Language"
+                                            name="language">
                                             <option value="">Select</option>
                                             @foreach (\App\Enums\Language::all() as $value => $label)
                                                 <option value="{{ $label }}"

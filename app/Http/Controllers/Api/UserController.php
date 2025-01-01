@@ -284,6 +284,7 @@ class UserController extends Controller {
     }
 
     public function verificationEditSubmit(Request $request) {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'image'      => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'image_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
