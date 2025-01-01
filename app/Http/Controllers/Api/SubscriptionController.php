@@ -19,6 +19,8 @@ class SubscriptionController extends Controller {
     }
 
     public function subscribe(Request $request) {
+
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'id'         => 'required|integer',
             'package_id' => 'required|integer',
@@ -42,7 +44,7 @@ class SubscriptionController extends Controller {
     }
 
     public function subscribeSpecial(Request $request) {
-        
+
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
         ]);
