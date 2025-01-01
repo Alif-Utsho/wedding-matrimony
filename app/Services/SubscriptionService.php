@@ -14,8 +14,8 @@ class SubscriptionService {
 
     public function subscribe($userId, $id, $package_id) {
 
-        $package = SubPackage::with('package')->where('id', 3)
-            ->where('package_id', 2)
+        $package = SubPackage::with('package')->where('id', $id)
+            ->where('package_id', $package_id)
             ->first();
         // dd($package);
         $user = User::find($userId);
