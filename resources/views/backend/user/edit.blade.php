@@ -66,7 +66,7 @@
                                 <div class="form-group">
                                     <label class="lb">Bio:</label>
                                     <textarea name="bio" class="form-control" id="bio" cols="30" rows="10" placeholder="Enter your bio"
-                                        required>{{ $user->bio }}</textarea>
+                                        required>{{ $user->profile->bio }}</textarea>
 
                                 </div>
 
