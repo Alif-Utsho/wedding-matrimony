@@ -42,7 +42,7 @@ class SubscriptionController extends Controller {
     }
 
     public function subscribeSpecial(Request $request) {
-
+        
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
         ]);

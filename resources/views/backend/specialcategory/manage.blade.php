@@ -49,7 +49,7 @@
                             @foreach ($show_data as $value)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><span class="hig-blu">{{ $value->specialpackage[0]->name }}</span></td>
+                                    <td><span class="hig-blu">{{ $value->specialpackage->name }}</span></td>
                                     <td>{{ $value->price }}</td>
                                     <td>{{ $value->old_price }}</td>
                                     <td>

@@ -19,7 +19,7 @@ class SpecialPackageCategory extends Model {
     ];
 
     public function specialpackage() {
-        return $this->hasMany(SpecialPackage::class, 'id', 'special_id');
+        return $this->hasOne(SpecialPackage::class, 'id', 'special_id');
     }
 
     public function accesses() {

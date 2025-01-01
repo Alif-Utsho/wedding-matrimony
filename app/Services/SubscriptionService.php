@@ -41,9 +41,9 @@ class SubscriptionService {
 
     public function subscribeSpecialPackage($userId, $id) {
 
-        $package = SpecialPackageCategory::with('specialpackage')->findOrFail($id);
+        $package = SpecialPackageCategory::with('specialpackage')->find($id);
         $user    = User::find($userId);
-
+        
         $expirationDate = Carbon::now()->addDays($package->duration);
 
         $payment = PackagePayment::create([
