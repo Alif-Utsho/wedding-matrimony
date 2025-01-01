@@ -46,60 +46,6 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label class="lb">Price:</label>
-                            <input type="number" class="form-control" placeholder="Enter package price"
-                                name="price" value="{{ $package->price }}">
-                            @error('price')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="lb">Old Price:</label>
-                            <input type="number" class="form-control" placeholder="Enter package old_price"
-                                name="old_price" value="{{ $package->old_price }}">
-                            @error('old_price')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="lb">Duration:</label>
-                            <input type="number" class="form-control" placeholder="Enter days"
-                                name="duration" value="{{ $package->duration }}">
-                            @error('duration')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="lb">Descriptions:</label>
-                            <textarea value="{{ $package->name }}" class="form-control" id="" cols="30" rows="10"
-                                name="details">{{ $package->details }}</textarea>
-                            @error('details')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="chosenini">
-                            <div class="form-group">
-                                <label class="lb">Accesses:</label>
-                                <select class="chosen-select" data-placeholder="Select package Tags" multiple name="accesses[]">
-                                    <option></option>
-                                    @foreach ($accesses as $access)
-                                        <option value="{{ $access->id }}"
-                                            {{ in_array($access->id, $package->accesses->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                            {{ $access->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('accesses')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-
-                        
 
                         <div class="form-group">
                             <label class="lb">Popular</label>

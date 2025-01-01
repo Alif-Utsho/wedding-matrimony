@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Toastr;
 use App\Http\Controllers\Controller;
-use App\Models\Access;
 use App\Models\Package;
 use App\Models\PackagePayment;
 use Illuminate\Http\Request;
@@ -18,22 +17,15 @@ class PackageController extends Controller {
     }
 
     public function add() {
-        $accesses = Access::get();
 
-        return view('backend.package.add', compact('accesses'));
+        return view('backend.package.add');
     }
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name'       => 'required|string|max:50|unique:packages,name',
-            'price'      => 'required|integer|min:0',
-            'old_price'  => 'nullable|integer|min:0',
-            'duration'   => 'required|integer|min:1',
-            'details'    => 'nullable|string',
-            'accesses'   => 'nullable|array',
-            'accesses.*' => 'exists:accesses,id',
-            'popular'    => 'nullable',
-            'status'     => 'nullable',
+            'name'    => 'required|string|max:50|unique:packages,name',
+            'popular' => 'nullable',
+            'status'  => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -45,19 +37,11 @@ class PackageController extends Controller {
             return back()->withErrors($validator)->withInput();
         }
 
-        $package = Package::create([
-            'name'      => $request->name,
-            'price'     => $request->price,
-            'old_price' => $request->old_price,
-            'duration'  => $request->duration,
-            'details'   => $request->details,
-            'popular'   => $request->boolean('popular') ? 1 : 0,
-            'status'    => $request->boolean('status') ? 1 : 0,
+        Package::create([
+            'name'    => $request->name,
+            'popular' => $request->boolean('popular') ? 1 : 0,
+            'status'  => $request->boolean('status') ? 1 : 0,
         ]);
-
-        if ($request->has('accesses')) {
-            $package->accesses()->sync($request->accesses);
-        }
 
         Toastr::success('Package created successfully!', 'Success');
 
@@ -65,23 +49,16 @@ class PackageController extends Controller {
     }
 
     public function edit($id) {
-        $package  = Package::find($id);
-        $accesses = Access::get();
+        $package = Package::find($id);
 
-        return view('backend.package.edit', compact('package', 'accesses'));
+        return view('backend.package.edit', compact('package'));
     }
 
     public function update(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name'       => 'required|string|max:50|unique:packages,name,' . $request->package_id,
-            'price'      => 'required|integer|min:0',
-            'old_price'  => 'nullable|integer|min:0',
-            'duration'   => 'required|integer|min:1',
-            'details'    => 'nullable|string',
-            'accesses'   => 'nullable|array',
-            'accesses.*' => 'exists:accesses,id',
-            'popular'    => 'nullable',
-            'status'     => 'nullable',
+            'name'    => 'required|string|max:50,' . $request->package_id,
+            'popular' => 'nullable',
+            'status'  => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -96,20 +73,10 @@ class PackageController extends Controller {
         $package = Package::findOrFail($request->package_id);
 
         $package->update([
-            'name'      => $request->name,
-            'price'     => $request->price,
-            'old_price' => $request->old_price,
-            'duration'  => $request->duration,
-            'details'   => $request->details,
-            'popular'   => $request->boolean('popular') ? 1 : 0,
-            'status'    => $request->boolean('status') ? 1 : 0,
+            'name'    => $request->name,
+            'popular' => $request->boolean('popular') ? 1 : 0,
+            'status'  => $request->boolean('status') ? 1 : 0,
         ]);
-
-        if ($request->has('accesses')) {
-            $package->accesses()->sync($request->accesses);
-        } else {
-            $package->accesses()->sync([]); // Clear all accesses if none provided
-        }
 
         Toastr::success('Package updated successfully!', 'Success');
 
@@ -140,7 +107,6 @@ class PackageController extends Controller {
 
     public function delete($id) {
         $package = Package::findOrFail($id);
-        $package->accesses()->detach();
         $package->delete();
 
         Toastr::success('Package deleted successfully!', 'Success');

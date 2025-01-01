@@ -26,7 +26,8 @@
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.package.add') }}">Add new package post</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.package.add') }}">Add new package
+                                        post</a></li>
                             </ul>
                         </div>
                     </div>
@@ -35,9 +36,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Title</th>
-                                <th>Price</th>
-                                <th>Old Price</th>
-                                <th>Duration</th>
                                 <td>Status</td>
                                 <th>Edit</th>
                             </tr>
@@ -47,20 +45,6 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="hig-blu">{{ $value->name }}</span></td>
-                                    <td>{{ $value->price }}</td>
-                                    <td>{{ $value->old_price }}</td>
-                                    <td>
-                                        @if ($value->price > 0)
-                                            <small>
-                                                @if ($value->duration >= 30)
-                                                    {{ round($value->duration / 30, 1) }}
-                                                    {{ Str::plural('Month', round($value->duration / 30, 1)) }}
-                                                @else
-                                                    {{ $value->duration }} {{ Str::plural('Day', $value->duration) }}
-                                                @endif
-                                            </small>
-                                        @endif
-                                    </td>
                                     <td>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input toggle-front" type="checkbox"
@@ -78,7 +62,8 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('admin.package.edit', $value->id) }}">Edit</a></li>
-                                                <form action="{{ route('admin.package.delete', $value->id) }}" method="POST"
+                                                <form action="{{ route('admin.package.delete', $value->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this package?');"
                                                     style="display: inline;">
                                                     @csrf
@@ -90,7 +75,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>

@@ -72,6 +72,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function () {
 
         Route::get('current-package', [SubscriptionController::class, 'currentPackage']);
         Route::post('subscribe', [SubscriptionController::class, 'subscribe']);
+        Route::post('subscribe-special', [SubscriptionController::class, 'subscribeSpecial']);
 
         Route::get('recent-views', [ProfileviewController::class, 'recentView']);
         Route::get('recent-visitors', [ProfileviewController::class, 'recentVisitor']);
