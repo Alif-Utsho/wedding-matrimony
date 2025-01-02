@@ -413,7 +413,7 @@ class UserService {
             "userId" => $userId,
 
         ];
-        
+
         PushNotificationService::send($notification);
 
         return $matchingUsers;
@@ -540,10 +540,12 @@ class UserService {
     }
 
     public function verifySubmit($userId, $data) {
-        // dd($data);
+        // dd($userId);
         try {
+
             $imagePath     = ImageService::uploadImage($data["image"], "", "verification");
             $imageBackPath = ImageService::uploadImage($data["image_back"], "", "verification");
+
             UserVerification::create([
                 'user_id'    => $userId,
                 'name'       => 'NID',

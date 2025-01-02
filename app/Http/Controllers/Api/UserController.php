@@ -309,6 +309,7 @@ class UserController extends Controller {
         }
 
         try {
+
             $response = $this->userService->verifySubmit($userId, $request->all());
 
             if ($response) {

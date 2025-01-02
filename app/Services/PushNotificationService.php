@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 class PushNotificationService {
 
     public static function send($data) {
-        // dd($data);
+
         $osurl     = "https://onesignal.com/api/v1/notifications";
         $api_token = "os_v2_app_wl3ocf7z5fckff3eycrakfg6b3miyr7ccrvupc4q2f7km6isity6i72rfpguue7yqmjmj5smwjidxr5aygue6pdatupu7u6iufxk6ti";
 
@@ -26,6 +26,7 @@ class PushNotificationService {
                 "en" => $data["body"],
             ],
         ];
+       
 
         if ($userId == 'all') {
             $notification["included_segments"] = ["All Users"];
@@ -43,11 +44,10 @@ class PushNotificationService {
             $notification["include_player_ids"] = $subscribed_devices;
         }
 
-        // dd($notification);
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $api_token,
-                'Content-Type'  => 'application/json',
+                'content-Type'  => 'application/json',
             ])->post($osurl, $notification);
 
             return $response->json();
