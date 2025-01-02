@@ -18,13 +18,13 @@
             <div class="container">
                 <div class="row">
                     <ul>
-                        @foreach ($plans as $plan)
+                        @foreach ($packages as $plan)
                             <li>
-                                <div class="pri-box @if ($plan->popular) pri-box-pop @endif">
-                                    @if ($plan->popular)
+                                <div class="pri-box @if ($plan->package->popular) pri-box-pop @endif">
+                                    @if ($plan->package->popular)
                                         <span class="pop-pln">Most popular plan</span>
                                     @endif
-                                    <h2>{{ $plan->name }}</h2>
+                                    <h2>{{ $plan->package->name }}</h2>
                                     <p>Printer took a type and scrambled </p>
                                     {{-- <a href="sign-up.html" class="cta">Get Started</a> --}}
                                     <a href="javascript:void(0);" class="cta"
@@ -34,7 +34,8 @@
                                     <form id="subscription-form-{{ $plan->id }}" action="{{ route('user.subscribe') }}"
                                         method="POST" style="display: none;">
                                         @csrf
-                                        <input type="hidden" name="package_id" value="{{ $plan->id }}">
+                                        <input type="hidden" name="id" value="{{ $plan->id }}">
+                                        <input type="hidden" name="package_id" value="{{ $plan->package_id }}">
                                     </form>
                                     <span class="pri-cou">
                                         <b>${{ $plan->price }}</b>
@@ -44,7 +45,8 @@
                                                     {{ round($plan->duration / 30, 1) }}
                                                     {{ Str::plural('Month', round($plan->duration / 30, 1)) }}
                                                 @else
-                                                    {{ $plan->duration }} {{ Str::plural('Day', $plan->duration) }}
+                                                    {{ $plan->duration }}
+                                                    {{ Str::plural('Day', $plan->duration) }}
                                                 @endif
                                             </small>
                                         @endif

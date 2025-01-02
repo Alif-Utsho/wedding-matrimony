@@ -15,6 +15,7 @@ use App\Models\ProfileClick;
 use App\Models\ProfileLike;
 use App\Models\ProfileView;
 use App\Models\Service;
+use App\Models\SubPackage;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -25,33 +26,37 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FrontendController extends Controller {
+class FrontendController extends Controller
+{
 
     protected $userService;
 
-    function __construct(UserService $userService) {
+    public function __construct(UserService $userService)
+    {
         $this->middleware('check.access:profile-view')->only('profileDetails');
         $this->userService = $userService;
     }
 
-    public function index() {
-        $services        = Service::whereStatus(true)->latest()->get();
-        $testimonials    = Testimonial::whereStatus(true)->latest()->get();
-        $wedding_steps   = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
-        $ourteams        = Ourteam::whereStatus(true)->get();
-        $blogs           = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
-        $weddings        = Wedding::whereStatus(true)->get();
-        $banners         = Banner::whereStatus(true)->get();
+    public function index()
+    {
+        $services = Service::whereStatus(true)->latest()->get();
+        $testimonials = Testimonial::whereStatus(true)->latest()->get();
+        $wedding_steps = WeddingStep::whereNull('wedding_id')->whereStatus(true)->get();
+        $ourteams = Ourteam::whereStatus(true)->get();
+        $blogs = Blog::whereStatus(true)->where('front_page', true)->latest()->limit(3)->get();
+        $weddings = Wedding::whereStatus(true)->get();
+        $banners = Banner::whereStatus(true)->get();
         $generalSettings = GeneralSetting::first();
-        $users           = User::whereStatus(true)->count();
-        $maleUser        = UserProfile::where('gender', 'Male')->count();
-        $femaleUser      = UserProfile::where('gender', 'Female')->count();
-        $galleries       = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
+        $users = User::whereStatus(true)->count();
+        $maleUser = UserProfile::where('gender', 'Male')->count();
+        $femaleUser = UserProfile::where('gender', 'Female')->count();
+        $galleries = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
 
         return view('frontend.index', compact('services', 'testimonials', 'wedding_steps', 'ourteams', 'blogs', 'weddings', 'banners', 'galleries', 'users', 'maleUser', 'femaleUser', 'generalSettings'));
     }
 
-    public function weddingDetails($id) {
+    public function weddingDetails($id)
+    {
         $wedding = Wedding::find($id);
 
         if (!$wedding) {
@@ -63,8 +68,9 @@ class FrontendController extends Controller {
         return view('frontend.pages.wedding-details', compact('wedding'));
     }
 
-    public function allProfile(Request $request) {
-        $users     = $this->userService->getUsers($request);
+    public function allProfile(Request $request)
+    {
+        $users = $this->userService->getUsers($request);
         $userQuery = User::whereStatus(true)->latest()->whereHas('profile');
 
         $likedUsers = ProfileLike::where('liker_id', Auth::guard('user')->id())
@@ -77,7 +83,8 @@ class FrontendController extends Controller {
         return view('frontend.pages.all-profile', compact('users', 'likedUsers'));
     }
 
-    public function profileDetails(Request $request) {
+    public function profileDetails(Request $request)
+    {
         $user = User::where('slug', $request->slug)->where('profile_visibility', '<>', 'no-visible')->first();
 
         if (!$user) {
@@ -93,47 +100,47 @@ class FrontendController extends Controller {
 
         if (!$alreadyViewed) {
             ProfileView::create([
-                'user_id'   => $user->id,
+                'user_id' => $user->id,
                 'viewer_id' => Auth::guard('user')->id(),
             ]);
         }
 
         ProfileClick::create([
-            'user_id'    => $user->id,
+            'user_id' => $user->id,
             'clicker_id' => Auth::guard('user')->id(),
         ]);
 
-        $invitationSent       = false;
-        $invitationReceived   = false;
-        $invitationAccepted   = false;
-        $invitationSentId     = null;
+        $invitationSent = false;
+        $invitationReceived = false;
+        $invitationAccepted = false;
+        $invitationSentId = null;
         $invitationReceivedId = null;
         $invitationAcceptedId = null;
 
         if (Auth::guard('user')->check()) {
             $invitationSentData = Invitation::where([
                 'sent_from' => Auth::guard('user')->user()->id,
-                'sent_to'   => $user->id,
-                'status'    => null,
+                'sent_to' => $user->id,
+                'status' => null,
             ])->first();
 
             if ($invitationSentData) {
-                $invitationSent   = true;
+                $invitationSent = true;
                 $invitationSentId = $invitationSentData->id;
             }
 
             $invitationReceivedData = Invitation::where([
-                'sent_to'   => Auth::guard('user')->user()->id,
+                'sent_to' => Auth::guard('user')->user()->id,
                 'sent_from' => $user->id,
-                'status'    => null,
+                'status' => null,
             ])->first();
 
             if ($invitationReceivedData) {
-                $invitationReceived   = true;
+                $invitationReceived = true;
                 $invitationReceivedId = $invitationReceivedData->id;
             }
 
-            $currentUserId          = Auth::guard('user')->user()->id;
+            $currentUserId = Auth::guard('user')->user()->id;
             $invitationAcceptedData = Invitation::where('status', true)
                 ->where(function ($query) use ($currentUserId, $user) {
                     $query->where('sent_to', $currentUserId)
@@ -144,7 +151,7 @@ class FrontendController extends Controller {
             })->first();
 
             if ($invitationAcceptedData) {
-                $invitationAccepted   = true;
+                $invitationAccepted = true;
                 $invitationAcceptedId = $invitationAcceptedData->id;
             }
 
@@ -161,7 +168,8 @@ class FrontendController extends Controller {
         return view('frontend.pages.profile-details', compact('user', 'related_users', 'invitationSent', 'invitationReceived', 'invitationAccepted', 'invitationSentId', 'invitationReceivedId', 'invitationAcceptedId'));
     }
 
-    public function blogs(Request $request) {
+    public function blogs(Request $request)
+    {
         $blogQueries = Blog::whereStatus(true);
 
         if ($request->category) {
@@ -172,14 +180,15 @@ class FrontendController extends Controller {
         $blogs = $blogQueries->latest()->get();
 
         $blog_categories = BlogCategory::whereStatus(true)->get();
-        $trending_blogs  = Blog::where('trending', true)->latest()->limit(5)->get();
+        $trending_blogs = Blog::where('trending', true)->latest()->limit(5)->get();
 
         return view('frontend.pages.blogs', compact('blogs', 'trending_blogs', 'blog_categories'));
     }
 
-    public function blogDetails(Request $request) {
+    public function blogDetails(Request $request)
+    {
         $blog_id = $request->id;
-        $blog    = Blog::find($blog_id);
+        $blog = Blog::find($blog_id);
 
         $related_posts = Blog::whereHas('tags', function ($query) use ($blog) {
             $query->whereIn('tag_id', $blog->tags->pluck('id'));
@@ -199,29 +208,36 @@ class FrontendController extends Controller {
         return view('frontend.pages.blog-details', compact('blog', 'related_posts', 'next_post', 'prev_post', 'trending_blogs', 'blog_categories'));
     }
 
-    public function plans() {
-        return view('frontend.pages.plans');
+    public function plans()
+    {
+        $packages = SubPackage::with('package', 'package.accesses')->latest()->get();
+        // dd($packages);
+        return view('frontend.pages.plans', compact('packages'));
     }
 
-    public function photoGallery() {
+    public function photoGallery()
+    {
         $galleries = WeddingGallery::whereStatus(true)->inRandomOrder()->limit(10)->get();
 
         return view('frontend.pages.wedding-gallery', compact('galleries'));
     }
 
-    public function contact() {
+    public function contact()
+    {
         return view('frontend.pages.contact');
     }
 
-    public function enquiry() {
+    public function enquiry()
+    {
         return view('frontend.pages.enquiry');
     }
 
-    public function enquirySubmit(Request $request) {
+    public function enquirySubmit(Request $request)
+    {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'email'   => 'required|email|max:255',
-            'phone'   => 'nullable|string|max:20',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'message' => 'required|string',
         ]);
 

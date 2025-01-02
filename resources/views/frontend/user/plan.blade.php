@@ -52,7 +52,7 @@
             <div class="col-md-12 db-sec-com">
                 <div class="alert alert-warning db-plan-canc">
                     <p><strong>Plan cancellation:</strong> <a href="#" data-bs-toggle="modal"
-                            data-bs-target="#plancancel">Click here</a> to cancell the current plan.</p>
+                            data-bs-target="#plancancel">Click here</a> to cancel the current plan.</p>
                 </div>
             </div>
             <div class="col-md-12 db-sec-com">

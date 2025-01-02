@@ -14,13 +14,12 @@ use Illuminate\Support\Facades\Validator;
 class SubscriptionController extends Controller {
     protected $subscriptionService;
 
-    function __construct(SubscriptionService $subscriptionService) {
+    public function __construct(SubscriptionService $subscriptionService) {
         $this->subscriptionService = $subscriptionService;
     }
 
     public function subscribe(Request $request) {
 
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'id'         => 'required|integer',
             'package_id' => 'required|integer',
@@ -73,15 +72,6 @@ class SubscriptionController extends Controller {
             ->where('expired_at', '>', now())
             ->latest()
             ->first();
-
-// if ($userPackage) {
-
-//     $package = Package::find($userPackage->package_id);
-
-// } else {
-
-//     $package = Package::where('price', 0)->first();
-        // }
 
         return response()->json([
             'status' => 'success',
