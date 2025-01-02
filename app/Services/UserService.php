@@ -404,6 +404,17 @@ class UserService {
         $matchingProfiles = $query->pluck('user_id');
 
         $matchingUsers = User::with('profile', 'profile.career')->whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
+        // dd($matchingUsers);
+
+        $notification = [
+
+            "title"  => "New Profile Matching",
+            "body"   => "You have a new match profile suggestion",
+            "userId" => $userId,
+
+        ];
+        
+        PushNotificationService::send($notification);
 
         return $matchingUsers;
     }

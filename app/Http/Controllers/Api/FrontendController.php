@@ -25,6 +25,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller {
@@ -215,18 +216,23 @@ class FrontendController extends Controller {
     }
 
     public function get_cities(Request $request) {
-        $cityQuery = City::whereStatus(true)->orderBy('name', 'ASC');
 
-        if ($request->division_id) {
-            $cityQuery->where('division_id', $request->division_id);
+        $response = Http::get('https://bdapis.com/api/v1.2/division/' . $request->division_name);
+
+        if ($response->successful()) {
+            $data = $response->json();
+
+            return response()->json([
+                'status' => 'success',
+                'cities' => $data,
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'error'  => $response->status(),
+            ]);
         }
 
-        $cities = $cityQuery->get();
-
-        return response()->json([
-            'status' => 'success',
-            'cities' => $cities,
-        ], Response::HTTP_OK);
     }
 
     public function contactInfo() {
