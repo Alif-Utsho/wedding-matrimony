@@ -6,7 +6,8 @@
             <div class="container">
                 <div class="row">
                     <h1>Lakhs of Happy Marriages</h1>
-                    <a href="{{ route('user.register') }}">Join now for Free <i class="fa fa-handshake-o" aria-hidden="true"></i></a>
+                    <a href="{{ route('user.register') }}">Join now for Free <i class="fa fa-handshake-o"
+                            aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
@@ -64,7 +65,8 @@
                                         <option value="71-to-80" {{ request()->age_range == '71-to-80' ? 'selected' : '' }}>
                                             71
                                             to 80</option>
-                                        <option value="81-to-90" {{ request()->age_range == '81-to-90' ? 'selected' : '' }}>
+                                        <option value="81-to-90"
+                                            {{ request()->age_range == '81-to-90' ? 'selected' : '' }}>
                                             81
                                             to 90</option>
                                         <option value="91-to-100"
@@ -259,10 +261,10 @@
                                                             <i class="fa fa-lock"></i>
                                                         @endauth
                                                     </span>
-                                                    <a href="#!">WhatsApp</a>
-                                                    <a href="#!" class="cta cta-sendint" data-bs-toggle="modal"
-                                                        data-bs-target="#sendInter">Send interest</a>
-                                                    <a href="/profile/{{ $user->slug }}">More detaiils</a>
+                                                    {{-- <a href="#!">WhatsApp</a> --}}
+                                                    <a href="/profile/{{ $user->slug }}">Send
+                                                        Invitation</a>
+                                                    {{-- <a href="/profile/{{ $user->slug }}">More detaiils</a> --}}
                                                 </div>
                                             </div>
                                             <!--END PROFILE NAME-->
@@ -270,7 +272,7 @@
                                             <span
                                                 class="enq-sav like-btn {{ isset($likedUsers[$user->id]) ? 'liked' : '' }}"
                                                 data-toggle="tooltip" data-user-id="{{ $user->id }}"
-                                                title="{{ isset($likedUsers[$user->id]) ? 'Profile liked' : 'Click to like this profile' }}""><i
+                                                title="{{ isset($likedUsers[$user->id]) ? 'Profile liked' : 'Click to like this profile' }}"><i
                                                     class="fa fa-thumbs-o-up {{ isset($likedUsers[$user->id]) ? 'sav-act' : '' }} "
                                                     aria-hidden="true"></i></span>
                                             <!--END SAVE-->
@@ -402,6 +404,7 @@
                         }
                     });
                 });
+
             });
         </script>
     @endpush
