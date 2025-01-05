@@ -18,32 +18,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
 
     protected $userService, $messageService;
 
-    public function __construct(UserService $userService, MessageService $messageService)
-    {
-        $this->userService = $userService;
+    public function __construct(UserService $userService, MessageService $messageService) {
+        $this->userService    = $userService;
         $this->messageService = $messageService;
     }
 
-    public function index()
-    {
+    public function index() {
 
         $user = User::find(Auth::guard('user')->id());
 
-        $userPackage = UserPackage::where('user_id', $user->id)
+        $userPackage = UserPackage::with('subpackage', 'specialcategory')->where('user_id', $user->id)
             ->where('expired_at', '>', now())
             ->latest()
-            ->with('subpackage', 'specialcategory')
             ->first();
 
         if ($userPackage) {
-            $package = SubPackage::with('package')->find($userPackage->sub_pkg_id);
+
+            $package = SubPackage::with('package', 'userpackage')->find($userPackage->sub_pkg_id);
+
         } else {
-            $package = SubPackage::with('package')->where('price', 0)->first();
+
+            $package = SubPackage::with('package', 'userpackage')->where('price', 0)->first();
         }
 
         $chatListUsers = $this->messageService->list($user->id);
@@ -52,10 +51,10 @@ class UserController extends Controller
 
         $profile_completion = $this->userService->getProfileCompletion($user->id);
 
-        $data['package'] = $package;
-        $data['chatListUsers'] = $chatListUsers;
-        $data['userPackage'] = $userPackage;
-        $data['matchingUsers'] = $matchingUsers;
+        $data['package']            = $package;
+        $data['chatListUsers']      = $chatListUsers;
+        $data['userPackage']        = $userPackage;
+        $data['matchingUsers']      = $matchingUsers;
         $data['profile_completion'] = $profile_completion;
 
         // dd($data);
@@ -63,8 +62,7 @@ class UserController extends Controller
         return view('frontend.user.dashboard', $data);
     }
 
-    public function profile()
-    {
+    public function profile() {
         $user = User::find(Auth::guard('user')->id());
 
         $profile_completion = $this->userService->getProfileCompletion($user->id);
@@ -88,50 +86,48 @@ class UserController extends Controller
         return view('frontend.user.profile', compact('user', 'profile_completion', 'userPackage', 'package'));
     }
 
-    public function profileEdit()
-    {
-        $user = User::find(Auth::guard('user')->id());
+    public function profileEdit() {
+        $user    = User::find(Auth::guard('user')->id());
         $hobbies = Hobby::whereStatus(true)->orderBy('name', 'ASC')->get();
 
         return view('frontend.user.profile-edit', compact('user', 'hobbies'));
     }
 
-    public function profileEditSubmit(Request $request)
-    {
+    public function profileEditSubmit(Request $request) {
         $userId = Auth::guard('user')->id();
-        $user = User::find($userId);
+        $user   = User::find($userId);
 
         // Validate the request
         $request->validate([
-            'name' => 'required|string|max:200',
-            'gender' => 'required|string',
-            'city_id' => 'required|string',
-            'religion' => 'required|string',
-            'language' => 'required|string',
-            'birth_date' => 'required|date',
-            'height' => 'required|numeric|min:30|max:300',
-            'weight' => 'required|numeric|min:10|max:300',
-            'fathers_name' => 'required|string|max:200',
-            'mothers_name' => 'required|string|max:200',
-            'address' => 'required|string|max:255',
-            'type' => 'required|string',
+            'name'           => 'required|string|max:200',
+            'gender'         => 'required|string',
+            'city_id'        => 'required|string',
+            'religion'       => 'required|string',
+            'language'       => 'required|string',
+            'birth_date'     => 'required|date',
+            'height'         => 'required|numeric|min:30|max:300',
+            'weight'         => 'required|numeric|min:10|max:300',
+            'fathers_name'   => 'required|string|max:200',
+            'mothers_name'   => 'required|string|max:200',
+            'address'        => 'required|string|max:255',
+            'type'           => 'required|string',
             'marital_status' => 'required|string|max:20',
-            'bio' => 'nullable|string',
-            'company_name' => 'nullable|string|max:200',
-            'salary' => 'nullable|string|max:20',
-            'experience' => 'nullable|string|max:20',
-            'degree' => 'nullable|string|max:200',
-            'college' => 'nullable|string|max:200',
-            'school' => 'nullable|string|max:200',
-            'whatsApp' => 'nullable|string|max:200',
-            'facebook' => 'nullable|string|max:200',
-            'instagram' => 'nullable|string|max:200',
-            'x' => 'nullable|string|max:200',
-            'youtube' => 'nullable|string|max:200',
-            'linkedin' => 'nullable|string|max:200',
-            'hobbies' => 'nullable|array',
+            'bio'            => 'nullable|string',
+            'company_name'   => 'nullable|string|max:200',
+            'salary'         => 'nullable|string|max:20',
+            'experience'     => 'nullable|string|max:20',
+            'degree'         => 'nullable|string|max:200',
+            'college'        => 'nullable|string|max:200',
+            'school'         => 'nullable|string|max:200',
+            'whatsApp'       => 'nullable|string|max:200',
+            'facebook'       => 'nullable|string|max:200',
+            'instagram'      => 'nullable|string|max:200',
+            'x'              => 'nullable|string|max:200',
+            'youtube'        => 'nullable|string|max:200',
+            'linkedin'       => 'nullable|string|max:200',
+            'hobbies'        => 'nullable|array',
             // 'image'        => 'if $user->profile->image == null required else nullable|image|png, jpg, jpeg'
-            'image' => [
+            'image'          => [
                 Rule::requiredIf(!$user->profile || !$user->profile->image),
                 'nullable',
                 'image',
@@ -146,10 +142,9 @@ class UserController extends Controller
         return redirect('/user/profile');
     }
 
-    public function imageUpload(Request $request)
-    {
+    public function imageUpload(Request $request) {
         $request->validate([
-            'images' => [
+            'images'   => [
                 'required',
                 'array',
                 'min:1',
@@ -157,7 +152,7 @@ class UserController extends Controller
             'images.*' => 'image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        $userId = Auth::guard('user')->id();
+        $userId      = Auth::guard('user')->id();
         $userProfile = UserProfile::where('user_id', $userId)->first();
 
         if (!$userProfile) {
@@ -171,9 +166,8 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function deleteImage(Request $request)
-    {
-        $id = $request->imageId;
+    public function deleteImage(Request $request) {
+        $id     = $request->imageId;
         $result = $this->userService->deleteImage($id);
 
         if ($result) {
@@ -185,8 +179,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function chatList(Request $request)
-    {
+    public function chatList(Request $request) {
         $userId = Auth::guard('user')->id();
 
         $chatListUsers = $this->messageService->list($userId);
@@ -194,8 +187,7 @@ class UserController extends Controller
         return view('frontend.user.chat-list', compact('chatListUsers'));
     }
 
-    public function userPlan()
-    {
+    public function userPlan() {
         $user = User::find(Auth::guard('user')->id());
 
         $userPackage = UserPackage::where('user_id', $user->id)
@@ -213,21 +205,20 @@ class UserController extends Controller
         $payments = PackagePayment::where('user_id', $user->id)->where('status', PaymentStatus::PAID)->get();
 
         $data['userPackage'] = $userPackage;
-        $data['package'] = $package;
-        $data['payments'] = $payments;
+        $data['package']     = $package;
+        $data['payments']    = $payments;
         // dd($data);
+
         return view('frontend.user.plan', $data);
     }
 
-    public function setting()
-    {
+    public function setting() {
         return view('frontend.user.setting');
     }
 
-    public function updateSetting(Request $request)
-    {
+    public function updateSetting(Request $request) {
         $request->validate([
-            'setting_key' => 'required|string|in:profile_visibility,interest_request_access',
+            'setting_key'   => 'required|string|in:profile_visibility,interest_request_access',
             'setting_value' => 'required|string|in:all,premium,no-visible',
         ]);
 
@@ -243,8 +234,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function like($userId)
-    {
+    public function like($userId) {
         $likerId = Auth::guard('user')->id();
 
         $result = $this->userService->toggleLike($userId, $likerId);
@@ -252,20 +242,18 @@ class UserController extends Controller
         return response()->json($result);
     }
 
-    public function verificationEdit()
-    {
+    public function verificationEdit() {
         return view('frontend.user.verification-edit');
     }
 
-    public function verificationEditSubmit(Request $request)
-    {
+    public function verificationEditSubmit(Request $request) {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image'      => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'image_back' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $userId = Auth::guard('user')->id();
-        $exist = UserVerification::where('user_id', $userId)->latest()->first();
+        $exist  = UserVerification::where('user_id', $userId)->latest()->first();
 
         if ($exist) {
             Toastr::error('Already Submitted! Contact with Administrator');
@@ -286,8 +274,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function downloadProfileDownload()
-    {
+    public function downloadProfileDownload() {
         $userId = Auth::guard('user')->id();
 
         return $this->userService->downloadProfilePdf($userId);

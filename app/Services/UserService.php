@@ -82,6 +82,7 @@ class UserService {
             [
                 'gender'         => $data['gender'],
                 'city_id'        => $data['city_id'],
+                'sub_district'   => $data['sub_district'] ?? null,
                 'religion'       => $data['religion'],
                 'language'       => $data['language'],
                 'birth_date'     => $data['birth_date'],
@@ -581,11 +582,28 @@ class UserService {
     }
 
     public function updatePreference($data, $userId) {
+
         $user = User::findOrFail($userId);
 
         $preferences = UserPreference::updateOrCreate(
             ['user_id' => $userId],
-            $data
+            [
+                'min_age'         => $data['min_age'],
+                'max_age'         => $data['max_age'],
+                'min_height'      => $data['min_height'],
+                'max_height'      => $data['max_height'],
+                'marital_status'  => $data['marital_status'],
+                'religion'        => $data['religion'],
+                'language'        => $data['language'],
+                'city_id'         => $data['city_id'],
+                'jobtype'         => $data['jobtype'],
+                'min_salary'      => $data['min_salary'],
+                'max_salary'      => $data['max_salary'],
+                'profession_area' => $data['profession_area'],
+                'working_with'    => $data['working_with'],
+                'annual_income'   => $data['annual_income'],
+                'qualification'   => $data['qualification'],
+            ]
         );
 
         return $preferences;

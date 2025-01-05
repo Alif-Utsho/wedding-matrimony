@@ -14,4 +14,8 @@ class UserPreference extends Model
     public function city(){
         return $this->belongsTo(City::class);
     }
+
+    public function career() {
+        return $this->hasOne(UserCareer::class);
+    }
 }

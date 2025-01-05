@@ -193,21 +193,33 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12 form-group">
-                                    <label class="lb">City:</label>
-                                    <select class="form-select chosen-select" data-placeholder="Select your City"
-                                        name="city_id" value="{{ $user->profile->city_id ?? old('city_id') }}">
-                                        <option value="">Select</option>
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}"
-                                                {{ $user->profile && $city->id === $user->profile->city_id ? 'selected' : '' }}>
-                                                {{ $city->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('city_id')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label class="lb">City:</label>
+                                        <select class="form-select chosen-select" data-placeholder="Select your City"
+                                            name="city_id" value="{{ $user->profile->city_id ?? old('city_id') }}">
+                                            <option value="">Select</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ $user->profile && $city->id === $user->profile->city_id ? 'selected' : '' }}>
+                                                    {{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('city_id')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label class="lb">Sub District:</label>
+                                        <input type="text" class="form-control" name="sub_district"
+                                            value="{{ $user->profile->sub_district ?? old('sub_district') }}">
+                                        @error('sub_district')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="lb">Address:</label>
                                     <input type="text" class="form-control" name="address"
@@ -240,14 +252,16 @@
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
                                     <label class="lb">Company name:</label>
                                     <input type="text" class="form-control" name="company_name"
                                         value="{{ $user->profile ? $user->profile->career->company_name : old('company_name') }}">
-                                    @error('cpmpany_name')
+                                    @error('company_name')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label class="lb">Salary:</label>

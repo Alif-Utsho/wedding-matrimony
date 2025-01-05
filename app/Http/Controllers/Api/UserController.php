@@ -341,18 +341,23 @@ class UserController extends Controller {
     }
 
     public function updatePreference(Request $request) {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'min_age'        => 'nullable|integer',
-            'max_age'        => 'nullable|integer',
-            'min_height'     => 'nullable|integer',
-            'max_height'     => 'nullable|integer',
-            'marital_status' => 'nullable|string',
-            'religion'       => 'nullable|string',
-            'language'       => 'nullable|string',
-            'city_id'        => 'nullable|string',
-            'jobtype'        => 'nullable|string',
-            'min_salary'     => 'nullable|integer',
-            'max_salary'     => 'nullable|integer',
+            'min_age'         => 'nullable|integer',
+            'max_age'         => 'nullable|integer',
+            'min_height'      => 'nullable|integer',
+            'max_height'      => 'nullable|integer',
+            'marital_status'  => 'nullable|string',
+            'religion'        => 'nullable|string',
+            'language'        => 'nullable|string',
+            'city_id'         => 'nullable|string',
+            'working_with'    => 'nullable|string',
+            'profession_area' => 'nullable|string',
+            'jobtype'         => 'nullable|string',
+            'min_salary'      => 'nullable|integer',
+            'max_salary'      => 'nullable|integer',
+            'annual_income'   => 'nullable|integer',
+            'qualification'   => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -363,7 +368,9 @@ class UserController extends Controller {
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $userId     = Auth::guard('api')->id();
+        $userId = Auth::guard('api')->id();
+        $user   = User::find($userId);
+
         $preference = $this->userService->updatePreference($request->all(), $userId);
 
         return response()->json([
