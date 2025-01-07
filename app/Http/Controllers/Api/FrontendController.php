@@ -349,8 +349,9 @@ class FrontendController extends Controller {
     }
 
     public function callLog() {
+        $userId = Auth::guard('api')->id() ?? Auth::guard('user')->id();
 
-        $callLog = CallLog::where('status', true)->get();
+        $callLog = CallLog::where(['sender_id' => $userId])->where('status', true)->get();
 
         $callLog->load(['receiver', 'receiver.profile']);
 

@@ -18,6 +18,7 @@ class MessageController extends Controller {
     }
 
     public function sendMessage(Request $request) {
+        
         $validator = Validator::make($request->all(), [
             'receiver_id' => 'required|integer',
             'message'     => 'required|string',

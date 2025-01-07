@@ -39,9 +39,11 @@ class UserService {
             'profile_for' => $data['profile_for'],
             'password'    => Hash::make($data['password']),
         ]);
+
     }
 
     public function updateUser($data, $user) {
+
         $updated_user = User::where('id', $user->id)->update([
             'name'  => $data['name'],
             'email' => $data['email'],
@@ -54,7 +56,7 @@ class UserService {
     public function updateUserProfile($data, $user) {
 
 // Process image if uploaded
-        // dd($data);
+
         $imagePath   = null;
         $editProfile = UserProfile::where('user_id', $user->id)->first();
 
@@ -80,17 +82,17 @@ class UserService {
         $userProfile = UserProfile::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'gender'         => $data['gender'],
+                'gender'         => $data['gender'] ?? null,
                 'city_id'        => $data['city_id'],
                 'sub_district'   => $data['sub_district'] ?? null,
-                'religion'       => $data['religion'],
-                'language'       => $data['language'],
+                'religion'       => $data['religion'] ?? null,
+                'language'       => $data['language'] ?? null,
                 'birth_date'     => $data['birth_date'],
-                'height'         => $data['height'],
-                'weight'         => $data['weight'],
-                'fathers_name'   => $data['fathers_name'],
-                'mothers_name'   => $data['mothers_name'],
-                'address'        => $data['address'],
+                'height'         => $data['height'] ?? null,
+                'weight'         => $data['weight'] ?? null,
+                'fathers_name'   => $data['fathers_name'] ?? null,
+                'mothers_name'   => $data['mothers_name'] ?? null,
+                'address'        => $data['address'] ?? null,
                 'bio'            => $data['bio'],
                 'marital_status' => $data['marital_status'] ?? null,
                 'age'            => $data['age'] ?? null,
@@ -144,14 +146,52 @@ class UserService {
         UserSocialmedia::updateOrCreate(
             ['user_id' => $user->id, 'user_profile_id' => $userProfile->id],
             [
-                'whatsApp'  => $data['whatsApp'],
-                'facebook'  => $data['facebook'],
-                'instagram' => $data['instagram'],
-                'youtube'   => $data['youtube'],
-                'linkedin'  => $data['linkedin'],
-                'x'         => $data['x'],
+                'whatsApp'  => $data['whatsApp'] ?? null,
+                'facebook'  => $data['facebook'] ?? null,
+                'instagram' => $data['instagram'] ?? null,
+                'youtube'   => $data['youtube'] ?? null,
+                'linkedin'  => $data['linkedin'] ?? null,
+                'x'         => $data['x'] ?? null,
             ]
         );
+
+        //Get Matching User
+
+        $oppositeGender = $userProfile->gender === 'Male' ? 'Female' : 'Male';
+
+        if ($userProfile->gender === 'Male') {
+            $ageMax    = $userProfile->age;
+            $heightMax = $userProfile->height;
+        } else {
+            $ageMin    = $userProfile->age;
+            $heightMin = $userProfile->height;
+        }
+
+        $query = UserProfile::where('user_id', '!=', $user->id)
+            ->where('gender', $oppositeGender)
+            ->where('religion', $userProfile->religion);
+
+        if ($userProfile->gender === 'Male') {
+            $query->where('age', '<', $ageMax)
+                ->where('height', '<', $heightMax);
+        } else {
+            $query->where('age', '>', $ageMin)
+                ->where('height', '>', $heightMin);
+        }
+
+        $matchingProfiles = $query->pluck('user_id');
+
+        $matchingUsers = User::with('profile', 'profile.career')->whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
+        // dd($matchingUsers);
+
+        $notification = [
+            "title"  => "New Profile Matching",
+            "body"   => "You have a new match profile suggestion",
+            "userId" => $user->id,
+        ];
+
+        // dd($notification);
+        PushNotificationService::send($notification);
 
         return $userProfile;
     }
@@ -375,6 +415,7 @@ class UserService {
     }
 
     public function getMatchingUsers($userId) {
+
         $userProfile = UserProfile::where('user_id', $userId)->first();
 
         $oppositeGender = $userProfile->gender === 'Male' ? 'Female' : 'Male';
@@ -405,17 +446,20 @@ class UserService {
         $matchingProfiles = $query->pluck('user_id');
 
         $matchingUsers = User::with('profile', 'profile.career')->whereIn('id', $matchingProfiles)->where('profile_visibility', '<>', 'no-visible')->inRandomOrder()->get();
-        // dd($matchingUsers);
 
-        $notification = [
+// dd($matchingUsers);
 
-            "title"  => "New Profile Matching",
-            "body"   => "You have a new match profile suggestion",
-            "userId" => $userId,
+// $notification = [
 
-        ];
+//     "title"  => "New Profile Matching",
 
-        PushNotificationService::send($notification);
+//     "body"   => "You have a new match profile suggestion",
+
+//     "userId" => $userId,
+
+// ];
+
+        // PushNotificationService::send($notification);
 
         return $matchingUsers;
     }

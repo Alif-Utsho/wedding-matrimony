@@ -22,7 +22,7 @@
                         </strong>
                     </li>
                     <li>Valid till:
-                        <strong>{{ Carbon\Carbon::parse($package->userpackage->expired_at)->format('d M Y') }}</strong>
+                        
                     </li>
                 @endif
                 <li><a href="/plans" class="cta-3">Upgrade now</a></li>

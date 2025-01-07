@@ -26,7 +26,6 @@ class PushNotificationService {
                 "en" => $data["body"],
             ],
         ];
-       
 
         if ($userId == 'all') {
             $notification["included_segments"] = ["All Users"];
@@ -47,7 +46,7 @@ class PushNotificationService {
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $api_token,
-                'content-Type'  => 'application/json',
+                'Content-Type'  => 'application/json',
             ])->post($osurl, $notification);
 
             return $response->json();

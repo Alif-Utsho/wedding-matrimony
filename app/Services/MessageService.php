@@ -18,6 +18,7 @@ class MessageService {
             "body"   => $message,
             "userId" => $receiverId,
         ];
+
         PushNotificationService::send($notification);
 
         return $response;
